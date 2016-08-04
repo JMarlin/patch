@@ -29,6 +29,9 @@ function Desktop(core) {
 
         ctx.fillStyle = that.bgcolor;
         ctx.fillRect(0, 0, that.width, that.height); 
+        ctx.fillStyle = 'white';
+        ctx.font = '12px sans-serif'; 
+        ctx.fillText('PATCH Build Number ' + BUILDNO, 5, that.height - 6);
     }
 
     return that;
