@@ -15,7 +15,7 @@ function Frame(x, y, width, height) {
         this.drag_y = y;
     };
 
-    that.onmouseup = function(x, y) {
+    that.onmouseup = this.onmouseout = function(x, y) {
     
         this.dragged = false;
     };

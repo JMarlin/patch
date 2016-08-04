@@ -15,6 +15,10 @@ function PatchCore() {
             name: 'Sine VCO',
             constructor: function() {}
         });
+        that.install_module({
+            name: 'Square VCO',
+            constructor: function() {}
+        });
         manager = new UIManager();
         manager.add_child(new Desktop(that));
     };
