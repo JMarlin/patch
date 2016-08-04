@@ -25,6 +25,9 @@ function UIManager() {
                 
                 if(e.type === "mousemove") {
                 
+                    if(child.onmousemove)
+                        child.onmousemove(e.clientX - child.x, e.clientY - child.y);
+
                     if(that.mouse_in_child !== child) {
                     
                         if(that.mouse_in_child && that.mouse_in_child.onmouseout)
@@ -35,9 +38,6 @@ function UIManager() {
                         if(that.mouse_in_child.onmouseover)
                             that.mouse_in_child.onmouseover();
                     }
-
-                    if(child.onmousemove)
-                        child.onmousemove(e.clientX - child.x, e.clientY - child.y);
                 }
  
                 if(e.type === "mousedown") {
