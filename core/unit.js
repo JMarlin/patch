@@ -1,17 +1,14 @@
-function Unit(application) {
+function Unit() {
 
-    var that      = this,
-        frame     = new Frame(application.next_spawn_x(), application.next_spawn_y(), 100, 100);
+    var that = new Frame(0, 0, 100, 100);
     
     that.inputs = [];
 
-    frame.old_paint = frame.paint;
+    that.old_paint = that.paint;
 
-    application.uimanager.add_widget(frame);
+    that.paint = function(ctx) {
 
-    frame.paint = function(ctx) {
-
-        frame.old_paint(ctx);
+        that.old_paint(ctx);
 
         ctx.strokeWidth = '2px';
         ctx.strokeStyle = 'black';
@@ -22,11 +19,12 @@ function Unit(application) {
         });
     };
 
+    //Move to frame class
     that.resize = function(w, h) {
 
-        frame.width = w;
-        frame.height = h;
-        frame.invalidate();
+        that.width = w;
+        that.height = h;
+        if(that.invalidate) that.invalidate();
     };
 
     that.create_input = function(x, y) {
@@ -38,4 +36,6 @@ function Unit(application) {
 
         return input;
     };
+
+    return that;
 }

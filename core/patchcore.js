@@ -10,12 +10,12 @@ function PatchCore() {
         modules[module.name] = module.constructor;
     };
 
-    that.next_spawn_x() {
+    that.next_spawn_x = function() {
 
         return 0;
     };
 
-    that.next_spawn_y() {
+    that.next_spawn_y = function() {
 
         return 0;
     };
@@ -37,15 +37,13 @@ function PatchCore() {
         return Object.keys(modules);
     };
 
-    that.create_unit() {
-
-        return new Unit(that);
-    };
-
     that.instantiate_module = function(name) {
 
         //TODO: Make sure that passing a name that's not in
         //      the module list won't blow things up
-        return new modules[name](that);
+        var mod = new modules[name](that);
+        mod.x = that.next_spawn_x();
+        mod.y = that.next_spawn_y();
+        manager.add_child(mod);
     };
 }
