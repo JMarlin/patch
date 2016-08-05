@@ -21,5 +21,12 @@ function SessionMenu(core, x, y) {
         });
     };
 
+    that.onmousedown = function(x, y) {
+
+        //Another fake until we have sub-widgets which would each handle their own clicking
+        core.instantiate_module(modules_names[0]);
+        that.destroy();
+    };
+
     return that;
 }
