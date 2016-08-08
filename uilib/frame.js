@@ -1,12 +1,6 @@
 function Frame(x, y, width, height) {
 
-    var that = this;
-
-    that.x = x;
-    that.y = y;
-    that.width = width;
-    that.height = height;
-    that.parent = null;
+    var that = new Window(x, y, width, height);
 
     that.onmousedown = function(x, y) {
  
@@ -44,4 +38,6 @@ function Frame(x, y, width, height) {
         ctx.strokeStyle = 'rgb(0, 0, 0)';
         ctx.strokeRect(1, 1, that.width - 2, that.height - 2);
     };
+
+    return that;
 }

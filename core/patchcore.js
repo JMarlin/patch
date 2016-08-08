@@ -56,6 +56,6 @@ function PatchCore() {
         var mod = new modules[name](that);
         mod.x = that.next_spawn_x();
         mod.y = that.next_spawn_y();
-        manager.add_child(mod);
+        desktop.add_child(mod);
     };
 }

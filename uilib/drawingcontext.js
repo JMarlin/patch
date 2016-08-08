@@ -9,20 +9,36 @@ function DrawingContext(target_widget) {
     //and the list of widgets overlapping it.
     that.init_clip = function() {
 
+        if(!target_widget.parent)
+            return;
+
         var clipper       = new ClipperLib.Clipper(),
-            clipping_paths = [];
+            clipping_paths = [],
+            clipped_paths = [];
         
         //Set the client rect as the subject polygon
         clipper.AddPath(
             [
-                {X: target_widget.x, Y: target_widget.y},
-                {X: target_widget.x + target_widget.width, Y: target_widget.y},
-                {X: target_widget.x + target_widget.width, Y: target_widget.y + target_widget.height},
-                {X: target_widget.x, Y: target_widget.y + target_widget.height}
+                {X: target_widget.screen_x(), Y: target_widget.screen_y()},
+                {X: target_widget.screen_x() + target_widget.width, Y: target_widget.screen_y()},
+                {X: target_widget.screen_x() + target_widget.width, Y: target_widget.screen_y() + target_widget.height},
+                {X: target_widget.screen_x(), Y: target_widget.screen_y() + target_widget.height}
             ],
             ClipperLib.PolyType.ptSubject,
             true
         ); 
+
+        //If we have a parent clipper, clip the child rect to the parent's drawable region 
+        if(parent.clip) {
+            
+            parent.clip.init_clip();
+
+            clipper.AddPaths(parent.clip.clip_paths, ClipperLib.PolyType.ptClip, true);
+            clipper.Execute(ClipperLib.ClipType.ctDifference, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
+            clipper = new ClipperLib.Clipper();
+            clipper.AddPaths(clipped_paths, ClipperLib.PolyType.ptSubject, true);
+        }
+                
 
         //Get the list of overlapping widgets from the 
         //owning uimanager
@@ -39,10 +55,10 @@ function DrawingContext(target_widget) {
 
             temp_clipper.AddPath(
                 [
-                    {X: widget.x, Y: widget.y},
-                    {X: widget.x + widget.width, Y: widget.y},
-                    {X: widget.x + widget.width, Y: widget.y + widget.height},
-                    {X: widget.x, Y: widget.y + widget.height}
+                    {X: widget.screen_x(), Y: widget.screen_y()},
+                    {X: widget.screen_x() + widget.width, Y: widget.screen_y()},
+                    {X: widget.screen_x() + widget.width, Y: widget.screen_y() + widget.height},
+                    {X: widget.screen_x(), Y: widget.screen_y() + widget.height}
                 ],
                 ClipperLib.PolyType.ptSubject,
                 true
@@ -83,6 +99,9 @@ function DrawingContext(target_widget) {
     //sets the canvas transform so that 0, 0 is at the
     //upper lefthand corner of the widget
     that.apply_clip = function() {
+
+        if(!target_widget.parent)
+            return;
 
         var ctx = target_widget.parent.context;
 

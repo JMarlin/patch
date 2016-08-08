@@ -22,7 +22,7 @@ function Desktop(core) {
         } else {
 
             that.menu = new SessionMenu(core, x, y);
-            that.parent.add_child(that.menu); //Should really add this as a child of Desktop when we've written the capacity for sub-windows (which is how we'll do actual widgets and such)
+            that.add_child(that.menu); 
         }
     };
 

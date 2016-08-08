@@ -1,4 +1,4 @@
-var BUILDNO = 37 ;
+var BUILDNO = 43 ;
 // rev 482
 /********************************************************************************
  *                                                                              *
@@ -253,20 +253,36 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
     //and the list of widgets overlapping it.
     that.init_clip = function() {
 
+        if(!target_widget.parent)
+            return;
+
         var clipper       = new ClipperLib.Clipper(),
-            clipping_paths = [];
+            clipping_paths = [],
+            clipped_paths = [];
         
         //Set the client rect as the subject polygon
         clipper.AddPath(
             [
-                {X: target_widget.x, Y: target_widget.y},
-                {X: target_widget.x + target_widget.width, Y: target_widget.y},
-                {X: target_widget.x + target_widget.width, Y: target_widget.y + target_widget.height},
-                {X: target_widget.x, Y: target_widget.y + target_widget.height}
+                {X: target_widget.screen_x(), Y: target_widget.screen_y()},
+                {X: target_widget.screen_x() + target_widget.width, Y: target_widget.screen_y()},
+                {X: target_widget.screen_x() + target_widget.width, Y: target_widget.screen_y() + target_widget.height},
+                {X: target_widget.screen_x(), Y: target_widget.screen_y() + target_widget.height}
             ],
             ClipperLib.PolyType.ptSubject,
             true
         ); 
+
+        //If we have a parent clipper, clip the child rect to the parent's drawable region 
+        if(parent.clip) {
+            
+            parent.clip.init_clip();
+
+            clipper.AddPaths(parent.clip.clip_paths, ClipperLib.PolyType.ptClip, true);
+            clipper.Execute(ClipperLib.ClipType.ctDifference, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
+            clipper = new ClipperLib.Clipper();
+            clipper.AddPaths(clipped_paths, ClipperLib.PolyType.ptSubject, true);
+        }
+                
 
         //Get the list of overlapping widgets from the 
         //owning uimanager
@@ -283,10 +299,10 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
 
             temp_clipper.AddPath(
                 [
-                    {X: widget.x, Y: widget.y},
-                    {X: widget.x + widget.width, Y: widget.y},
-                    {X: widget.x + widget.width, Y: widget.y + widget.height},
-                    {X: widget.x, Y: widget.y + widget.height}
+                    {X: widget.screen_x(), Y: widget.screen_y()},
+                    {X: widget.screen_x() + widget.width, Y: widget.screen_y()},
+                    {X: widget.screen_x() + widget.width, Y: widget.screen_y() + widget.height},
+                    {X: widget.screen_x(), Y: widget.screen_y() + widget.height}
                 ],
                 ClipperLib.PolyType.ptSubject,
                 true
@@ -327,6 +343,9 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
     //sets the canvas transform so that 0, 0 is at the
     //upper lefthand corner of the widget
     that.apply_clip = function() {
+
+        if(!target_widget.parent)
+            return;
 
         var ctx = target_widget.parent.context;
 
@@ -371,13 +390,7 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
 }
 function Frame(x, y, width, height) {
 
-    var that = this;
-
-    that.x = x;
-    that.y = y;
-    that.width = width;
-    that.height = height;
-    that.parent = null;
+    var that = new Window(x, y, width, height);
 
     that.onmousedown = function(x, y) {
  
@@ -415,6 +428,8 @@ function Frame(x, y, width, height) {
         ctx.strokeStyle = 'rgb(0, 0, 0)';
         ctx.strokeRect(1, 1, that.width - 2, that.height - 2);
     };
+
+    return that;
 }
 function Menu(x, y, width) {
 
@@ -470,7 +485,7 @@ function MenuEntry(text, click_action) {
 }
 function UIManager() {
 
-    var that = this;
+    var that = new Window(0, 0, window.innerWidth, window.innerHeight);
 
     document.body.style.margin = "0px";
     that.canvas = document.createElement('canvas');
@@ -479,8 +494,38 @@ function UIManager() {
 
     window.addEventListener('resize', function(){
     
-        that.do_resize();
+        that.ongfxresize();
     }, true);
+
+    that.canvas.onmousemove  = that.mouse_handler;
+    that.canvas.onmousedown  = that.mouse_handler;
+    that.canvas.onmouseup    = that.mouse_handler;
+    that.canvas.onmouseclick = that.mouse_handler;
+
+    that.old_ongfxresize = that.ongfxresize;
+
+    that.ongfxresize = function() {
+
+        that.canvas.width = that.width = window.innerWidth;
+        that.canvas.height = that.width = window.innerHeight;
+        
+        that.old_ongfxresize();
+    };
+
+    that.ongfxresize();
+
+    return that;
+}
+
+    
+function Window(x, y, width, height) {
+
+    var that = this;
+
+    that.x = x;
+    that.y = y;
+    that.width = width;
+    that.height = height;
 
     that.mouse_handler = function(e) {
 
@@ -493,11 +538,13 @@ function UIManager() {
                e.clientY >= child.y &&
                e.clientY < child.y + child.height) {
                 
+                e.clientX -= child.x;
+                e.clientY -= child.y;
+
+                child.mouse_handler(e);
+
                 if(e.type === "mousemove") {
                 
-                    if(child.onmousemove)
-                        child.onmousemove(e.clientX - child.x, e.clientY - child.y);
-
                     if(that.mouse_in_child !== child) {
                     
                         if(that.mouse_in_child && that.mouse_in_child.onmouseout)
@@ -521,26 +568,21 @@ function UIManager() {
                     }
                 }
 
-                if(child['on' + e.type])
-                    child['on' + e.type](e.clientX - child.x, e.clientY - child.y);
-
                 break;
             }
-        };
-    }
+        }
 
-    that.canvas.onmousemove  = that.mouse_handler;
-    that.canvas.onmousedown  = that.mouse_handler;
-    that.canvas.onmouseup    = that.mouse_handler;
-    that.canvas.onmouseclick = that.mouse_handler;
+        if(i === -1) {
+
+            if(that['on' + e.type])
+                that['on' + e.type](e.clientX, e.clientY);
+        }
+    };
 
     that.children = [];
 
-    that.do_resize = function() {
+    that.ongfxresize = function() {
 
-        that.canvas.width = window.innerWidth;
-        that.canvas.height = window.innerHeight;
-        
         that.children.forEach(function(child) {
         
             if(child.ongfxresize) 
@@ -550,9 +592,23 @@ function UIManager() {
         });
     };
 
-    that.do_resize();
-
     that.mouse_in_child = null;
+
+    that.screen_x = function() {
+
+        if(that.parent)
+            return that.x + that.parent.screen_x();
+        else
+            return that.x;
+    };
+
+    that.screen_y = function() {
+ 
+        if(that.parent)
+            return that.y + that.parent.screen_y();
+        else
+            return that.y;
+    };
 
     that.children_below = function(child) {
     
@@ -610,12 +666,12 @@ function UIManager() {
         if(child.visible !== true)
             return;
 
-        child.context.init_clip();
-        that.context.save();
-        child.context.apply_clip();
+        child.clip.init_clip();
+        child.context.save();
+        child.clip.apply_clip();
 
         if(child.paint)
-            child.paint(that.context);
+            child.paint(child.context);
 
         that.context.restore();        
     }    
@@ -624,7 +680,7 @@ function UIManager() {
     //to be redrawn. At the moment just calls the window
     //paint method, but should do some housekeeping things
     //in the future
-    that.invalidate = function(child) {
+    that.invalidate_child = function(child) {
     
         that.paint_child(child);
     }
@@ -659,8 +715,9 @@ function UIManager() {
         child.visible = true;
         child.parent = that;
         that.children.push(child);  
-        child.context = new DrawingContext(child);
-        child.invalidate = function() { that.invalidate(child); };
+        child.context = that.context;
+        child.clip = new DrawingContext(child);
+        child.invalidate = function() { that.invalidate_child(child); };
         child.move = function(x, y) { that.move_child(child, x, y); };
         child.destroy = function(x, y) { that.destroy_child(child); };        
         child.hide = function() { that.hide_child(child); };
@@ -694,7 +751,7 @@ function Desktop(core) {
         } else {
 
             that.menu = new SessionMenu(core, x, y);
-            that.parent.add_child(that.menu); //Should really add this as a child of Desktop when we've written the capacity for sub-windows (which is how we'll do actual widgets and such)
+            that.add_child(that.menu); 
         }
     };
 
@@ -836,7 +893,7 @@ function Input(parent_unit, x, y) {
         var mod = new modules[name](that);
         mod.x = that.next_spawn_x();
         mod.y = that.next_spawn_y();
-        manager.add_child(mod);
+        desktop.add_child(mod);
     };
 }
 function Unit(patch) {
