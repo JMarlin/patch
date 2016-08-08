@@ -8,7 +8,7 @@ function Menu(x, y, width) {
 
     that.paint = function(ctx) {
 
-        that.old_paint();
+        that.old_paint(ctx);
 
         entries.forEach(function(entry) {
 
@@ -21,9 +21,10 @@ function Menu(x, y, width) {
         //This is dumb, because this would already be taken
         //care of if we just made windows sub-instances of the
         //ui manager class already
+        entries.push(entry);
         entry.parent = that;
-        entries.push[entry];
-
+        entry.x = 2;
+        entry.y = (entries.length * 13) + 1;
         that.height += 14;
     };
 

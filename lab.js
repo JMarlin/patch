@@ -1,4 +1,4 @@
-var BUILDNO = 26 ;
+var BUILDNO = 37 ;
 // rev 482
 /********************************************************************************
  *                                                                              *
@@ -426,7 +426,7 @@ function Menu(x, y, width) {
 
     that.paint = function(ctx) {
 
-        that.old_paint();
+        that.old_paint(ctx);
 
         entries.forEach(function(entry) {
 
@@ -439,14 +439,16 @@ function Menu(x, y, width) {
         //This is dumb, because this would already be taken
         //care of if we just made windows sub-instances of the
         //ui manager class already
+        entries.push(entry);
         entry.parent = that;
-        entries.push[entry];
-
+        entry.x = 2;
+        entry.y = (entries.length * 13) + 1;
         that.height += 14;
     };
 
     return that;
-}function MenuEntry(text, click_action) {
+}
+function MenuEntry(text, click_action) {
 
     var that = this;
 
@@ -465,7 +467,8 @@ function Menu(x, y, width) {
 
         click_action();
     }
-}function UIManager() {
+}
+function UIManager() {
 
     var that = this;
 
@@ -669,7 +672,8 @@ function Menu(x, y, width) {
     
 function Desktop(core) {
 
-    var that = new Frame(0, 0, window.innerWidth, window.innerHeight);
+    var that = new Frame(0, 0, window.innerWidth, window.innerHeight),
+        start_io = null;
 
     that.suppress_raise = true;
     that.bgcolor = 'rgb(90, 95, 210)';
@@ -692,7 +696,7 @@ function Desktop(core) {
             that.menu = new SessionMenu(core, x, y);
             that.parent.add_child(that.menu); //Should really add this as a child of Desktop when we've written the capacity for sub-windows (which is how we'll do actual widgets and such)
         }
-    }
+    };
 
     that.paint = function(ctx) {
 
@@ -701,7 +705,49 @@ function Desktop(core) {
         ctx.fillStyle = 'white';
         ctx.font = '12px sans-serif'; 
         ctx.fillText('PATCH Build Number ' + BUILDNO, 5, that.height - 6);
-    }
+
+        //Set up wire stroke properties
+        ctx.strokeWidth = '2px';
+        ctx.strokeStyle = 'black';
+
+        if(start_io) {
+
+            ctx.beginPath();
+            ctx.moveTo(start_io.x + start_io.parent_unit.x, start_io.y + start_io.parent_unit.y);
+            ctx.lineTo(wire_x, wire_y);
+            ctx.stroke();
+        }
+
+        var wires = core.get_wires();
+
+        wires.forEach(function(wire) {
+
+            ctx.beginPath();
+            ctx.moveTo(wire.x1, wire.y1);
+            ctx.lineTo(wire.x2, wire.y2);
+            ctx.stroke();
+        });
+    };
+
+    that.begin_connection = function(io) {
+    
+        start_io = io;
+    };
+
+    that.end_connection = function() {
+    
+        start_io = null;
+    };
+
+    that.onmousemove = function(x, y) {
+    
+        if(!start_io)
+            return;
+
+        wire_x = x;
+        wire_y = y;
+        that.invalidate();
+    };
 
     return that;
 }
@@ -713,10 +759,7 @@ function SessionMenu(patch, x, y) {
 
     module_names.forEach(function(name, i) {
     
-        var entry = new MenuEntry(name, function(){});
-        entry.x = 2;
-        entry.y = (i * 13) + 1;
-        that.add_entry(new MenuEntry())
+        that.add_entry(new MenuEntry(name, function(){}));
     });
 
     that.onmousedown = function(x, y) {
@@ -740,7 +783,8 @@ function Input(parent_unit, x, y) {
     var that    = this,
         manager = null,
         modules = {},
-        sources = [];
+        sources = [],
+        desktop = null;
 
     that.install_module = function(module) {
 
@@ -761,7 +805,8 @@ function Input(parent_unit, x, y) {
 
         that.install_module(new Output()); //TODO: This will be replaced by the loading of default modules from a list
         manager = new UIManager();
-        manager.add_child(new Desktop(that));
+        desktop = new Desktop(that);
+        manager.add_child(desktop);
     };
 
     that.add_source = function(source) {
@@ -772,6 +817,16 @@ function Input(parent_unit, x, y) {
     that.list_modules = function() {
 
         return Object.keys(modules);
+    };
+
+    that.begin_connection = function(io) {
+    
+        desktop.begin_connection(io);
+    };
+
+    that.get_wires = function() {
+
+        return [];
     };
 
     that.instantiate_module = function(name) {
@@ -832,7 +887,7 @@ function Unit(patch) {
                y < input.y + 3) {
  
                 clicked = true;
-                alert("input clicked");
+                patch.begin_connection(input);
             }
         });
 

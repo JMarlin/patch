@@ -6,10 +6,7 @@ function SessionMenu(patch, x, y) {
 
     module_names.forEach(function(name, i) {
     
-        var entry = new MenuEntry(name, function(){});
-        entry.x = 2;
-        entry.y = (i * 13) + 1;
-        that.add_entry(new MenuEntry())
+        that.add_entry(new MenuEntry(name, function(){}));
     });
 
     that.onmousedown = function(x, y) {

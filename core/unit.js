@@ -46,7 +46,7 @@ function Unit(patch) {
                y < input.y + 3) {
  
                 clicked = true;
-                alert("input clicked");
+                patch.begin_connection(input);
             }
         });
 

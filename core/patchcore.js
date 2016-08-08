@@ -3,7 +3,8 @@ function PatchCore() {
     var that    = this,
         manager = null,
         modules = {},
-        sources = [];
+        sources = [],
+        desktop = null;
 
     that.install_module = function(module) {
 
@@ -24,7 +25,8 @@ function PatchCore() {
 
         that.install_module(new Output()); //TODO: This will be replaced by the loading of default modules from a list
         manager = new UIManager();
-        manager.add_child(new Desktop(that));
+        desktop = new Desktop(that);
+        manager.add_child(desktop);
     };
 
     that.add_source = function(source) {
@@ -35,6 +37,16 @@ function PatchCore() {
     that.list_modules = function() {
 
         return Object.keys(modules);
+    };
+
+    that.begin_connection = function(io) {
+    
+        desktop.begin_connection(io);
+    };
+
+    that.get_wires = function() {
+
+        return [];
     };
 
     that.instantiate_module = function(name) {
