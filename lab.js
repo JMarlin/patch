@@ -1,4 +1,4 @@
-var BUILDNO = 17 ;
+var BUILDNO = 26 ;
 // rev 482
 /********************************************************************************
  *                                                                              *
@@ -416,7 +416,56 @@ function Frame(x, y, width, height) {
         ctx.strokeRect(1, 1, that.width - 2, that.height - 2);
     };
 }
-function UIManager() {
+function Menu(x, y, width) {
+
+    var that    = new Frame(x, y, width, 4),
+        entries = [];
+
+    //Replace when we have real sub windows
+    that.old_paint = that.paint;
+
+    that.paint = function(ctx) {
+
+        that.old_paint();
+
+        entries.forEach(function(entry) {
+
+            entry.paint(ctx);
+        });
+    };
+
+    that.add_entry = function(entry) {
+ 
+        //This is dumb, because this would already be taken
+        //care of if we just made windows sub-instances of the
+        //ui manager class already
+        entry.parent = that;
+        entries.push[entry];
+
+        that.height += 14;
+    };
+
+    return that;
+}function MenuEntry(text, click_action) {
+
+    var that = this;
+
+    that.text = text;
+    that.x = 0;
+    that.y = 0;
+
+    that.paint = function(ctx) {
+
+        ctx.font = '12px sans-serif';
+        ctx.fillStyle = 'rgb(0, 0, 0)';
+        ctx.fillText(that.text, that.x, that.y);
+    }
+
+    that.onmousedown = function(x, y) {
+
+        click_action();
+    }
+}function UIManager() {
 
     var that = this;
 
@@ -656,39 +705,37 @@ function Desktop(core) {
 
     return that;
 }
-function SessionMenu(core, x, y) {
+function SessionMenu(patch, x, y) {
 
-    var module_names = core.list_modules();
+    var module_names = patch.list_modules();
 
-    var that = new Frame(x, y, 200, (24 * module_names.length) + 6);
+    var that = new Menu(x, y, 200);
 
-    //Doing this just until we have actual sub-windows
-    var old_paint = that.paint;
-
-    that.paint = function(ctx) {
-
-        //Draw the basic frame
-        old_paint(ctx);
-        
-        //Draw module names over it
-        module_names.forEach(function(name, i) {
-        
-            ctx.font = '20px sans-serif';
-            ctx.fillStyle = 'rgb(0, 0, 0)';
-            ctx.fillText(name, 5, (i*24) + 23);
-        });
-    };
+    module_names.forEach(function(name, i) {
+    
+        var entry = new MenuEntry(name, function(){});
+        entry.x = 2;
+        entry.y = (i * 13) + 1;
+        that.add_entry(new MenuEntry())
+    });
 
     that.onmousedown = function(x, y) {
 
         //Another fake until we have sub-widgets which would each handle their own clicking
-        core.instantiate_module(module_names[0]);
+        patch.instantiate_module(module_names[0]);
         that.destroy();
     };
 
     return that;
 }
-function PatchCore() {
+function Input(parent_unit, x, y) {
+ 
+    var that = this;
+
+    that.x = x;
+    that.y = y;
+    that.parent_unit = parent_unit;
+}function PatchCore() {
 
     var that    = this,
         manager = null,
@@ -737,10 +784,11 @@ function PatchCore() {
         manager.add_child(mod);
     };
 }
-function Unit() {
+function Unit(patch) {
 
     var that = new Frame(0, 0, 100, 100);
     
+    that.patch = patch;
     that.inputs = [];
 
     that.old_paint = that.paint;
@@ -766,9 +814,37 @@ function Unit() {
         if(that.invalidate) that.invalidate();
     };
 
+    that.old_onmousedown = that.onmousedown;
+
+    that.onmousedown = function(x, y) {
+
+        var clicked = false;
+
+        //This should be replaced when we have actual sub-windowing
+        that.inputs.forEach(function(input) {
+        
+            if(clicked)
+                return;
+
+            if(x >= input.x - 2 &&
+               x < input.x + 3 &&
+               y >= input.y - 2 &&
+               y < input.y + 3) {
+ 
+                clicked = true;
+                alert("input clicked");
+            }
+        });
+
+        if(clicked)
+            return;
+
+        that.old_onmousedown(x, y);
+    }
+
     that.create_input = function(x, y) {
 
-        var input = {x: x, y: y}; //Should make a proper class some time
+        var input = new Input(that, x, y);
 
         //Need to actually add a sub-widget to the frame
         that.inputs.push(input);        
@@ -782,15 +858,15 @@ function Output() {
 
     this.name = 'Output';
     
-    this.constructor = function(application) {
+    this.constructor = function(patch) {
 
-        var that = new Unit();
+        var that = new Unit(patch);
 
         that.resize(200, 150);
 
         var input = that.create_input(5, 75);
 
-        application.add_source(input);
+        patch.add_source(input);
  
         return that;
     }

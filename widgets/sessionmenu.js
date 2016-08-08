@@ -1,30 +1,21 @@
-function SessionMenu(core, x, y) {
+function SessionMenu(patch, x, y) {
 
-    var module_names = core.list_modules();
+    var module_names = patch.list_modules();
 
-    var that = new Frame(x, y, 200, (24 * module_names.length) + 6);
+    var that = new Menu(x, y, 200);
 
-    //Doing this just until we have actual sub-windows
-    var old_paint = that.paint;
-
-    that.paint = function(ctx) {
-
-        //Draw the basic frame
-        old_paint(ctx);
-        
-        //Draw module names over it
-        module_names.forEach(function(name, i) {
-        
-            ctx.font = '20px sans-serif';
-            ctx.fillStyle = 'rgb(0, 0, 0)';
-            ctx.fillText(name, 5, (i*24) + 23);
-        });
-    };
+    module_names.forEach(function(name, i) {
+    
+        var entry = new MenuEntry(name, function(){});
+        entry.x = 2;
+        entry.y = (i * 13) + 1;
+        that.add_entry(new MenuEntry())
+    });
 
     that.onmousedown = function(x, y) {
 
         //Another fake until we have sub-widgets which would each handle their own clicking
-        core.instantiate_module(module_names[0]);
+        patch.instantiate_module(module_names[0]);
         that.destroy();
     };
 

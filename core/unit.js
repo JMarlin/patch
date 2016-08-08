@@ -1,7 +1,8 @@
-function Unit() {
+function Unit(patch) {
 
     var that = new Frame(0, 0, 100, 100);
     
+    that.patch = patch;
     that.inputs = [];
 
     that.old_paint = that.paint;
@@ -27,9 +28,37 @@ function Unit() {
         if(that.invalidate) that.invalidate();
     };
 
+    that.old_onmousedown = that.onmousedown;
+
+    that.onmousedown = function(x, y) {
+
+        var clicked = false;
+
+        //This should be replaced when we have actual sub-windowing
+        that.inputs.forEach(function(input) {
+        
+            if(clicked)
+                return;
+
+            if(x >= input.x - 2 &&
+               x < input.x + 3 &&
+               y >= input.y - 2 &&
+               y < input.y + 3) {
+ 
+                clicked = true;
+                alert("input clicked");
+            }
+        });
+
+        if(clicked)
+            return;
+
+        that.old_onmousedown(x, y);
+    }
+
     that.create_input = function(x, y) {
 
-        var input = {x: x, y: y}; //Should make a proper class some time
+        var input = new Input(that, x, y);
 
         //Need to actually add a sub-widget to the frame
         that.inputs.push(input);        
