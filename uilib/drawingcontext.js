@@ -7,7 +7,7 @@ function DrawingContext(target_widget) {
     //This function uses clipper to determine a clipping
     //region based on the target widget's base rectangle
     //and the list of widgets overlapping it.
-    that.init_clip = function() {
+    that.init_clip = function(ignore_children) {
 
         if(!target_widget.parent)
             return;
@@ -29,16 +29,36 @@ function DrawingContext(target_widget) {
         ); 
 
         //If we have a parent clipper, clip the child rect to the parent's drawable region 
-        if(parent.clip) {
+        if(target_widget.parent.clip) {
             
-            parent.clip.init_clip();
+            target_widget.parent.clip.init_clip(true);
 
-            clipper.AddPaths(parent.clip.clip_paths, ClipperLib.PolyType.ptClip, true);
-            clipper.Execute(ClipperLib.ClipType.ctDifference, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
+            clipper.AddPaths(target_widget.parent.clip.clip_paths, ClipperLib.PolyType.ptClip, true);
+            clipper.Execute(ClipperLib.ClipType.ctIntersection, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
             clipper = new ClipperLib.Clipper();
             clipper.AddPaths(clipped_paths, ClipperLib.PolyType.ptSubject, true);
         }
-                
+
+        //If we have children, punch out a hole for each visible child
+        if(target_widget.children && (ignore_children !== true)) {
+
+            target_widget.children.forEach(function(child) {
+
+                clipper.AddPath(
+                    [
+                        {X: child.screen_x(), Y: child.screen_y()},
+                        {X: child.screen_x() + child.width, Y: child.screen_y()},
+                        {X: child.screen_x() + child.width, Y: child.screen_y() + child.height},
+                        {X: child.screen_x(), Y: child.screen_y() + child.height}
+                    ],
+                    ClipperLib.PolyType.ptClip,
+                    true
+                );
+                clipper.Execute(ClipperLib.ClipType.ctDifference, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
+                clipper = new ClipperLib.Clipper();
+                clipper.AddPaths(clipped_paths, ClipperLib.PolyType.ptSubject, true);
+            });
+        }                
 
         //Get the list of overlapping widgets from the 
         //owning uimanager
@@ -99,10 +119,12 @@ function DrawingContext(target_widget) {
     //sets the canvas transform so that 0, 0 is at the
     //upper lefthand corner of the widget
     that.apply_clip = function() {
-
+ 
         if(!target_widget.parent)
             return;
-
+        
+        that.show_clip();  
+   
         var ctx = target_widget.parent.context;
 
         ctx.beginPath();

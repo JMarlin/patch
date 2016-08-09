@@ -1,6 +1,6 @@
 function UIManager() {
 
-    var that = new Window(0, 0, window.innerWidth, window.innerHeight);
+    var that = new WinObj(0, 0, window.innerWidth, window.innerHeight);
 
     document.body.style.margin = "0px";
     that.canvas = document.createElement('canvas');
@@ -24,7 +24,7 @@ function UIManager() {
         that.canvas.width = that.width = window.innerWidth;
         that.canvas.height = that.width = window.innerHeight;
         
-        that.old_ongfxresize();
+        that.old_ongfxresize(that.canvas.width, that.canvas.height);
     };
 
     that.ongfxresize();

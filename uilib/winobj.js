@@ -1,4 +1,4 @@
-function Window(x, y, width, height) {
+function WinObj(x, y, width, height) {
 
     var that = this;
 
@@ -61,12 +61,12 @@ function Window(x, y, width, height) {
 
     that.children = [];
 
-    that.ongfxresize = function() {
+    that.ongfxresize = function(w, h) {
 
         that.children.forEach(function(child) {
         
             if(child.ongfxresize) 
-                child.ongfxresize(that.canvas.width, that.canvas.height);
+                child.ongfxresize(w, h);
 
             child.invalidate();
         });

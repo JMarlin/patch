@@ -1,4 +1,4 @@
-var BUILDNO = 43 ;
+var BUILDNO = 57 ;
 // rev 482
 /********************************************************************************
  *                                                                              *
@@ -251,7 +251,7 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
     //This function uses clipper to determine a clipping
     //region based on the target widget's base rectangle
     //and the list of widgets overlapping it.
-    that.init_clip = function() {
+    that.init_clip = function(ignore_children) {
 
         if(!target_widget.parent)
             return;
@@ -273,16 +273,36 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
         ); 
 
         //If we have a parent clipper, clip the child rect to the parent's drawable region 
-        if(parent.clip) {
+        if(target_widget.parent.clip) {
             
-            parent.clip.init_clip();
+            target_widget.parent.clip.init_clip(true);
 
-            clipper.AddPaths(parent.clip.clip_paths, ClipperLib.PolyType.ptClip, true);
-            clipper.Execute(ClipperLib.ClipType.ctDifference, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
+            clipper.AddPaths(target_widget.parent.clip.clip_paths, ClipperLib.PolyType.ptClip, true);
+            clipper.Execute(ClipperLib.ClipType.ctIntersection, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
             clipper = new ClipperLib.Clipper();
             clipper.AddPaths(clipped_paths, ClipperLib.PolyType.ptSubject, true);
         }
-                
+
+        //If we have children, punch out a hole for each visible child
+        if(target_widget.children && (ignore_children !== true)) {
+
+            target_widget.children.forEach(function(child) {
+
+                clipper.AddPath(
+                    [
+                        {X: child.screen_x(), Y: child.screen_y()},
+                        {X: child.screen_x() + child.width, Y: child.screen_y()},
+                        {X: child.screen_x() + child.width, Y: child.screen_y() + child.height},
+                        {X: child.screen_x(), Y: child.screen_y() + child.height}
+                    ],
+                    ClipperLib.PolyType.ptClip,
+                    true
+                );
+                clipper.Execute(ClipperLib.ClipType.ctDifference, clipped_paths, ClipperLib.PolyFillType.pftEvenOdd, ClipperLib.PolyFillType.pftEvenOdd);
+                clipper = new ClipperLib.Clipper();
+                clipper.AddPaths(clipped_paths, ClipperLib.PolyType.ptSubject, true);
+            });
+        }                
 
         //Get the list of overlapping widgets from the 
         //owning uimanager
@@ -343,10 +363,12 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
     //sets the canvas transform so that 0, 0 is at the
     //upper lefthand corner of the widget
     that.apply_clip = function() {
-
+ 
         if(!target_widget.parent)
             return;
-
+        
+        that.show_clip();  
+   
         var ctx = target_widget.parent.context;
 
         ctx.beginPath();
@@ -390,7 +412,7 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
 }
 function Frame(x, y, width, height) {
 
-    var that = new Window(x, y, width, height);
+    var that = new WinObj(x, y, width, height);
 
     that.onmousedown = function(x, y) {
  
@@ -485,7 +507,7 @@ function MenuEntry(text, click_action) {
 }
 function UIManager() {
 
-    var that = new Window(0, 0, window.innerWidth, window.innerHeight);
+    var that = new WinObj(0, 0, window.innerWidth, window.innerHeight);
 
     document.body.style.margin = "0px";
     that.canvas = document.createElement('canvas');
@@ -509,7 +531,7 @@ function UIManager() {
         that.canvas.width = that.width = window.innerWidth;
         that.canvas.height = that.width = window.innerHeight;
         
-        that.old_ongfxresize();
+        that.old_ongfxresize(that.canvas.width, that.canvas.height);
     };
 
     that.ongfxresize();
@@ -518,7 +540,7 @@ function UIManager() {
 }
 
     
-function Window(x, y, width, height) {
+function WinObj(x, y, width, height) {
 
     var that = this;
 
@@ -581,12 +603,12 @@ function Window(x, y, width, height) {
 
     that.children = [];
 
-    that.ongfxresize = function() {
+    that.ongfxresize = function(w, h) {
 
         that.children.forEach(function(child) {
         
             if(child.ongfxresize) 
-                child.ongfxresize(that.canvas.width, that.canvas.height);
+                child.ongfxresize(w, h);
 
             child.invalidate();
         });
@@ -984,3 +1006,18 @@ function Output() {
     }
 }
 new PatchCore().start();
+/*
+var uiman = new UIManager();
+var window1 = new WinObj(0, 0, 300, 200);
+var window2 = new WinObj(100, 100, 300, 200);
+uiman.add_child(window1);
+window1.add_child(window2);
+window1.paint = function(ctx) {
+    ctx.fillStyle = 'green';
+    ctx.fillRect(0, 0, 500, 500);
+};
+window2.paint = function(ctx) {
+    ctx.fillStyle = 'red';
+    ctx.fillRect(0, 0, 500, 500);
+};
+*/

@@ -1,6 +1,6 @@
 function Frame(x, y, width, height) {
 
-    var that = new Window(x, y, width, height);
+    var that = new WinObj(x, y, width, height);
 
     that.onmousedown = function(x, y) {
  
