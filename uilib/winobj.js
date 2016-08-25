@@ -43,10 +43,11 @@ function WinObj(x, y, width, height) {
                     }
                 }
 
-                e.clientX -= child.x;
-                e.clientY -= child.y;
-
-                child.mouse_handler(e);
+                child.mouse_handler({
+                    clientX: e.clientX - child.x,
+                    clientY: e.clientY - child.y,
+                    type:    e.type
+                });
 
                 break;
             }
