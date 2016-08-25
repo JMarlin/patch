@@ -18,7 +18,15 @@ function Slider(x, y, width, height) {
 
     that.paint = function(context) {
 
-        context.fillStyle = 'rgb(60, 60, 60)'
+        var gradient = context.createLinearGradient(0, 2, 0, that.height - 4);
+        context.addColorStop(0, 'rgb(155, 165, 185)');
+        context.addColorStop(1, 'rgb(225, 235, 255)');
+
+        context.imageSmoothingEnabled = false;
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, that.width, that.height);
+
+        context.fillStyle = 'rgb(100, 100, 100)'
         context.fillRect((width / 2) - 3, 0, 5, height);
         context.lineWidth = 2;
         context.strokeStyle = 'rgb(0, 0, 0)';
