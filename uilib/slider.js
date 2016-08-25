@@ -13,7 +13,7 @@ function Slider(x, y, width, height) {
                 new_y = 0;
             
             if(knob.y >= (height - 10))
-                new_y = knob.y >= (height - 10);
+                new_y = height - 10;
 
             knob.move(
                 0,
