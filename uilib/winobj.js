@@ -190,19 +190,35 @@ function WinObj(x, y, width, height) {
         that.children.splice(i, 1);
     }
 
+    that.init = function(context) {
+
+        //Inherit the passed context and do initial draw
+        that.context = context;
+        that.invalidate();
+ 
+        //Do the same for any attached children
+        for(var i = 0; i < that.children.length; i++) 
+            if(that.children[i].init) that.children[i].init(context);
+    };
+
     that.add_child = function(child) {
 
+        that.children.push(child);
+        child.parent = that;  
         child.visible = true;
-        child.parent = that;
-        that.children.push(child);  
-        child.context = that.context;
         child.clip = new DrawingContext(child);
         child.invalidate = function() { that.invalidate_child(child); };
         child.move = function(x, y) { that.move_child(child, x, y); };
         child.destroy = function(x, y) { that.destroy_child(child); };        
         child.hide = function() { that.hide_child(child); };
 
-        that.paint_child(child);
+        if(that.context === undefined)
+            return;
+
+        //If we are attached to a context, give it to the new child
+        //and any of its children and do their initial draws
+        if(child.init) 
+            child.init(that.context);
     }
 }
 
