@@ -113,6 +113,15 @@ function WinObj(x, y, width, height) {
         }
 
         return return_group;
+    };
+
+    that.invalidate_children = function() {
+
+        for(var i = 0; i < that.children.length; i++) {
+
+            that.children[i].invalidate();
+            that.children[i].invalidate_children();
+        }
     }
 
     that.move_child = function(child, x, y) {
@@ -124,8 +133,9 @@ function WinObj(x, y, width, height) {
         child.x = x;
         child.y = y;
         child.invalidate();
+        child.invalidate_children();
         that.invalidate();
-    }
+    };
 
     that.children_above = function(child) {
 
