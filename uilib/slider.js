@@ -17,7 +17,7 @@ function Slider(x, y, width, height) {
 
             knob.move(
                 0,
-                (knob.y + y) - knob.drag_y
+                new_y
             );
         }
     };
