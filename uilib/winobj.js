@@ -161,6 +161,7 @@ function WinObj(x, y, width, height) {
         child.clip.init_clip();
         child.context.save();
         child.clip.apply_clip();
+        child.context.translate(that.screen_x(), that.screen_y());
 
         if(child.paint)
             child.paint(child.context);
@@ -185,6 +186,8 @@ function WinObj(x, y, width, height) {
  
             target.invalidate();
         });
+
+        that.invalidate();
     }
 
     that.destroy_child = function(child) {
