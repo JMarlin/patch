@@ -19,8 +19,8 @@ function Slider(x, y, width, height) {
     that.paint = function(context) {
 
         var gradient = context.createLinearGradient(0, 2, 0, that.height - 4);
-        context.addColorStop(0, 'rgb(155, 165, 185)');
-        context.addColorStop(1, 'rgb(225, 235, 255)');
+        gradient.addColorStop(0, 'rgb(155, 165, 185)');
+        gradient.addColorStop(1, 'rgb(225, 235, 255)');
 
         context.imageSmoothingEnabled = false;
         context.fillStyle = gradient;
