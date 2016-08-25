@@ -9,10 +9,10 @@ function Slider(x, y, width, height) {
 
             var new_y = (knob.y + y) - knob.drag_y;
 
-            if(new_y <= 0)
+            if(new_y < 0)
                 new_y = 0;
             
-            if(knob.y >= (height - 10))
+            if(knob.y > (height - 10))
                 new_y = height - 10;
 
             knob.move(
