@@ -124,6 +124,7 @@ function WinObj(x, y, width, height) {
         child.x = x;
         child.y = y;
         child.invalidate();
+        that.invalidate();
     }
 
     that.children_above = function(child) {
