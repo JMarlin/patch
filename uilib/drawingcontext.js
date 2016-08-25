@@ -123,7 +123,7 @@ function DrawingContext(target_widget) {
         if(!target_widget.parent)
             return;
         
-        that.show_clip();  
+        //that.show_clip();  
    
         var ctx = target_widget.parent.context;
 
