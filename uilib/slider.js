@@ -7,6 +7,14 @@ function Slider(x, y, width, height) {
 
         if(knob.dragged === true) {
 
+            var new_y = (knob.y + y) - knob.drag_y;
+
+            if(new_y <= 0)
+                new_y = 0;
+            
+            if(knob.y >= (height - 10))
+                new_y = knob.y >= (height - 10);
+
             knob.move(
                 0,
                 (knob.y + y) - knob.drag_y
@@ -27,10 +35,10 @@ function Slider(x, y, width, height) {
         context.fillRect(0, 0, that.width, that.height);
 
         context.fillStyle = 'rgb(100, 100, 100)'
-        context.fillRect((width / 2) - 3, 0, 5, height);
+        context.fillRect((width / 2) - 3, 3, 5, height-6);
         context.lineWidth = 2;
         context.strokeStyle = 'rgb(0, 0, 0)';
-        context.fillRect((width / 2) - 3, 1, 5, height - 2);
+        context.strokeRect((width / 2) - 3, 4, 5, height - 8);
     };
 
     
