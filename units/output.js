@@ -5,15 +5,15 @@ function Output() {
     this.constructor = function(patch) {
 
         var that = new Unit(patch);
-        var child = new Frame(100, 75, 200, 150);
+        var slider = new Slider(10, 10, 30, 130);
 
-        that.add_child(child);
+        that.add_child(Slider);
         that.resize(200, 150);
 
         var input = that.create_input(5, 75);
 
         patch.add_source(input);
- 
+
         return that;
     }
 }
