@@ -18,11 +18,6 @@ function WinObj(x, y, width, height) {
                e.clientY >= child.y &&
                e.clientY < child.y + child.height) {
                 
-                e.clientX -= child.x;
-                e.clientY -= child.y;
-
-                child.mouse_handler(e);
-
                 if(e.type === "mousemove") {
                 
                     if(that.mouse_in_child !== child) {
@@ -47,6 +42,11 @@ function WinObj(x, y, width, height) {
                         that.paint_child(child);
                     }
                 }
+
+                e.clientX -= child.x;
+                e.clientY -= child.y;
+
+                child.mouse_handler(e);
 
                 break;
             }
