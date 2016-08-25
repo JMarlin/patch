@@ -18,10 +18,10 @@ function Slider(x, y, width, height) {
 
     that.paint = function(context) {
 
-        ctx.fillStyle = 'rgb(60, 60, 60)'
+        context.fillStyle = 'rgb(60, 60, 60)'
         context.fillRect((width / 2) - 3, 0, 5, height);
         context.lineWidth = 2;
-        ctx.strokeStyle = 'rgb(0, 0, 0)';
+        context.strokeStyle = 'rgb(0, 0, 0)';
         context.fillRect((width / 2) - 3, 1, 5, height - 2);
     };
 
