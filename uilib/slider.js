@@ -8,8 +8,8 @@ function Slider(x, y, width, height) {
         if(knob.dragged === true) {
 
             knob.move(
-                (knob.x + x) - knob.drag_x,
-                0
+                0,
+                (knob.y + y) - knob.drag_y
             );
         }
     };
