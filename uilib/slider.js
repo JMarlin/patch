@@ -30,8 +30,6 @@ function Slider(x, y, width, height, min, max) {
 
         var new_y = (((-(height - 10)) / (max - min)) * (new_value - min)) + (height - 10);
 
-        console.log("value: " + new_value + ", y: " + new_y);
-
         knob.move(0, new_y);
     };
 
