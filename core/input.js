@@ -4,10 +4,6 @@ function Input(patch, x, y) {
 
     that.paint = function(ctx) {
 
-        ctx.fillStyle = "";
-        ctx.fillRect();
-        ctx.strokeRect(1, 1, 4, 4);
-
         context.fillStyle = 'rgb(100, 100, 100)'
         context.fillRect(0, 0, 6, 6);
         context.lineWidth = 2;
