@@ -27,6 +27,32 @@ function PatchCore() {
         manager = new UIManager();
         desktop = new Desktop(that);
         manager.add_child(desktop);
+
+        var audioCtx  = new (window.AudioContext || window.webkitAudioContext)(),
+            pcm_node  = audioCtx.createScriptProcessor(512, 0, 2),
+            source    = audioCtx.createBufferSource();
+
+        pcm_node.onaudioprocess = function(e) {
+
+            var outbuf_l = e.outputBuffer.getChannelData(0),
+                outbuf_r = e.outputBuffer.getChannelData(1);
+    
+            for(var i = 0; i < 512; i++) {
+
+                outbuf_l[i] = 0; 
+                outbuf_r[i] = 0;
+
+                for(var j = 0; j < sources.length; j++) {
+                
+                    outbuf_r[i] += sources[j].pull_right_sample();
+                    outbuf_l[i] += sources[j].pull_left_sample();
+                }
+            }
+        }
+
+        source.connect(pcm_node);
+        pcm_node.connect(audioCtx.destination);
+        source.start();
     };
 
     that.add_source = function(source) {

@@ -4,7 +4,15 @@ function Input(patch, x, y) {
 
     that.paint = function(ctx) {
 
+        ctx.fillStyle = "";
+        ctx.fillRect();
         ctx.strokeRect(1, 1, 4, 4);
+
+        context.fillStyle = 'rgb(100, 100, 100)'
+        context.fillRect(0, 0, 6, 6);
+        context.lineWidth = 2;
+        context.strokeStyle = 'rgb(0, 0, 0)';
+        context.strokeRect(1, 1, 4, 4);
     };
 
     that.onmousedown = function(x, y) {

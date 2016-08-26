@@ -41,7 +41,7 @@ function Desktop(core) {
         if(start_io) {
 
             ctx.beginPath();
-            ctx.moveTo(start_io.x + start_io.parent.x, start_io.y + start_io.parent.y);
+            ctx.moveTo(start_io.x + start_io.parent.x + 3, start_io.y + start_io.parent.y + 3);
             ctx.lineTo(wire_x, wire_y);
             ctx.stroke();
         }

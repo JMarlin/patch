@@ -11,8 +11,18 @@ function Output() {
         that.resize(200, 150);
 
         var input = that.create_input(5, 75);
+ 
+        //Need to create a 'source' object
+        patch.add_source({
+            pull_right_sample: function() {
 
-        patch.add_source(input);
+                return ((Math.random() * 2) - 1) * slider.value;
+            },
+            pull_left_sample: function() {
+
+                return ((Math.random() * 2) - 1) * slider.value;
+            }
+        });
 
         return that;
     }
