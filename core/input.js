@@ -4,11 +4,11 @@ function Input(patch, x, y) {
 
     that.paint = function(ctx) {
 
-        context.fillStyle = 'rgb(100, 100, 100)'
-        context.fillRect(0, 0, 6, 6);
-        context.lineWidth = 2;
-        context.strokeStyle = 'rgb(0, 0, 0)';
-        context.strokeRect(1, 1, 4, 4);
+        ctx.fillStyle = 'rgb(100, 100, 100)'
+        ctx.fillRect(0, 0, 6, 6);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgb(0, 0, 0)';
+        ctx.strokeRect(1, 1, 4, 4);
     };
 
     that.onmousedown = function(x, y) {
