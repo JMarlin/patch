@@ -10,7 +10,7 @@ function Output() {
         that.old_mouseup = that.onmouseup;
         that.onmouseup = function() {
         
-            slider.value = 0.5;
+            slider.value = 0.75;
             that.old_mouseup();
         };
 
