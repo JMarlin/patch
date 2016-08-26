@@ -29,7 +29,7 @@ function Slider(x, y, width, height, min, max) {
             new_value = min;
 
         var ratio = (new_value - min) / (max - min),
-            new_y = Math.ceil((1 - ratio) / (height - 10));
+            new_y = (1 - ratio) / (height - 10);
 
         console.log("value: " + new_value + ", r: " + ratio + ", y: " + new_y);
 
