@@ -14,6 +14,11 @@ function Output() {
             that.old_mouseup();
         };
 
+        setInterval(function() {
+
+            console.log(slider.value);
+        }, 1);
+
         that.add_child(slider);
         that.resize(200, 150);
 
