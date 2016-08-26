@@ -9,7 +9,7 @@ function Input(patch, x, y) {
 
     that.onmousedown = function(x, y) {
 
-        patch.begin_connection(input);
+        patch.begin_connection(that);
     };
 
     return that;
