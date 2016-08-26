@@ -15,7 +15,7 @@ function Slider(x, y, width, height, min, max) {
 
     that.calculate_value = function() {
         
-        return (((knob.y - height + 10) * (max - min))/(-(h-10))) - min;
+        return (((knob.y - height + 10) * (max - min)) / (-(height - 10))) - min;
     };
 
     that.set_value = function(new_value) {
