@@ -5,21 +5,6 @@ function Unit(patch) {
     that.patch = patch;
     that.inputs = [];
 
-    that.old_paint = that.paint;
-
-    that.paint = function(ctx) {
-
-        that.old_paint(ctx);
-
-        ctx.strokeWidth = '2px';
-        ctx.strokeStyle = 'black';
-
-        that.inputs.forEach(function(input) {
- 
-            ctx.strokeRect(input.x - 2, input.y - 2, 4, 4);
-        });
-    };
-
     //Move to frame class
     that.resize = function(w, h) {
 
@@ -28,40 +13,12 @@ function Unit(patch) {
         if(that.invalidate) that.invalidate();
     };
 
-    that.old_onmousedown = that.onmousedown;
-
-    that.onmousedown = function(x, y) {
-
-        var clicked = false;
-
-        //This should be replaced when we have actual sub-windowing
-        that.inputs.forEach(function(input) {
-        
-            if(clicked)
-                return;
-
-            if(x >= input.x - 2 &&
-               x < input.x + 3 &&
-               y >= input.y - 2 &&
-               y < input.y + 3) {
- 
-                clicked = true;
-                patch.begin_connection(input);
-            }
-        });
-
-        if(clicked)
-            return;
-
-        that.old_onmousedown(x, y);
-    }
-
     that.create_input = function(x, y) {
 
-        var input = new Input(that, x, y);
+        var input = new Input(patch, x, y);
 
-        //Need to actually add a sub-widget to the frame
         that.inputs.push(input);        
+        that.add_child(input);
 
         return input;
     };

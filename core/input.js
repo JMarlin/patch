@@ -1,8 +1,16 @@
-function Input(parent_unit, x, y) {
+function Input(patch, x, y) {
  
-    var that = this;
+    var that = new WinObj(x - 3, y - 3, 6, 6);
 
-    that.x = x;
-    that.y = y;
-    that.parent_unit = parent_unit;
+    that.paint = function(ctx) {
+
+        ctx.strokeRect(1, 1, 4, 4);
+    };
+
+    that.onmousedown = function(x, y) {
+
+        patch.begin_connection(input);
+    };
+
+    return that;
 }
