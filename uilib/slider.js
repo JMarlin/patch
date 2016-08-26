@@ -1,7 +1,38 @@
-function Slider(x, y, width, height) {
+function Slider(x, y, width, height, min, max) {
 
     var that = new WinObj(x, y, width, height),
         knob = new Frame(0, 0, width, 10);
+
+
+    Object.defineProperty(that, 'value', {
+        get: function() {
+            return that.calculate_value();
+        },
+        set: function(new_value) {
+            that.set_value(new_value);
+        }
+    });
+
+    that.calculate_value = function() {
+
+        var ratio = 1.0 - (knob.y / (height - 10));
+        
+        return (ratio * (max - min)) + min;
+    };
+
+    that.set_value = function(new_value) {
+
+        if(new_value > max)
+            new_value = max;
+
+        if(new_value < min)
+            new_value = min;
+
+        var ratio = (new_value - min) / (max - min),
+            new_y = Math.ceil((1 - ratio) / (height - 10));
+
+        knob.move(0, new_y);
+    };
 
     knob.onmousemove = function(x, y) {
 
