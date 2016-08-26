@@ -11,6 +11,7 @@ function Output() {
         that.onmouseup = function() {
         
             slider.value = 0.75;
+            that.old_mouseup();
         };
 
         that.add_child(slider);
