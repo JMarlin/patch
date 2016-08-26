@@ -31,7 +31,7 @@ function Slider(x, y, width, height, min, max) {
         var ratio = (new_value - min) / (max - min),
             new_y = Math.ceil((1 - ratio) / (height - 10));
 
-        console.log("value: " + new_value + ", y: " + new_y);
+        console.log("value: " + new_value + ", r: " + ratio + ", y: " + new_y);
 
         knob.move(0, new_y);
     };
