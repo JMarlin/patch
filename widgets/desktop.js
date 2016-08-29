@@ -51,8 +51,8 @@ function Desktop(core) {
         wires.forEach(function(wire) {
 
             ctx.beginPath();
-            ctx.moveTo(wire.io1.x, wire.io1.y);
-            ctx.lineTo(wire.io2.x, wire.io2.y);
+            ctx.moveTo(wire.io1.screen_x(), wire.io1.screen_y());
+            ctx.lineTo(wire.io2.screen_x(), wire.io2.screen_y());
             ctx.stroke();
         });
     };
