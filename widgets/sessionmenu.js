@@ -12,7 +12,7 @@ function SessionMenu(patch, x, y) {
     that.onmousedown = function(x, y) {
 
         //Another fake until we have sub-widgets which would each handle their own clicking
-        patch.instantiate_module(module_names[0]);
+        patch.instantiate_module(module_names[Math.floor(y/14)]);
         that.destroy();
     };
 
