@@ -51,8 +51,8 @@ function Desktop(core) {
         wires.forEach(function(wire) {
 
             ctx.beginPath();
-            ctx.moveTo(wire.x1, wire.y1);
-            ctx.lineTo(wire.x2, wire.y2);
+            ctx.moveTo(wire.io1.x, wire.io1.y);
+            ctx.lineTo(wire.io2.x, wire.io2.y);
             ctx.stroke();
         });
     };
@@ -61,6 +61,20 @@ function Desktop(core) {
     
         start_io = io;
     };
+
+    that.finish_connection = function(io) {
+
+        if(start_io !== null) {
+
+            start_io.connect(io);
+            io.connect(start_io);
+            core.add_wire({
+                io1: start_io,
+                io2: io
+            });
+            start_io = null;
+        }
+    }
 
     that.end_connection = function() {
     

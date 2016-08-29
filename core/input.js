@@ -2,6 +2,8 @@ function Input(patch, x, y) {
  
     var that = new WinObj(x - 3, y - 3, 6, 6);
 
+    that.connected_output = null;
+
     that.paint = function(ctx) {
 
         ctx.fillStyle = 'rgb(100, 100, 100)'
@@ -15,6 +17,27 @@ function Input(patch, x, y) {
 
         patch.begin_connection(that);
     };
+
+    that.connect = function(output) {
+
+        that.connected_output = output;
+    }
+
+    that.pull_right_sample = function() {
+
+        if(that.connected_output !== null)
+            return that.connected_output.pull_right_sample();
+        else
+            return 0.0;
+    }
+
+    that.pull_left_sample = function() {
+
+        if(that.connected_output !== null)
+            return that.connected_output.pull_left_sample();
+        else
+            return 0.0;
+    }
 
     return that;
 }

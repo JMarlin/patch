@@ -4,6 +4,7 @@ function PatchCore() {
         manager = null,
         modules = {},
         sources = [],
+        wires   = [],
         desktop = null;
 
     that.install_module = function(module) {
@@ -23,7 +24,8 @@ function PatchCore() {
 
     that.start = function() {
 
-        that.install_module(new Output()); //TODO: This will be replaced by the loading of default modules from a list
+        that.install_module(new MasterOut()); //TODO: This will be replaced by the loading of default modules from a list
+        that.install_module(new Noise());
         manager = new UIManager();
         desktop = new Desktop(that);
         manager.add_child(desktop);
@@ -65,14 +67,24 @@ function PatchCore() {
         return Object.keys(modules);
     };
 
+    that.finish_connection = function(io) {
+
+        desktop.finish_connection(io);
+    }
+
     that.begin_connection = function(io) {
     
         desktop.begin_connection(io);
     };
 
+    that.add_wire = function(wire) {
+
+        wires.push(wire);
+    }
+
     that.get_wires = function() {
 
-        return [];
+        return wires;
     };
 
     that.instantiate_module = function(name) {

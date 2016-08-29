@@ -1,6 +1,6 @@
-function Output() {
+function MasterOut() {
 
-    this.name = 'Output';
+    this.name = 'Master Out';
 
     this.constructor = function(patch) {
 
@@ -26,12 +26,12 @@ function Output() {
         //Need to create a 'source' object
         patch.add_source({
             pull_right_sample: function() {
-
-                return ((Math.random() * 2) - 1) * db2gain(slider.value);
+ 
+                return input.pull_right_sample() * db2gain(slider.value);
             },
             pull_left_sample: function() {
-
-                return ((Math.random() * 2) - 1) * db2gain(slider.value);
+ 
+                return input.pull_left_sample() * db2gain(slider.value);
             }
         });
 
