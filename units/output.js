@@ -12,15 +12,26 @@ function Output() {
 
         var input = that.create_input(5, 75);
  
+        function db2gain(value) {
+
+            var max_db = 10;
+            var min_db = -80;
+
+            var db_value = ((max_db - min_db) * value) - min_db;
+            var gain_value = (Math.pow(10,(db_value/20)) - Math.pow(10,(-80/20))) / (1 - Math.pow(10, (-80/20)));
+
+            return gain_value;
+        }
+
         //Need to create a 'source' object
         patch.add_source({
             pull_right_sample: function() {
 
-                return ((Math.random() * 2) - 1) * slider.value;
+                return ((Math.random() * 2) - 1) * db2gain(slider.value);
             },
             pull_left_sample: function() {
 
-                return ((Math.random() * 2) - 1) * slider.value;
+                return ((Math.random() * 2) - 1) * db2gain(slider.value);
             }
         });
 
