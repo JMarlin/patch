@@ -4,6 +4,7 @@ function Unit(patch) {
     
     that.patch = patch;
     that.inputs = [];
+    that.outputs = [];
 
     //Move to frame class
     that.resize = function(w, h) {
