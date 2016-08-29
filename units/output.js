@@ -18,7 +18,9 @@ function Output() {
             var min_db = -80;
 
             var db_value = ((max_db - min_db) * value) - min_db;
-            var gain_value = (Math.pow(10,(db_value/20)) - Math.pow(10,(-80/20))) / (1 - Math.pow(10, (-80/20)));
+            var gain_value = (Math.pow(10,(db_value/20)) - Math.pow(10,(min_db/20))) / (1 - Math.pow(10, (min_db/20)));
+
+            console.log("val: " + value + ", db: " + db_value + ", gain: " + gain_value);
 
             return gain_value;
         }
