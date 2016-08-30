@@ -1,4 +1,4 @@
-var BUILDNO = 57 ;
+var BUILDNO = 64 ;
 // rev 482
 /********************************************************************************
  *                                                                              *
@@ -367,7 +367,7 @@ d.JS.AddOuterPolyNodeToExPolygons(g,b);b.push(c)};d.JS.ExPolygonsToPaths=functio
         if(!target_widget.parent)
             return;
         
-        that.show_clip();  
+        //that.show_clip();  
    
         var ctx = target_widget.parent.context;
 
@@ -505,7 +505,81 @@ function MenuEntry(text, click_action) {
         click_action();
     }
 }
-function UIManager() {
+function Slider(x, y, width, height, min, max) {
+
+    var that = new WinObj(x, y, width, height),
+        knob = new Frame(0, 0, width, 10);
+
+
+    Object.defineProperty(that, 'value', {
+        get: function() {
+            return that.calculate_value();
+        },
+        set: function(new_value) {
+            that.set_value(new_value);
+        }
+    });
+
+    that.calculate_value = function() {
+        
+        return (((knob.y - height + 10) * (max - min)) / (-(height - 10))) - min;
+    };
+
+    that.set_value = function(new_value) {
+
+        if(new_value > max)
+            new_value = max;
+
+        if(new_value < min)
+            new_value = min;
+
+        var new_y = (((-(height - 10)) / (max - min)) * (new_value - min)) + (height - 10);
+
+        knob.move(0, new_y);
+    };
+
+    knob.onmousemove = function(x, y) {
+
+        if(knob.dragged === true) {
+
+            var new_y = (knob.y + y) - knob.drag_y;
+
+            if(new_y < 0)
+                new_y = 0;
+            
+            if(knob.y > (height - 10))
+                new_y = height - 10;
+
+            knob.move(
+                0,
+                new_y
+            );
+        }
+    };
+
+    that.add_child(knob);
+
+    that.paint = function(context) {
+
+        var gradient = context.createLinearGradient(0, 2, 0, that.height - 4);
+        gradient.addColorStop(0, 'rgb(155, 165, 185)');
+        gradient.addColorStop(1, 'rgb(225, 235, 255)');
+
+        context.imageSmoothingEnabled = false;
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, that.width, that.height);
+
+        context.fillStyle = 'rgb(100, 100, 100)'
+        context.fillRect((width / 2) - 3, 3, 5, height-6);
+        context.lineWidth = 2;
+        context.strokeStyle = 'rgb(0, 0, 0)';
+        context.strokeRect((width / 2) - 3, 4, 5, height - 8);
+    };
+
+    
+
+    return that;
+}function UIManager() {
 
     var that = new WinObj(0, 0, window.innerWidth, window.innerHeight);
 
@@ -560,11 +634,6 @@ function WinObj(x, y, width, height) {
                e.clientY >= child.y &&
                e.clientY < child.y + child.height) {
                 
-                e.clientX -= child.x;
-                e.clientY -= child.y;
-
-                child.mouse_handler(e);
-
                 if(e.type === "mousemove") {
                 
                     if(that.mouse_in_child !== child) {
@@ -589,6 +658,12 @@ function WinObj(x, y, width, height) {
                         that.paint_child(child);
                     }
                 }
+
+                child.mouse_handler({
+                    clientX: e.clientX - child.x,
+                    clientY: e.clientY - child.y,
+                    type:    e.type
+                });
 
                 break;
             }
@@ -654,6 +729,15 @@ function WinObj(x, y, width, height) {
         }
 
         return return_group;
+    };
+
+    that.invalidate_children = function() {
+
+        for(var i = 0; i < that.children.length; i++) {
+
+            that.children[i].invalidate();
+            that.children[i].invalidate_children();
+        }
     }
 
     that.move_child = function(child, x, y) {
@@ -665,7 +749,9 @@ function WinObj(x, y, width, height) {
         child.x = x;
         child.y = y;
         child.invalidate();
-    }
+        child.invalidate_children();
+        that.invalidate();
+    };
 
     that.children_above = function(child) {
 
@@ -691,6 +777,7 @@ function WinObj(x, y, width, height) {
         child.clip.init_clip();
         child.context.save();
         child.clip.apply_clip();
+        child.context.translate(that.screen_x(), that.screen_y());
 
         if(child.paint)
             child.paint(child.context);
@@ -715,6 +802,8 @@ function WinObj(x, y, width, height) {
  
             target.invalidate();
         });
+
+        that.invalidate();
     }
 
     that.destroy_child = function(child) {
@@ -732,19 +821,35 @@ function WinObj(x, y, width, height) {
         that.children.splice(i, 1);
     }
 
+    that.init = function(context) {
+
+        //Inherit the passed context and do initial draw
+        that.context = context;
+        that.invalidate();
+ 
+        //Do the same for any attached children
+        for(var i = 0; i < that.children.length; i++) 
+            if(that.children[i].init) that.children[i].init(context);
+    };
+
     that.add_child = function(child) {
 
+        that.children.push(child);
+        child.parent = that;  
         child.visible = true;
-        child.parent = that;
-        that.children.push(child);  
-        child.context = that.context;
         child.clip = new DrawingContext(child);
         child.invalidate = function() { that.invalidate_child(child); };
         child.move = function(x, y) { that.move_child(child, x, y); };
         child.destroy = function(x, y) { that.destroy_child(child); };        
         child.hide = function() { that.hide_child(child); };
 
-        that.paint_child(child);
+        if(that.context === undefined)
+            return;
+
+        //If we are attached to a context, give it to the new child
+        //and any of its children and do their initial draws
+        if(child.init) 
+            child.init(that.context);
     }
 }
 
@@ -792,7 +897,7 @@ function Desktop(core) {
         if(start_io) {
 
             ctx.beginPath();
-            ctx.moveTo(start_io.x + start_io.parent_unit.x, start_io.y + start_io.parent_unit.y);
+            ctx.moveTo(start_io.x + start_io.parent.x + 3, start_io.y + start_io.parent.y + 3);
             ctx.lineTo(wire_x, wire_y);
             ctx.stroke();
         }
@@ -802,8 +907,8 @@ function Desktop(core) {
         wires.forEach(function(wire) {
 
             ctx.beginPath();
-            ctx.moveTo(wire.x1, wire.y1);
-            ctx.lineTo(wire.x2, wire.y2);
+            ctx.moveTo(wire.io1.screen_x(), wire.io1.screen_y());
+            ctx.lineTo(wire.io2.screen_x(), wire.io2.screen_y());
             ctx.stroke();
         });
     };
@@ -812,6 +917,20 @@ function Desktop(core) {
     
         start_io = io;
     };
+
+    that.finish_connection = function(io) {
+
+        if(start_io !== null) {
+
+            start_io.connect(io);
+            io.connect(start_io);
+            core.add_wire({
+                io1: start_io,
+                io2: io
+            });
+            start_io = null;
+        }
+    }
 
     that.end_connection = function() {
     
@@ -844,25 +963,98 @@ function SessionMenu(patch, x, y) {
     that.onmousedown = function(x, y) {
 
         //Another fake until we have sub-widgets which would each handle their own clicking
-        patch.instantiate_module(module_names[0]);
+        patch.instantiate_module(module_names[Math.floor(y/14)]);
         that.destroy();
     };
 
     return that;
 }
-function Input(parent_unit, x, y) {
+function Input(patch, x, y) {
  
-    var that = this;
+    var that = new WinObj(x - 3, y - 3, 6, 6);
 
-    that.x = x;
-    that.y = y;
-    that.parent_unit = parent_unit;
+    that.connected_output = null;
+
+    that.paint = function(ctx) {
+
+        ctx.fillStyle = 'rgb(100, 100, 100)'
+        ctx.fillRect(0, 0, 6, 6);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgb(0, 0, 0)';
+        ctx.strokeRect(1, 1, 4, 4);
+    };
+
+    that.onmousedown = function(x, y) {
+
+        patch.begin_connection(that);
+    };
+
+    that.connect = function(output) {
+
+        that.connected_output = output;
+    }
+
+    that.pull_right_sample = function() {
+
+        if(that.connected_output !== null)
+            return that.connected_output.pull_right_sample();
+        else
+            return 0.0;
+    }
+
+    that.pull_left_sample = function() {
+
+        if(that.connected_output !== null)
+            return that.connected_output.pull_left_sample();
+        else
+            return 0.0;
+    }
+
+    return that;
+}function Output(patch, x, y) {
+ 
+    var that = new WinObj(x - 3, y - 3, 6, 6);
+
+    that.connected_input = null;
+
+    that.paint = function(ctx) {
+
+        ctx.fillStyle = 'rgb(100, 100, 100)'
+        ctx.fillRect(0, 0, 6, 6);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgb(0, 0, 0)';
+        ctx.strokeRect(1, 1, 4, 4);
+    };
+
+    that.onmousedown = function(x, y) {
+
+        patch.finish_connection(that);
+    };
+
+    that.connect = function(input) {
+
+        that.connected_input = input;
+    }
+
+    //To be overridden by the owning unit
+    that.pull_right_sample = function() {
+
+        return 0.0;
+    }
+
+    that.pull_left_sample = function() {
+
+        return 0.0;
+    }
+
+    return that;
 }function PatchCore() {
 
     var that    = this,
         manager = null,
         modules = {},
         sources = [],
+        wires   = [],
         desktop = null;
 
     that.install_module = function(module) {
@@ -882,10 +1074,39 @@ function Input(parent_unit, x, y) {
 
     that.start = function() {
 
-        that.install_module(new Output()); //TODO: This will be replaced by the loading of default modules from a list
+        that.install_module(new MasterOut()); //TODO: This will be replaced by the loading of default modules from a list
+        that.install_module(new Noise());
+        that.install_module(new Sine());
+        that.install_module(new PitchKnob());
         manager = new UIManager();
         desktop = new Desktop(that);
         manager.add_child(desktop);
+
+        var audioCtx  = new (window.AudioContext || window.webkitAudioContext)(),
+            pcm_node  = audioCtx.createScriptProcessor(512, 0, 2),
+            source    = audioCtx.createBufferSource();
+
+        pcm_node.onaudioprocess = function(e) {
+
+            var outbuf_l = e.outputBuffer.getChannelData(0),
+                outbuf_r = e.outputBuffer.getChannelData(1);
+    
+            for(var i = 0; i < 512; i++) {
+
+                outbuf_l[i] = 0; 
+                outbuf_r[i] = 0;
+
+                for(var j = 0; j < sources.length; j++) {
+                
+                    outbuf_r[i] += sources[j].pull_right_sample();
+                    outbuf_l[i] += sources[j].pull_left_sample();
+                }
+            }
+        }
+
+        source.connect(pcm_node);
+        pcm_node.connect(audioCtx.destination);
+        source.start();
     };
 
     that.add_source = function(source) {
@@ -898,14 +1119,24 @@ function Input(parent_unit, x, y) {
         return Object.keys(modules);
     };
 
+    that.finish_connection = function(io) {
+
+        desktop.finish_connection(io);
+    }
+
     that.begin_connection = function(io) {
     
         desktop.begin_connection(io);
     };
 
+    that.add_wire = function(wire) {
+
+        wires.push(wire);
+    }
+
     that.get_wires = function() {
 
-        return [];
+        return wires;
     };
 
     that.instantiate_module = function(name) {
@@ -924,21 +1155,7 @@ function Unit(patch) {
     
     that.patch = patch;
     that.inputs = [];
-
-    that.old_paint = that.paint;
-
-    that.paint = function(ctx) {
-
-        that.old_paint(ctx);
-
-        ctx.strokeWidth = '2px';
-        ctx.strokeStyle = 'black';
-
-        that.inputs.forEach(function(input) {
- 
-            ctx.strokeRect(input.x - 2, input.y - 2, 4, 4);
-        });
-    };
+    that.outputs = [];
 
     //Move to frame class
     that.resize = function(w, h) {
@@ -948,64 +1165,169 @@ function Unit(patch) {
         if(that.invalidate) that.invalidate();
     };
 
-    that.old_onmousedown = that.onmousedown;
+    that.create_output = function(x, y) {
 
-    that.onmousedown = function(x, y) {
+        var output = new Output(patch, x, y);
 
-        var clicked = false;
+        that.outputs.push(output);
+        that.add_child(output);
 
-        //This should be replaced when we have actual sub-windowing
-        that.inputs.forEach(function(input) {
-        
-            if(clicked)
-                return;
-
-            if(x >= input.x - 2 &&
-               x < input.x + 3 &&
-               y >= input.y - 2 &&
-               y < input.y + 3) {
- 
-                clicked = true;
-                patch.begin_connection(input);
-            }
-        });
-
-        if(clicked)
-            return;
-
-        that.old_onmousedown(x, y);
+        return output;
     }
 
     that.create_input = function(x, y) {
 
-        var input = new Input(that, x, y);
+        var input = new Input(patch, x, y);
 
-        //Need to actually add a sub-widget to the frame
         that.inputs.push(input);        
+        that.add_child(input);
 
         return input;
     };
 
     return that;
 }
-function Output() {
+function MasterOut() {
 
-    this.name = 'Output';
-    
+    this.name = 'Master Out';
+
     this.constructor = function(patch) {
 
         var that = new Unit(patch);
+        var slider = new Slider(10, 10, 30, 130, 0, 1);
 
+        that.add_child(slider);
         that.resize(200, 150);
 
         var input = that.create_input(5, 75);
-
-        patch.add_source(input);
  
+        function db2gain(value) {
+
+            var max_db = 10;
+            var min_db = -80;
+
+            var db_value = ((max_db - min_db) * value) + min_db;
+            var gain_value = (Math.pow(10,(db_value/20)) - Math.pow(10,(min_db/20))) / (1 - Math.pow(10, (min_db/20)));
+
+            return gain_value;
+        }
+
+        //Need to create a 'source' object
+        patch.add_source({
+            pull_right_sample: function() {
+ 
+                return input.pull_right_sample() * db2gain(slider.value);
+            },
+            pull_left_sample: function() {
+ 
+                return input.pull_left_sample() * db2gain(slider.value);
+            }
+        });
+
         return that;
     }
 }
-new PatchCore().start();
+function Noise() {
+
+    this.name = 'Noise';
+
+    this.constructor = function(patch) {
+
+        var that = new Unit(patch);
+        var output = that.create_output(195, 75);
+
+        that.resize(200, 150);
+
+        output.pull_right_sample = function() {
+
+            return ((Math.random() * 2) - 1);
+        }
+
+        output.pull_left_sample = function() {
+
+            return ((Math.random() * 2) - 1);
+        }
+
+        return that;
+    }
+}function PitchKnob() {
+
+    this.name = 'Pitch Knob';
+
+    this.constructor = function(patch) {
+
+        var that = new Unit(patch);
+        var slider = new Slider(10, 10, 30, 130, 0, 1);
+
+        that.add_child(slider);
+        that.resize(50, 150);
+
+        var output = that.create_output(45, 75);
+
+        output.pull_right_sample = function() {
+
+            return pull_function();        
+        }
+
+        output.pull_left_sample = function() {
+
+            return pull_function();
+        }
+
+        function pull_function() {
+
+            return 55*(Math.pow(2, ((1 - slider.value)*4)));
+        }
+
+        return that;
+    }
+}
+function Sine() {
+
+    this.name = 'Sine';
+
+    this.constructor = function(patch) {
+
+        var that = new Unit(patch);
+        var output = that.create_output(195, 75);
+        var input = that.create_input(5, 75);
+        var pulls = 0;
+        var phase = 0;
+        var sample = 0;
+
+        that.resize(200, 150);
+
+        output.pull_right_sample = function() {
+
+            return pull_function();        
+        }
+
+        output.pull_left_sample = function() {
+
+            return pull_function();
+        }
+
+        function pull_function() {
+
+            if(pulls === 0) {
+ 
+                sample = Math.sin(phase);
+                var in_sample = input.pull_left_sample();
+                phase += in_sample ? (2*Math.PI) / in_sample : 0;  
+ 
+                pulls++;
+            } else {
+
+                input.pull_right_sample();
+                pulls = 0;
+            }
+
+            return sample;
+        }
+
+        return that;
+    }
+}new PatchCore().start();
 /*
 var uiman = new UIManager();
 var window1 = new WinObj(0, 0, 300, 200);

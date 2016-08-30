@@ -27,6 +27,7 @@ function PatchCore() {
         that.install_module(new MasterOut()); //TODO: This will be replaced by the loading of default modules from a list
         that.install_module(new Noise());
         that.install_module(new Sine());
+        that.install_module(new PitchKnob());
         manager = new UIManager();
         desktop = new Desktop(that);
         manager.add_child(desktop);

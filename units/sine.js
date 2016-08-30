@@ -6,7 +6,7 @@ function Sine() {
 
         var that = new Unit(patch);
         var output = that.create_output(195, 75);
-        var freq = 220;
+        var input = that.create_input(5, 75);
         var pulls = 0;
         var phase = 0;
         var sample = 0;
@@ -28,11 +28,13 @@ function Sine() {
             if(pulls === 0) {
  
                 sample = Math.sin(phase);
-                phase += (2*Math.PI) / freq; 
+                var in_sample = input.pull_left_sample();
+                phase += in_sample ? (2*Math.PI) / in_sample : 0;  
  
                 pulls++;
             } else {
 
+                input.pull_right_sample();
                 pulls = 0;
             }
 
