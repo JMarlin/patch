@@ -67,7 +67,7 @@ function WinObj(x, y, width, height) {
         if(e.type === "mouseup")
             that.drag_child = null;
 
-        if(e.type === "mousemove" && that.drag_child !== null && that.drag_child.drag_child === null) 
+        if(e.type === "mousemove" && that.drag_child !== null && !child.has_dragged_children()) 
             that.drag_child.move(e.clientX - that.drag_off_x, e.clientY - that.drag_off_y);
 
         if(i === -1) {
@@ -91,6 +91,19 @@ function WinObj(x, y, width, height) {
     };
 
     that.mouse_in_child = null;
+
+    that.has_dragged_children = function() {
+
+        for(var i = 0; i < that.children.length; i++) {
+
+            var child = that.children[i];
+
+            if(child.drag_child !== null || child.has_dragged_children())
+                return true;
+        }
+
+        return false;
+    };
 
     that.screen_x = function() {
 
@@ -147,7 +160,8 @@ function WinObj(x, y, width, height) {
             target.invalidate();
         });
 
-        child.move(x, y);
+        child.x = x;
+        child.y = y;
         child.invalidate();
         child.invalidate_children();
         that.invalidate();

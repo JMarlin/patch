@@ -31,16 +31,20 @@ function Slider(x, y, width, height, min, max) {
         knob.move(0, new_y);
     };
 
-    knob.old_move = knob.move;
-    knob.move = function(x, y) {
+    knob.old_init = knob.init;
+    knob.init = function() {
 
-        if(y < 0)
-            y = 0;
+        knob.old_move = knob.move;
+        knob.move = function(x, y) {
 
-        if(y > (height - 10))
-            y = height - 10;
+            if(y < 0)
+                y = 0;
 
-        knob.old_move(0, y);
+            if(y > (height - 10))
+                y = height - 10;
+
+            knob.old_move(0, y);
+        };
     };
 
     that.add_child(knob);
