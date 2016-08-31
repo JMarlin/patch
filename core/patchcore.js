@@ -75,6 +75,12 @@ function PatchCore() {
         desktop.connect_action(io);
     }
 
+    that.destroy_menu = function() {
+    
+        desktop.menu.destroy();
+        desktop.menu = null;
+    };
+
     that.instantiate_module = function(name) {
 
         //TODO: Make sure that passing a name that's not in
