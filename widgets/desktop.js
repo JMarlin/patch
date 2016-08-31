@@ -10,10 +10,14 @@ function Desktop(core) {
     that.bgcolor = 'rgb(90, 95, 210)';
     that.menu = null;
 
+    that.old_ongfxresize = that.ongfxresize;
+
     that.ongfxresize = function(width, height) {
 
         that.width = width;
         that.height = height;
+
+        that.old_ongfxresize(width, height);
     };
 
     that.onmousedown = function(x, y) {
