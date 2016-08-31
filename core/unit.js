@@ -22,7 +22,7 @@ function Unit(patch) {
         that.add_child(output);
 
         return output;
-    }
+    };
 
     that.create_input = function(x, y) {
 

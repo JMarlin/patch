@@ -31,22 +31,16 @@ function Slider(x, y, width, height, min, max) {
         knob.move(0, new_y);
     };
 
-    knob.onmousemove = function(x, y) {
+    knob.old_move = knob.move;
+    knob.move = function(x, y) {
 
-        if(knob.dragged === true) {
+            if(y < 0)
+                y = 0;
 
-            var new_y = (knob.y + y) - knob.drag_y;
+            if(y > (height - 10))
+                y = height - 10;
 
-            if(new_y < 0)
-                new_y = 0;
-            
-            if(knob.y > (height - 10))
-                new_y = height - 10;
-
-            knob.move(
-                0,
-                new_y
-            );
+            knob.old_move(0, y);
         }
     };
 

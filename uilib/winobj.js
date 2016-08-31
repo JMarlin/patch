@@ -6,6 +6,10 @@ function WinObj(x, y, width, height) {
     that.y = y;
     that.width = width;
     that.height = height;
+    that.suppress_drag = true;
+    that.drag_child = null;
+    that.drag_off_x = 0;
+    that.drag_off_y = 0;
 
     that.mouse_handler = function(e) {
 
@@ -41,6 +45,13 @@ function WinObj(x, y, width, height) {
                         that.children.push(child);
                         that.paint_child(child);
                     }
+
+                    if(child.suppress_drag !== true) {
+
+                        that.drag_off_x = e.clientX - child.x;
+                        that.drag_off_y = e.clientY - child.y;
+                        that.drag_child = child;
+                    }
                 }
 
                 child.mouse_handler({
@@ -52,6 +63,12 @@ function WinObj(x, y, width, height) {
                 break;
             }
         }
+
+        if(e.type === "mouseup")
+            that.drag_child = null;
+
+        if(that.drag_child !== null) 
+            that.drag_child.move(clientX - that.drag_off_x, clientY - that.drag_off_y);
 
         if(i === -1) {
 
@@ -122,7 +139,7 @@ function WinObj(x, y, width, height) {
             that.children[i].invalidate();
             that.children[i].invalidate_children();
         }
-    }
+    };
 
     that.move_child = function(child, x, y) {
 
@@ -150,7 +167,7 @@ function WinObj(x, y, width, height) {
         }
 
         return return_group;
-    }
+    };
 
     //Set up child context, do painting, reset context
     that.paint_child = function(child) {
@@ -167,7 +184,7 @@ function WinObj(x, y, width, height) {
             child.paint(child.context);
 
         that.context.restore();        
-    }    
+    };    
 
     //Fired when a child decalres that its content needs
     //to be redrawn. At the moment just calls the window
@@ -176,7 +193,7 @@ function WinObj(x, y, width, height) {
     that.invalidate_child = function(child) {
     
         that.paint_child(child);
-    }
+    };
 
     that.hide_child = function(child) {
 
@@ -188,7 +205,7 @@ function WinObj(x, y, width, height) {
         });
 
         that.invalidate();
-    }
+    };
 
     that.destroy_child = function(child) {
 
@@ -203,7 +220,7 @@ function WinObj(x, y, width, height) {
 
         child.hide();
         that.children.splice(i, 1);
-    }
+    };
 
     that.init = function(context) {
 

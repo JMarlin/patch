@@ -2,28 +2,7 @@ function Frame(x, y, width, height) {
 
     var that = new WinObj(x, y, width, height);
 
-    that.onmousedown = function(x, y) {
- 
-        this.dragged = true;
-        this.drag_x = x;
-        this.drag_y = y;
-    };
-
-    that.onmouseup = this.onmouseout = function(x, y) {
-    
-        this.dragged = false;
-    };
-
-    that.onmousemove = function(x, y) {
-
-        if(this.dragged === true) {
-
-            this.move(
-                (this.x + x) - this.drag_x,
-                (this.y + y) - this.drag_y
-            ); 
-        }
-    };
+    that.suppress_drag = false;
 
     that.paint = function(ctx) {
 
