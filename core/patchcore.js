@@ -70,15 +70,10 @@ function PatchCore() {
         return Object.keys(modules);
     };
 
-    that.finish_connection = function(io) {
+    that.connect_action = function(io) {
 
-        desktop.finish_connection(io);
+        desktop.connect_action(io);
     }
-
-    that.begin_connection = function(io) {
-    
-        desktop.begin_connection(io);
-    };
 
     that.instantiate_module = function(name) {
 

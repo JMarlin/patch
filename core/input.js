@@ -15,7 +15,13 @@ function Input(patch, x, y) {
 
     that.onmousedown = function(x, y) {
 
-        patch.begin_connection(that);
+        if(that.connected_output) {
+        
+            that.connected_output.connected_input = null;
+            that.connected_output = null;
+        }
+
+        patch.connect_action(that);
     };
 
     that.connect = function(output) {

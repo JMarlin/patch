@@ -59,6 +59,14 @@ function Desktop(core) {
         });
     };
 
+    that.connect_action = function(io) {
+
+        if(start_io)
+            that.finish_connection(io);
+        else
+            that.begin_connection(io);
+    };
+
     that.begin_connection = function(io) {
     
         start_io = io;
@@ -71,6 +79,7 @@ function Desktop(core) {
             start_io.connect(io);
             io.connect(start_io);
             start_io = null;
+            that.invalidate();
         }
     }
 
