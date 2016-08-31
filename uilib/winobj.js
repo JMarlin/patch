@@ -147,8 +147,7 @@ function WinObj(x, y, width, height) {
             target.invalidate();
         });
 
-        child.x = x;
-        child.y = y;
+        child.move(x, y);
         child.invalidate();
         child.invalidate_children();
         that.invalidate();
