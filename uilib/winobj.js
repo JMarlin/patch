@@ -80,7 +80,7 @@ function WinObj(x, y, width, height) {
             }
         }
 
-        if(e.type === "mousemove" && that.drag_child !== null && !child.has_dragged_children()) 
+        if(e.type === "mousemove" && that.drag_child !== null && !that.has_dragged_children()) 
             that.drag_child.move(e.clientX - that.drag_off_x, e.clientY - that.drag_off_y);
 
         if(i === -1) {
