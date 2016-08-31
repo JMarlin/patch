@@ -17,7 +17,7 @@ function WinObj(x, y, width, height) {
 
             that.drag_child = null;
 
-            children.forEach(function(child) {
+            that.children.forEach(function(child) {
 
                 child.mouse_handler({
                     clientX: e.clientX - child.x,
