@@ -230,7 +230,7 @@ function WinObj(x, y, width, height) {
             target.invalidate();
         });
 
-        that.invalidate();
+        child.parent.invalidate();
     };
 
     that.destroy_child = function(child) {
