@@ -45,6 +45,8 @@ function Slider(x, y, width, height, min, max) {
 
             knob.old_move(0, y);
         };
+
+        knob.old_init();
     };
 
     that.add_child(knob);
