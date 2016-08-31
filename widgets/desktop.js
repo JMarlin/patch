@@ -3,6 +3,7 @@ function Desktop(core) {
     var that = new Frame(0, 0, window.innerWidth, window.innerHeight),
         start_io = null;
 
+    that.suppress_drag = true;
     that.suppress_raise = true;
     that.bgcolor = 'rgb(90, 95, 210)';
     that.menu = null;

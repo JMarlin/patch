@@ -59,7 +59,7 @@ function WinObj(x, y, width, height) {
                     clientY: e.clientY - child.y,
                     type:    e.type
                 });
-
+                
                 break;
             }
         }
@@ -67,7 +67,7 @@ function WinObj(x, y, width, height) {
         if(e.type === "mouseup")
             that.drag_child = null;
 
-        if(e.type === "mousemove" && that.drag_child !== null) 
+        if(e.type === "mousemove" && that.drag_child !== null && that.drag_child.drag_child === null) 
             that.drag_child.move(e.clientX - that.drag_off_x, e.clientY - that.drag_off_y);
 
         if(i === -1) {
