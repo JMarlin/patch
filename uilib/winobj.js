@@ -13,54 +13,64 @@ function WinObj(x, y, width, height) {
 
     that.mouse_handler = function(e) {
 
-        for(var i = that.children.length - 1; i > -1; i--) {
-        
-            var child = that.children[i];
+        if(e.type === "mouseup") {
 
-            if(e.clientX >= child.x &&
-               e.clientX < child.x + child.width &&
-               e.clientY >= child.y &&
-               e.clientY < child.y + child.height) {
-                
-                if(e.type === "mousemove") {
-                
-                    if(that.mouse_in_child !== child) {
+            child.mouse_handler({
+                clientX: e.clientX - child.x,
+                clientY: e.clientY - child.y,
+                type:    e.type
+            });
+        } else {
+
+            for(var i = that.children.length - 1; i > -1; i--) {
+            
+                var child = that.children[i];
+
+                if(e.clientX >= child.x &&
+                e.clientX < child.x + child.width &&
+                e.clientY >= child.y &&
+                e.clientY < child.y + child.height) {
                     
-                        if(that.mouse_in_child && that.mouse_in_child.onmouseout)
-                            that.mouse_in_child.onmouseout();
-
-                        that.mouse_in_child = child;
+                    if(e.type === "mousemove") {
+                    
+                        if(that.mouse_in_child !== child) {
                         
-                        if(that.mouse_in_child.onmouseover)
-                            that.mouse_in_child.onmouseover();
+                            if(that.mouse_in_child && that.mouse_in_child.onmouseout)
+                                that.mouse_in_child.onmouseout();
+
+                            that.mouse_in_child = child;
+                            
+                            if(that.mouse_in_child.onmouseover)
+                                that.mouse_in_child.onmouseover();
+                        }
                     }
+    
+                    if(e.type === "mousedown") {
+            
+                        if(that.children[that.children.length - 1] !== child && child.suppress_raise !== true) {
+
+                            //This needs to be genericized into a widget.raise method
+                            that.children.splice(i, 1);
+                            that.children.push(child);
+                            that.paint_child(child);
+                        }
+
+                        if(child.suppress_drag !== true) {
+
+                            that.drag_off_x = e.clientX - child.x;
+                            that.drag_off_y = e.clientY - child.y;
+                            that.drag_child = child;
+                        }
+                    }
+
+                    child.mouse_handler({
+                        clientX: e.clientX - child.x,
+                        clientY: e.clientY - child.y,
+                        type:    e.type
+                    });
+                    
+                    break;
                 }
- 
-                if(e.type === "mousedown") {
-           
-                    if(that.children[that.children.length - 1] !== child && child.suppress_raise !== true) {
-
-                        //This needs to be genericized into a widget.raise method
-                        that.children.splice(i, 1);
-                        that.children.push(child);
-                        that.paint_child(child);
-                    }
-
-                    if(child.suppress_drag !== true) {
-
-                        that.drag_off_x = e.clientX - child.x;
-                        that.drag_off_y = e.clientY - child.y;
-                        that.drag_child = child;
-                    }
-                }
-
-                child.mouse_handler({
-                    clientX: e.clientX - child.x,
-                    clientY: e.clientY - child.y,
-                    type:    e.type
-                });
-                
-                break;
             }
         }
 
