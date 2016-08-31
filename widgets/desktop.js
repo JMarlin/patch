@@ -47,14 +47,15 @@ function Desktop(core) {
             ctx.stroke();
         }
 
-        var wires = core.get_wires();
+        core.inputs.forEach(function(input) {
+            
+            if(input.connected_output) {
 
-        wires.forEach(function(wire) {
-
-            ctx.beginPath();
-            ctx.moveTo(wire.io1.screen_x(), wire.io1.screen_y());
-            ctx.lineTo(wire.io2.screen_x(), wire.io2.screen_y());
-            ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(input.screen_x(), input.screen_y());
+                ctx.lineTo(input.connected_output.screen_x(), input.connected_output.screen_y());
+                ctx.stroke();
+            }
         });
     };
 

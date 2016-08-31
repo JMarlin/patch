@@ -3,8 +3,6 @@ function Unit(patch) {
     var that = new Frame(0, 0, 100, 100);
     
     that.patch = patch;
-    that.inputs = [];
-    that.outputs = [];
 
     //Move to frame class
     that.resize = function(w, h) {
@@ -18,7 +16,6 @@ function Unit(patch) {
 
         var output = new Output(patch, x, y);
 
-        that.outputs.push(output);
         that.add_child(output);
 
         return output;
@@ -27,9 +24,9 @@ function Unit(patch) {
     that.create_input = function(x, y) {
 
         var input = new Input(patch, x, y);
-
-        that.inputs.push(input);        
+     
         that.add_child(input);
+        patch.inputs.push(input);
 
         return input;
     };

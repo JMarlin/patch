@@ -4,8 +4,9 @@ function PatchCore() {
         manager = null,
         modules = {},
         sources = [],
-        wires   = [],
         desktop = null;
+
+    that.inputs   = [];
 
     that.install_module = function(module) {
 
@@ -77,16 +78,6 @@ function PatchCore() {
     that.begin_connection = function(io) {
     
         desktop.begin_connection(io);
-    };
-
-    that.add_wire = function(wire) {
-
-        wires.push(wire);
-    }
-
-    that.get_wires = function() {
-
-        return wires;
     };
 
     that.instantiate_module = function(name) {
