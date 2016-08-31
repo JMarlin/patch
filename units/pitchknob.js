@@ -24,7 +24,7 @@ function PitchKnob() {
 
         function pull_function() {
 
-            return 55*(Math.pow(2, ((1 - slider.value)*4)));
+            return 2*(Math.pow(2, ((1 - slider.value)*6)));
         }
 
         return that;
