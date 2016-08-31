@@ -29,6 +29,8 @@ function PatchCore() {
         that.install_module(new Noise());
         that.install_module(new Sine());
         that.install_module(new PitchKnob());
+        that.install_module(new Sequence());
+        that.install_module(new Square());
         manager = new UIManager();
         desktop = new Desktop(that);
         manager.add_child(desktop);
