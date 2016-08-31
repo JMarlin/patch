@@ -18,6 +18,8 @@ function Desktop(core) {
 
     that.onmousedown = function(x, y) {
 
+        start_io = null;
+
         if(that.menu) {
 
             that.menu.destroy();
