@@ -70,10 +70,6 @@ function Desktop(core) {
 
             start_io.connect(io);
             io.connect(start_io);
-            core.add_wire({
-                io1: start_io,
-                io2: io
-            });
             start_io = null;
         }
     }
