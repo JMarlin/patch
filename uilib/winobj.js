@@ -67,8 +67,8 @@ function WinObj(x, y, width, height) {
         if(e.type === "mouseup")
             that.drag_child = null;
 
-        if(that.drag_child !== null) 
-            that.drag_child.move(clientX - that.drag_off_x, clientY - that.drag_off_y);
+        if(e.type === "mousemove" && that.drag_child !== null) 
+            that.drag_child.move(e.clientX - that.drag_off_x, e.clientY - that.drag_off_y);
 
         if(i === -1) {
 
