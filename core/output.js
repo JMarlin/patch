@@ -3,6 +3,7 @@ function Output(patch, x, y) {
     var that = new WinObj(x - 3, y - 3, 6, 6);
 
     that.connected_input = null;
+    that.is_input = false;
 
     that.paint = function(ctx) {
 

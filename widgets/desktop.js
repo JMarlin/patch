@@ -3,6 +3,8 @@ function Desktop(core) {
     var that = new Frame(0, 0, window.innerWidth, window.innerHeight),
         start_io = null;
 
+    that.wire_x = 0;
+    that.wire_y = 0;
     that.suppress_drag = true;
     that.suppress_raise = true;
     that.bgcolor = 'rgb(90, 95, 210)';
@@ -43,7 +45,7 @@ function Desktop(core) {
 
             ctx.beginPath();
             ctx.moveTo(start_io.x + start_io.parent.x + 3, start_io.y + start_io.parent.y + 3);
-            ctx.lineTo(wire_x, wire_y);
+            ctx.lineTo(that.wire_x, that.wire_y);
             ctx.stroke();
         }
 
@@ -76,6 +78,10 @@ function Desktop(core) {
 
         if(start_io !== null) {
 
+            //Guard against input-to-input and output-to-output
+            if(start_io.is_input === io.is_input)
+                return;
+
             start_io.connect(io);
             io.connect(start_io);
             start_io = null;
@@ -93,8 +99,8 @@ function Desktop(core) {
         if(!start_io)
             return;
 
-        wire_x = x;
-        wire_y = y;
+        that.wire_x = x;
+        that.wire_y = y;
         that.invalidate();
     };
 
