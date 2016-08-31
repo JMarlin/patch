@@ -29,7 +29,7 @@ function Sine() {
  
                 sample = Math.sin(phase);
                 var in_sample = input.pull_left_sample();
-                phase = (phase + (in_sample ? (2*Math.PI) / in_sample : 0)) % (2*Math.PI);  
+                phase = (phase + (in_sample ? (((2*Math.PI) * in_sample)/44100) : 0)) % (2*Math.PI);  
  
                 pulls++;
             } else {
