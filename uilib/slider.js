@@ -32,7 +32,7 @@ function Slider(x, y, width, height, min, max) {
     };
 
     knob.old_init = knob.init;
-    knob.init = function() {
+    knob.init = function(context) {
 
         knob.old_move = knob.move;
         knob.move = function(x, y) {
@@ -46,7 +46,7 @@ function Slider(x, y, width, height, min, max) {
             knob.old_move(0, y);
         };
 
-        knob.old_init();
+        knob.old_init(context);
     };
 
     that.add_child(knob);
