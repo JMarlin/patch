@@ -16,12 +16,12 @@ function Square() {
         output.pull_right_sample = function() {
 
             return pull_function();        
-        }
+        };
 
         output.pull_left_sample = function() {
 
             return pull_function();
-        }
+        };
 
         function pull_function() {
 
