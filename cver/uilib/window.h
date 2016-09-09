@@ -15,8 +15,10 @@ typedef void (*WindowMoveHandler)(Window*, int, int);
 typedef void (*WindowMouseMoveHandler)(Window*, int, int);
 typedef void (*WindowMouseDownHandler)(Window*, int, int);
 typedef void (*WindowMouseUpHandler)(Window*, int, int);
-typedef void (*WindowMouseOutHandler)();
-typedef void (*WindowMouseOverHandler)();
+typedef void (*WindowMouseOutHandler)(Window*);
+typedef void (*WindowMouseOverHandler)(Window*);
+typedef void (*WindowPaintHandler)(Window*);
+typedef void (*WindowDeleteMethod)(void*);
 
 typedef struct Window_struct {
     Context* context;
@@ -31,6 +33,8 @@ typedef struct Window_struct {
     int drag_off_x;
     int drag_off_y;
     List* children;
+    WindowDeleter delete;
+    WindowPaintHandler paint;
     WindowEventHandler event_handler;
     WindowGFXResizeHandler ongfxresize;
     WindowMoveHandler move;
@@ -42,14 +46,15 @@ typedef struct Window_struct {
 } Window;
 
 Window* Window_new();
-void Window_init(Window* window);
+int Window_init(Window* window, int x, int y, int width, int height);
+void Window_init(Window* window, x, y, width, height);
 void Window_event_handler(Window* window, InputEvent* input_event);
 void Window_ongfxresize(Window* window, int w, int h);
-void Window_has_dragged_children(Window* window);
+int Window_has_dragged_children(Window* window);
 int Window_screen_x(Window* window);
 int Window_screen_y(Window* window);
 List* Window_children_below(Window* window, Window* child);
-List* Window_children_below(Window* window, Window* child);
+List* Window_children_above(Window* window, Window* child);
 void Window_invalidate_children(Window* window);
 void Window_move_child(Window* window, Window* child, int x, int y);
 void Window_paint_child(Window* window, Window* child);

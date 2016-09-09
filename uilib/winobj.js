@@ -144,7 +144,7 @@ function WinObj(x, y, width, height) {
             if(that.children[i] === child)
                 break;
 
-        for(i--; i > -1; i--) {
+        for(; i > -1; i--) {
 
             var target_widget = that.children[i];
 
@@ -183,13 +183,22 @@ function WinObj(x, y, width, height) {
     that.children_above = function(child) {
 
         var return_group = [];
+        var i = 0;
 
-        for(var i = that.children.length - 1; i > -1; i--) {
-
+        //fast-forward to the selected child
+        for(i = that.children.length - 1; i > -1; i--)
             if(that.children[i] === child)
                 break;
 
-            return_group.push(that.children[i]);
+        for(i++; i < that.children.length; i++) {
+
+            var target_widget = that.children[i];
+
+            if(child.x <= (target_widget.x + target_widget.width) &&
+               (child.x + child.width) >= target_widget.x &&
+               child.y <= (target_widget.y + target_widget.height) &&
+               (child.y + child.height) >= target_widget.y) 
+                return_group.push(target_widget);
         }
 
         return return_group;
