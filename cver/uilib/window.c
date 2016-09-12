@@ -1,29 +1,6 @@
 #include "window.h"
 #include <stdlib.h>
 
-typedef struct Window_struct {
-    Context* context;
-    int x;
-    int y;
-    int width;
-    int height;
-    uint8_t flags;
-    Window_struct* parent;
-    Window_struct* drag_child;
-    Window_struct* mouse_in_child;
-    int drag_off_x;
-    int drag_off_y;
-    List* children;
-    WindowEventHandler event_handler;
-    WindowGFXResizeHandler ongfxresize;
-    WindowMoveHandler move;
-    WindowMouseMoveHandler onmousemove;
-    WindowMouseDownHandler onmousedown;
-    WindowMouseUpHandler onmouseup;
-    WindowMouseOutHandler onmouseout;
-    WindowMouseOverHandler onmouseover;
-} Window;
-
 Window* Window_new(int x, int y, int width, int height) {
 
     Window* window;
