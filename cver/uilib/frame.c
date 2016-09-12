@@ -6,16 +6,22 @@ Frame* Frame_new(int x, int y, int width, int height) {
     if(!(frame = (Frame*)malloc(sizeof(Frame)))
         return frame;
 
-    if(!Window_init((Window*)Frame, x, y, width, height)) {
+    if(!Frame_init(frame, x, y, width, height)) {
 
-        free(frame);
+        free(window);
         return (Frame*)0;
     }
 
+    return frame;
+}
+
+int Frame_init(Frame* frame, int x, int y, int width, int height) {
+
+    if(!Window_init((Window*)frame, x, y, width, height)) 
+        return 0;
+
     frame->window.flags &= ~WIN_NODRAG;
     frame->window.paint = Frame_paint;
-
-    return frame;
 }
 
 void Frame_paint(Window* frame_window) {
