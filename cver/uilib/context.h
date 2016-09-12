@@ -18,6 +18,8 @@ typedef void (*ContextDrawLineHandler)(struct Context_struct*,
 
 typedef struct Context_struct {
     List* clipping_rects;
+    int translate_x;
+    int translate_y;
     ContextApplyClippingHandler apply_clipping;
     ContextClearClippingHander clear_clipping;
     ContextFillRectHandler fill_rect;
@@ -30,6 +32,7 @@ void Context_delete(void* context_void);
 int Context_add_clipping_rect(Context* context, Rect* rect);
 int Context_intersect_clipping_rect(Context* context, Rect* rect);
 int Context_subtract_clipping_rect(Context* context, Rect* rect);
+void Context_set_window_clipping(Context* context, Window* window);
 void Context_apply_clipping(Context* context);
 void Context_clear_clipping(Context* context);
 void Context_fill_rect(Context* context, int x, int y,

@@ -13,6 +13,8 @@ Context* Context_new() {
         return (Context*)0;
     }
 
+    context->translate_x = 0;
+    context->translate_y = 0;
     context->apply_clipping = (ContextApplyClippingHandler)0;
     context->clear_clipping = (ContextClearClippingHandler)0;
     context->fill_rect = (ContextFillRectHandler)0;
@@ -88,9 +90,74 @@ int Context_subtract_clipping_rect(Context* context, Rect* rect) {
             List_add(context->clipping_rects, cur_rect);
         }
 
-        free(split_rects);
+        List_delete(split_rects, 0);
         i = 0;    
     }
+}
+
+void Context_set_window_clipping(Context* context, Window* window, int ignore_children) {
+
+    int i;
+    Window* temp_window;
+    List* overlap_widgets;
+    Rect* temp_rect;
+    Rect* window_rect;
+
+    if(!window->parent)
+        return;
+
+    if(!(window_rect = Rect_new(window->y, window->x,
+                                window->y + window->height - 1,
+                                window->x + window->width - 1)))
+        return;
+
+    if(window->parent->context) {
+
+        Context_set_window_clipping(context, window->parent, 1);
+        Context_intersect_clipping_rect(context, window_rect);
+        Rect_delete((void*)window_rect);
+    } else {
+
+        Context_add_clipping_rect(context, window_rect);
+    }
+
+    if(target_widget->children && (!ignore_children)) {
+
+        for(i = 0; i < window->children->count; i++) {
+
+            temp_window = (Window*)List_get_at(window->children, i);
+
+            if(!(temp_window->flags & WIN_VISIBLE))
+            continue;
+
+            //Need to let this fail if malloc fails
+            temp_rect = Rect_new(temp_window->y, temp_window->x,
+                                 temp_window->y + temp_window->height - 1,
+                                 temp_window->x + temp_window->width - 1)
+            Context_subtract_clipping_rect(context, temp_rect);
+            Rect_delete((void*)temp_rect);
+        }
+    }
+
+    //Need to check for fail here as well
+    overlap_widgets = Window_children_above(window->parent, window);
+
+    for(i = 0; i < overlap_widgets->count; i++) {
+ 
+        temp_window = (Window*)List_get_at(overlap_widgets, i); 
+   
+        if(!(temp_window->flags & WIN_VISIBLE))
+            continue;
+
+        //Need to let this fail if malloc fails
+        temp_rect = Rect_new(temp_window->y, temp_window->x,
+                                temp_window->y + temp_window->height - 1,
+                                temp_window->x + temp_window->width - 1)
+        Context_subtract_clipping_rect(context, temp_rect);
+        Rect_delete((void*)temp_rect);
+    }
+
+    List_delete(overlap_widgets, 0);
 }
 
 void Context_apply_clipping(Context* context) {

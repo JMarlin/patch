@@ -299,7 +299,7 @@ void Window_paint_child(Window* window, Window* child) {
     if(!(child->flags & WIN_VISIBLE))
         return;
 
-    Context_set_window_clipping(child->context, child);
+    Context_set_window_clipping(child->context, child, 1);
     old_x = child->context->translate_x;
     old_y = child->context->translate_y;
     child->context->translate_x = Window_screen_x(child);
