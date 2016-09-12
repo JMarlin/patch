@@ -1,11 +1,5 @@
 #include "uimanager.h"
 
-typedef struct UIManager_struct {
-    Window window; //This class extends `Window`
-    PlatformWrapper* platform_wrapper;
-    WindowGFXResizeHandler old_ongfxresize;
-} UIManager;
-
 UIManager* UIManager_new(PlatformWrapper* platform_wrapper) {
 
     UIManager* uimanager;
@@ -58,4 +52,7 @@ void UIManager_generic_input_handler(void* uimanager_void, InputEvent* input_eve
     Window_event_handler(uimanager_window, input_event);
 }
 
-void UIManager_delete(void* uimanager_void);
+void UIManager_delete(void* uimanager_void) {
+
+    Window_delete(uimanager_void);
+}

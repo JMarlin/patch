@@ -5,6 +5,11 @@
 #include "../util/list.h"
 #include <inttypes.h>
 
+#define RGB(r, g, b) ((((uint32_t)(r)) << 24) | (((uint32_t)(g)) << 16) | (((uint32_t)(b)) << 8))  
+#define RED(c) ((uint8_t)(((c) >> 24) & 0xFF))
+#define GREEN(c) ((uint8_t)(((c) >> 16) & 0xFF))
+#define BLUE(c) ((uint8_t)(((c) >> 8) & 0xFF))
+
 struct Context_struct;
 
 typedef void (*ContextApplyClippingHandler)(struct Context_struct*);
