@@ -46,5 +46,6 @@ void Context_draw_rect(Context* context, int x, int y,
                        int width, int height, uint32_t color);
 void Context_draw_line(Context* context, int x1, int y1, 
                        int x2, int y2, uint32_t color);
+void Context_draw_string(char* text, int x, int y, uint32_t color);
 
 #endif //CONTEXT_H

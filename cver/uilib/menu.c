@@ -42,7 +42,7 @@ void Menu_paint(Window* menu_window) {
     for(i = 0; i < menu->entries; i++) {
 
         current_entry = (MenuEntry*)List_get_at(menu->entries, i);
-        MenuEntry_paint(current_entry);
+        MenuEntry_paint(current_entry, menu->frame.window.context);
     }
 }
 
