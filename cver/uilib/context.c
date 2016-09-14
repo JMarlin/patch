@@ -1,7 +1,7 @@
 #include "context.h"
 #include <stdlib.h>
 
-Context* Context_new() {
+Context* Context_new(PlatformWrapper* platform_wrapper) {
 
     Context* context; 
     if(!(context = (Context*)malloc(sizeof(Context))))
@@ -13,6 +13,7 @@ Context* Context_new() {
         return (Context*)0;
     }
 
+    context->platform_wrapper = platform_wrapper
     context->translate_x = 0;
     context->translate_y = 0;
     context->apply_clipping = (ContextApplyClippingHandler)0;
@@ -181,17 +182,22 @@ void Context_clear_clipping(Context* context) {
 void Context_fill_rect(Context* context, int x, int y,
                        int width, int height, uint32_t color) {
 
-    context->fill_rect(context, x, y, width, height, color);
+    PlatformWrapper_fill_rect(context->platform, x, y, width, height, color);
 }
 
 void Context_draw_rect(Context* context, int x, int y, 
                        int width, int height, uint32_t color) {
 
-    context->draw_rect(context, x, y, width, height, color);
+    PlatformWrapper_draw_rect(context->platform, x, y, width, height, color);
 }
 
 void Context_draw_line(Context* context, int x1, int y1, 
                        int x2, int y2, uint32_t color) {
 
-    context->draw_line(context, x1, y1, x2, y2, color);
+    PlatformWrapper_draw_line(context->platform, x1, y1, x2, y2, color);
+}
+
+void Context_draw_string(char* text, int x, int y, uint32_t color) {
+
+    PlatformWrapper_draw_string(context->platform, text, x, y, color);
 }

@@ -3,6 +3,7 @@
 
 #include "../util/rect.h"
 #include "../util/list.h"
+#include "../platform/platformwrapper.h"
 #include <inttypes.h>
 
 #define RGB(r, g, b) ((((uint32_t)(r)) << 24) | (((uint32_t)(g)) << 16) | (((uint32_t)(b)) << 8))  
@@ -10,29 +11,14 @@
 #define GREEN(c) ((uint8_t)(((c) >> 16) & 0xFF))
 #define BLUE(c) ((uint8_t)(((c) >> 8) & 0xFF))
 
-struct Context_struct;
-
-typedef void (*ContextApplyClippingHandler)(struct Context_struct*);
-typedef void (*ContextClearClippingHandler)(struct Context_struct*);
-typedef void (*ContextFillRectHandler)(struct Context_struct*,
-                                       int, int, int, int, uint32_t);
-typedef void (*ContextDrawRectHandler)(struct Context_struct*,
-                                       int, int, int, int, uint32_t);
-typedef void (*ContextDrawLineHandler)(struct Context_struct*, 
-                                       int, int, int, int, uint32_t);
-
 typedef struct Context_struct {
     List* clipping_rects;
     int translate_x;
     int translate_y;
-    ContextApplyClippingHandler apply_clipping;
-    ContextClearClippingHander clear_clipping;
-    ContextFillRectHandler fill_rect;
-    ContextDrawRectHandler draw_rect;
-    ContextDrawLineHandler draw_line;
+    PlatformWrapper* platform_wrapper;
 } Context;
 
-Context* Context_new();
+Context* Context_new(PlatformWrapper* platform_wrapper);
 void Context_delete(void* context_void);
 int Context_add_clipping_rect(Context* context, Rect* rect);
 int Context_intersect_clipping_rect(Context* context, Rect* rect);

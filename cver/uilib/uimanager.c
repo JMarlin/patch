@@ -7,18 +7,18 @@ UIManager* UIManager_new(PlatformWrapper* platform_wrapper) {
         return uimanager;
 
     if(!Window_init((Window*)UIManager, 0, 0,
-                platform_wrapper->get_screen_width(platform_wrapper),
-                platform_wrapper->get_screen_height(platform_wrapper))) {
+                PlatformWrapper_get_screen_width(platform_wrapper),
+                PlatformWrapper_get_screen_height(platform_wrapper))) {
 
         free(uimanager);
         return (UIManager*)0;
     }
 
-    uimanager->window.context = platform_wrapper->get_drawing_context(platform_wrapper);
+    uimanager->window.context = PlatformWrapper_get_drawing_context(platform_wrapper);
     uimanager->old_ongfxresize = uimanager->window.ongfxresize;
     uimanager->window.ongfxresize = UIManager_ongfxresize;
-    platform_wrapper->install_input_handler(UIManager_generic_input_handler, (void*)uimanager);
-    platform_wrapper->install_resize_handler(UIManager_generic_ongfxresize, (void*)uimanager);
+    PlatformWrapper_install_input_handler(platform_wrapper, UIManager_generic_input_handler, (void*)uimanager);
+    PlatformWrapper_install_resize_handler(platform_wrapper, UIManager_generic_ongfxresize, (void*)uimanager);
 
     UIManager_ongfxresize((Window*)uimanager, 0, 0);
 
@@ -30,10 +30,10 @@ void UIManager_ongfxresize(Window* uimanager_window, int w, int h) {
     UIManager* uimanager = (UIManager*)uimanager_window;
 
     w = uimanager->window.width =
-        uimanager->platform_wrapper->get_screen_width(uimanager->platform_wrapper);
+        PlatformWrapper_get_screen_width(uimanager->platform_wrapper);
 
     h = uimanager->window.height =
-        uimanager->platform_wrapper->get_screen_height(uimanager->platform_wrapper);
+        PlatformWrapper_get_screen_height(uimanager->platform_wrapper);
 
     uimanager->old_ongfxresize((Window*)uimanager, w, h);
 }
