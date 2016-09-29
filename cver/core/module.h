@@ -1,4 +1,5 @@
 #ifndef MODULE_H
+#define MODULE_H
 
 #include "../uilib/window.h"
 
@@ -12,4 +13,4 @@ typedef struct Module_struct {
 Module* Module_new(ModuleConstructor constructor, char* name);
 void Module_delete(void* module_void);
 
-#endif
+#endif //MODULE_H

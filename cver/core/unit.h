@@ -17,4 +17,4 @@ Output* Unit_create_output(Unit* unit, int x, int y);
 Input* Unit_create_input(Unit* unit, int x, int y);
 void Unit_delete(void* unit_void);
 
-#endif UNIT_H
+#endif //UNIT_H
