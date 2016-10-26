@@ -5,6 +5,7 @@
 #include "../units/sequence.h"
 #include "../units/sine.h"
 #include "../units/square.h"
+#include "patchdesktop.h"
 #include <stdlib.h>
 
 PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper) {
@@ -14,10 +15,9 @@ PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper) {
         return patch;
 
     patch->platform_wrapper = platform_wrapper;
-    patch->manager = (UIManager*)0;
     patch->modules = AssociativeArray_new();
     patch->sources = List_new();
-    patch->desktop = (Desktop*)0;
+    patch->desktop = (PatchDesktop*)0;
     patch->inputs = List_new();
 
     if(!(patch->modules && patch->sources && patch->inputs)) {
@@ -34,7 +34,6 @@ void PatchCore_delete(void* patch_void) {
     Module* module;
     PatchCore patch = (PatchCore*)patch_void;
 
-    if(patch->manager) UIManager_delete(patch->manager);
     if(patch->modules) AssociativeArray_delete(patch->modules, Module_delete);
     if(patch->sources) List_delete(patch->sources, Source_delete);
     if(patch->desktop) Desktop_delete(patch->desktop);
