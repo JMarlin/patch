@@ -33,7 +33,7 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
     if(!(slider = (Slider*)Malloc(sizeof(Slider))))
         return slider;
 
-    if(!Window_init((Window*)slider, x, y, width, height)) {
+    if(!Window_init((Window*)slider, x, y, width, height, (Context*)0)) {
 
         free(slider);
         return (Slider*)0;
@@ -50,6 +50,7 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
     slider->max = max; 
     slider->knob_old_move = slider->knob->window.move; 
     slider->knob->window.move = Slider_knob_move;
+    slider->window.object.delete_function = Slider_delete_function;
 }
 
 double Slider_get_value(Slider* slider) {
@@ -77,10 +78,10 @@ void Slider_set_value(Slider* slider, double new_value) {
     Window_move((Window*)slider->knob, 0, (int)new_y);
 }
 
-Slider* Slider_delete(void* slider_void) {
+Slider* Slider_delete_function(Object* slider_object) {
 
-    Slider* slider = (Slider*)slider_void;
+    Slider* slider = (Slider*)slider_object;
 
-    Frame_delete(slider->knob);
-    Window_delete(slider_void);
+    Object_delete(slider->knob);
+    Window_delete_function(slider_object);
 }

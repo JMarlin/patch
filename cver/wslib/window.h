@@ -34,6 +34,7 @@ typedef void (*WindowMouseoverHandler)(struct Window_struct*);
 typedef void (*WindowMouseoutHandler)(struct Window_struct*);
 typedef void (*WindowMousemoveHandler)(struct Window_struct*, int, int);
 typedef void (*WindowMouseclickHandler)(struct Window_struct*, int, int);
+typedef void (*WindowMoveHandler)(struct Window_struct*, int, int);
 
 typedef struct Window_struct {
     Object object;  
@@ -60,6 +61,7 @@ typedef struct Window_struct {
     WindowMouseoutHandler mouseout_function;
     WindowMousemoveHandler mousemove_function;
     WindowMouseclickHandler mouseclick_function;
+    WindowMoveHandler move_function;
     char* title;
     DeleteFunction delete_function;
 } Window;
@@ -86,6 +88,7 @@ List* Window_get_windows_above(Window* parent, Window* child);
 List* Window_get_windows_below(Window* parent, Window* child);
 void Window_raise(Window* window, uint8_t do_draw);
 void Window_move(Window* window, int new_x, int new_y);
+void Window_move_function(Window* window, int new_x, int new_y);
 void Window_hide(Window* window);
 void Window_show(Window* window);
 Window* Window_create_window(Window* window, int16_t x, int16_t y,  

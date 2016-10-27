@@ -13,6 +13,6 @@ typedef struct Slider_struct {
 Slider* Slider_new(int x, int y, int width, int height, double min, double max);
 double Slider_get_value(Slider* slider);
 void Slider_set_value(Slider* slider, double new_value);
-Slider* Slider_delete(void* slider_void);
+Slider* Slider_delete_function(void* slider_void);
 
 #endif //SLIDER_H

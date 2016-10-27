@@ -5,7 +5,6 @@
 #include "../units/sequence.h"
 #include "../units/sine.h"
 #include "../units/square.h"
-#include "patchdesktop.h"
 #include <stdlib.h>
 
 PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper) {
@@ -14,6 +13,7 @@ PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper) {
     if(!(patch = (PatchCore*)malloc(sizeof(PatchCore))))
         return patch;
 
+    Object_init(patch, Patch_delete_function);
     patch->platform_wrapper = platform_wrapper;
     patch->modules = AssociativeArray_new();
     patch->sources = List_new();
@@ -22,29 +22,16 @@ PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper) {
 
     if(!(patch->modules && patch->sources && patch->inputs)) {
 
-        PatchCore_delete(patch);
+        Object_delete(patch);
         return (PatchCore*)0;
     }
 
     return patch;
 }
 
-void PatchCore_delete(void* patch_void) {
-
-    Module* module;
-    PatchCore patch = (PatchCore*)patch_void;
-
-    if(patch->modules) AssociativeArray_delete(patch->modules, Module_delete);
-    if(patch->sources) List_delete(patch->sources, Source_delete);
-    if(patch->desktop) Desktop_delete(patch->desktop);
-    if(patch->inputs) List_delete(patch->inputs, IO_delete);
-
-    free(patch);
-}
-
 int PatchCore_install_module(PatchCore* patch, Module* module) {
 
-    return AssociativeArray_insert(patch->modules, module->name, module->constructor);
+    return AssociativeArray_insert(patch->modules, module->name, module);
 }
 
 int PatchCore_next_spawn_x(PatchCore* patch) {
@@ -67,16 +54,17 @@ void PatchCore_start(PatchCore* patch) {
     PatchCore_install_module(patch, Sequence_new());
     PatchCore_install_module(patch, Square_new());
 
-    patch->manager = UIManager_new(patch->platform_wrapper);
-    patch->desktop = Desktop_new(patch);
-    Window_add_child((Window*)patch->manager, (Window*)patch->desktop);
+    patch->desktop = PatchDesktop_new(patch);
 
     PlatformWrapper_install_audio_handler(patch->platform_wrapper,
-                                          PatchCore_create_AudioHandler(patch));
+                                          AudioHandler_new(PatchCore_pull_sample, (Object*)patch));
 }
 
 
-int PatchCore_add_source(PatchCore* patch, Source* source) {
+int PatchCore_add_source(PatchCore* patch, IO* source) {
+
+    if(!source->is_output)
+        return 0;
 
     return List_add(patch->sources, source);
 }
@@ -88,39 +76,33 @@ List* PatchCore_list_modules(PatchCore* patch) {
 
 void PatchCore_connect_action(PatchCore* patch, IO* io) {
 
-    Desktop_connect_action(patch->desktop, io);
+    PatchDesktop_connect_action(patch->desktop, io);
 }
 
 void PatchCore_destroy_menu(PatchCore* patch) {
-
-    Window_destroy((Window*)patch->desktop->menu);
+    
+    Object_delete(patch->desktop->menu);
     patch->desktop->menu = (SessionMenu*)0;
 }
 
 void PatchCore_instantiate_module(PatchCore* patch, char* module_name) {
 
-    ModuleConstructor module_constructor;
+    Module module;
     Window* window;
 
-    module_constructor = (ModuleConstructor)AssociativeArray_get(module_name);
-    if(!module_constructor)
+    module = (ModuleConstructor)AssociativeArray_get(module_name);
+    if(!module)
         return;
 
-    window = module_constructor();
+    window = module->constructor();
     if(!window)
         return;
 
-    window->x = PatchCore_next_spawn_x(patch);
-    window->y = PatchCore_next_spawn_y(patch);
-    Window_add_child((Window*)patch->desktop, window);
+    Window_insert_child((Window*)patch->desktop, window);
+    Window_move(PatchCore_next_spawn_x(patch), PatchCore_next_spawn_y(patch));
 }
 
-AudioHandler* PatchCore_create_audio_handler(PatchCore* patch) {
-
-    return AudioHandler_new(PatchCore_pull_sample, (void*)patch);
-}
-
-void PatchCore_pull_sample(void* patch_void, double* sample_l, double* sample_r) {
+void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sample_r) {
 
     int i;
     Source* source;
@@ -131,11 +113,22 @@ void PatchCore_pull_sample(void* patch_void, double* sample_l, double* sample_r)
 
     for(i = 0; i < patch->sources->count; i++) {
 
-        source = (Source*)List_get_at(patch->sources, i);
-
-        *sample_r += Source_pull_right_sample(source);
-        *sample_l += Source_pull_left_sample(source);
+        source = (IO*)List_get_at(patch->sources, i);
+        
+        *sample_r += IO_pull_right_sample(source);
+        *sample_l += IO_pull_left_sample(source);
     }
 }
 
-#endif //PATCHCORE_H
+void PatchCore_delete_function(Object* patch_object) {
+
+    
+    Module* module;
+    PatchCore patch = (PatchCore*)patch_object;
+
+    if(patch->modules) Object_delete(patch->modules);
+    if(patch->sources) Object_delete(patch->sources);
+    if(patch->desktop) Object_delete(patch->desktop);
+    if(patch->inputs)  Object_delete(patch->inputs);
+    free(patch);
+}

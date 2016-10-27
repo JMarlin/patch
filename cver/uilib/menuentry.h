@@ -6,6 +6,7 @@
 typedef void (*MenuEntryClickCallback)(void);
 
 typedef struct MenuEntry_struct {
+    Object object;
     char* text;
     int x; 
     int y; 
@@ -13,8 +14,7 @@ typedef struct MenuEntry_struct {
 } MenuEntry;
 
 MenuEntry* MenuEntry_new(char* text, MenuEntryClickCallback click_action);
-void MenuEntry_paint(MenuEntry* menu_entry, Context* context);
-void MenuEntry_onmousedown(MenuEntry* menu_entry);
-void MenuEntry_delete(void* menu_entry_void);
+void MenuEntry_paint_handler(MenuEntry* menu_entry, Context* context);
+void MenuEntry_mouseclick_handler(MenuEntry* menu_entry, int x, int y);
 
 #endif //MENUENTRY_H

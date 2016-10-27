@@ -9,7 +9,7 @@ Unit* Unit_new(PatchCore* patch_core) {
 
     if(!Unit_init(unit, patch_core)) {
 
-        Unit_delete(unit);
+        Object_delete(unit);
         return (Unit*)0;
     }
 
@@ -26,35 +26,25 @@ int Unit_init(Unit* unit, PatchCore* patch_core) {
     return 1;
 }
 
-//Move to window class
-void Unit_resize(Unit* unit, int w, int h) {
+IO* Unit_create_output(Unit* unit, int x, int y) {
 
-    unit->frame.window.width = w;
-    unit->frame.window.height = h;
-    Window_invalidate((Window*)unit);
+    return Unit_create_io(unit, x, y, 1);
 }
 
-Output* Unit_create_output(Unit* unit, int x, int y) {
+IO* Unit_create_input(Unit* unit, int x, int y) {
 
-    Output* output;
-    if(!(output = Output_new(unit->patch_core, x, y)))
-        return output;
-
-    Window_add_child((Window*)unit, (Window*)output);
-
-    return output;
+    return Unit_create_io(unit, x, y, 0);
 }
 
-Input* Unit_create_input(Unit* unit, int x, int y) {
+IO* Unit_create_io(Unit* uint, int x, int y, uint8_t is_output) {
 
-    Input* input;
-    if(!(input = Input_new(unit->patch_core, x, y)))
-        return input;
+    IO* io = IO_new(unit->patch_core, x, y, is_output);
+    if(!io)
+        return;
 
-    Window_add_child((Window*)unit, (Window*)input);
-    List_add(unit->patch_core->inputs, input);
+    Window_insert_child(unit, io);
 
-    return input;
+    return io;
 }
 
 void Unit_delete(void* unit_void) {

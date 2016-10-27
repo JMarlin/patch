@@ -39,13 +39,14 @@ int Window_init(Window* window, int16_t x, int16_t y, uint16_t width,
 
     static unsigned int handle_source = 0;
 
+    Object_init(window, Window_delete_function);
+
     //Moved over here from the desktop 
     //Create child list or clean up and fail
     if(!(window->children = List_new()))
         return 0;
 
     //Assign the property values
-    Object_init(window, Window_delete_function);
     window->id = ++handle_source;
     window->x = x;
     window->y = y;
@@ -608,8 +609,16 @@ void Window_raise(Window* window, uint8_t do_draw) {
         Window_update_title(last_active);
 }
 
-//We're wrapping this guy so that we can handle any needed redraw
 void Window_move(Window* window, int new_x, int new_y) {
+
+    if(window->move_function)
+        window->move_function(window, new_x, new_y);
+    else
+        Window_move_function(window, new_x, new_y);
+}
+
+//We're wrapping this guy so that we can handle any needed redraw
+void Window_move_function(Window* window, int new_x, int new_y) {
 
     int i;
     int old_x = window->x;
@@ -962,6 +971,8 @@ void Window_delete_function(Object* window_object) {
 
     int i;
     Window* window = (Window*)window_object;
+
+    Window_hide(window);
 
     if(window->parent) {
 

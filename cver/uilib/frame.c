@@ -17,14 +17,14 @@ Frame* Frame_new(int x, int y, int width, int height) {
 
 int Frame_init(Frame* frame, int x, int y, int width, int height) {
 
-    if(!Window_init((Window*)frame, x, y, width, height)) 
+    if(!Window_init((Window*)frame, x, y, width, height,
+                    WIN_BODYDRAG | WIN_NODECORATION, (Context*)0)) 
         return 0;
 
-    frame->window.flags &= ~WIN_NODRAG;
-    frame->window.paint = Frame_paint;
+    frame->window.paint_function = Frame_paint_handler;
 }
 
-void Frame_paint(Window* frame_window) {
+void Frame_paint_handler(Window* frame_window) {
 
     Context_fill_rect(window->context, 2, 2, window->width - 4,
                       window->height - 4, RGB(155, 165, 185));
@@ -34,7 +34,3 @@ void Frame_paint(Window* frame_window) {
                       window->height - 2, RGB(0, 0, 0));
 }
 
-void Frame_delete(void* frame_void) {
-    
-    Window_delete(frame_void);
-}

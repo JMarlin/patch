@@ -1,13 +1,13 @@
 #ifndef AUDIOHANDLER_H
 
-typedef void (*AudioHandlerFunction)(void*, double*, double*);
+typedef void (*AudioHandlerFunction)(Object*, double*, double*);
 
 typedef struct AudioHandler_struct {
+    Object object;
     AudioHandlerFunction function;
-    void* parent_object;
+    Object* parent_object;
 } AudioHandler;
 
-AudioHandler* AudioHandler_new(AudioHandlerFunction function, void* parent_object);
-void AudioHandler_delete(void* audio_handler_void);
+AudioHandler* AudioHandler_new(AudioHandlerFunction function, Object* parent_object);
 
 #endif

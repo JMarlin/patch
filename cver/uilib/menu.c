@@ -23,14 +23,16 @@ int Menu_init(Menu* menu, int x, int y, int width) {
     if(!(menu->entries = List_new()))
         return 0;
 
-    menu->old_paint = menu->frame.window.paint;
-    menu->frame.window.paint = Menu_paint;
+    menu->old_paint = menu->frame.window.paint_function;
+    menu->frame.window.paint_function = Menu_paint_handler;
+    menu->frame.window.mouseclick_function = Menu_mouseclick_handler;
+    menu->frame.window.object.delete_function = Menu_deleter;
 
     return 1;
 }
 
 //Need to make entries into actual sub-windows
-void Menu_paint(Window* menu_window) {
+void Menu_paint_handler(Window* menu_window) {
 
     int i;
     MenuEntry* current_entry;
@@ -41,25 +43,30 @@ void Menu_paint(Window* menu_window) {
 
     for(i = 0; i < menu->entries; i++) {
 
+        //This will be replaced when we make menu entries simple subchildren
         current_entry = (MenuEntry*)List_get_at(menu->entries, i);
-        MenuEntry_paint(current_entry, menu->frame.window.context);
+        MenuEntry_paint_handler(current_entry, menu->frame.window.context);
     }
+}
+
+void Menu_mouseclick_handler(Window* menu_window, int x, int y) {
+
+    //Fire menu entry handler
 }
 
 void Menu_add_entry(Menu* menu, MenuEntry* menu_entry) {
 
-    List_add(menu->entries, (void*)menu_entry);
+    List_add(menu->entries, menu_entry);
     menu_entry->parent = menu;
     menu_entry->x = 2;
     menu_entry->y = (menu->entries->count * 13) + 1;
     menu->frame.window.height += 14;
 }
 
-void Menu_delete(void* menu_void) {
+void Menu_delete_function(Object* menu_object) {
 
-    Menu* menu = (Menu*)menu_void; 
+    Menu* menu = (Menu*)menu_object; 
 
-    List_delete(menu->children, MenuEntry_delete);
-
-    Frame_delete(menu_void);
+    Object_delete(menu->children);
+    Window_delete_function(menu);
 }

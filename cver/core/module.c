@@ -7,13 +7,9 @@ Module* Module_new(ModuleConstructor constructor, char* name) {
     if(!(module = (Module*)malloc(sizeof(Module))))
         return module;
 
+    Object_init(module, 0);    
     module->constructor = constructor;
     module->name = name;
 
     return name;
-}
-
-void Module_delete(void* module_void) {
-
-    free(module_void);
 }
