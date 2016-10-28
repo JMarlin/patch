@@ -26,9 +26,14 @@ int Unit_init(Unit* unit, PatchCore* patch_core) {
     return 1;
 }
 
-IO* Unit_create_output(Unit* unit, int x, int y) {
+IO* Unit_create_output(Unit* unit, int x, int y, IOSamplePullHandler generator_function) {
 
-    return Unit_create_io(unit, x, y, 1);
+    IO* io = Unit_create_io(unit, x, y, 1);
+
+    if(!io)
+        return io;
+
+    io->sample_pull_function = generator_function;
 }
 
 IO* Unit_create_input(Unit* unit, int x, int y) {
@@ -39,6 +44,7 @@ IO* Unit_create_input(Unit* unit, int x, int y) {
 IO* Unit_create_io(Unit* uint, int x, int y, uint8_t is_output) {
 
     IO* io = IO_new(unit->patch_core, x, y, is_output);
+    
     if(!io)
         return;
 

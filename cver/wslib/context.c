@@ -48,6 +48,9 @@ void Context_delete_function(Object* context_object) {
 
     Context* context = (Context*)context_object;
 
+    if(!context_object)
+        return;
+
     Object_delete(context->clip_rects);
     free(context);
 }

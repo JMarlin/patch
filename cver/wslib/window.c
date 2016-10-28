@@ -972,6 +972,9 @@ void Window_delete_function(Object* window_object) {
     int i;
     Window* window = (Window*)window_object;
 
+    if(!window_object)
+        return;
+
     Window_hide(window);
 
     if(window->parent) {

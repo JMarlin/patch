@@ -39,12 +39,21 @@ Desktop* Desktop_new(Context* context) {
     if(!(desktop = (Desktop*)malloc(sizeof(Desktop))))
         return desktop;
 
-    //Initialize the Window bits of our desktop
-    if(!Window_init((Window*)desktop, 0, 0, context->width, context->height, WIN_NODECORATION | WIN_NORAISE, context)) {
+    if(!Desktop_init(desktop, context)) {
 
-        free(desktop);
+        Delete_object(desktop);
         return (Desktop*)0;
     }
+
+    return desktop;
+}
+
+int Desktop_init(Desktop* desktop, Context* context) {
+
+    //Initialize the Window bits of our desktop
+    if(!Window_init((Window*)desktop, 0, 0, context->width, context->height,
+                    WIN_NODECORATION | WIN_NORAISE, context))
+        return 0;
 
     //Override our paint function
     desktop->window.paint_function = Desktop_paint_handler;
@@ -57,7 +66,7 @@ Desktop* Desktop_new(Context* context) {
     desktop->mouse_y = desktop->window.context->height / 2;
     desktop->mouse_shown = 1;
 
-    return desktop;
+    return 1;
 }
 
 //Paint the desktop 

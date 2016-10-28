@@ -106,6 +106,7 @@ void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sampl
 
     int i;
     Source* source;
+    double temp_l, temp_r;
     PatchCore* patch = (PatchCore*)patch_void;
 
     *sample_r = 0;
@@ -115,8 +116,9 @@ void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sampl
 
         source = (IO*)List_get_at(patch->sources, i);
         
-        *sample_r += IO_pull_right_sample(source);
-        *sample_l += IO_pull_left_sample(source);
+        IO_pull_sample(source, &temp_l, &temp_r);
+        *sample_r += temp_r;
+        *sample_l += temp_l;
     }
 }
 

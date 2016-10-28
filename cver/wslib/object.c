@@ -16,6 +16,9 @@ void Object_init(Object* object, DeleteFunction delete_function) {
 
 void Object_delete(Object* object) {
 
+    if(!object)
+        return;
+
     if(object->delete_function)
         object->delete_function(object);
     else

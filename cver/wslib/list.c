@@ -136,6 +136,9 @@ void List_delete(Object* list_object) {
 
     List* list = (List*)list_object;
 
+    if(!list_object)
+        return;
+
     //Remove each item from the list and pass it to its deleter
     while(list->count)
         Object_delete(List_remove_at(list, 0));
