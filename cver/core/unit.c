@@ -43,8 +43,8 @@ IO* Unit_create_input(Unit* unit, int x, int y) {
 
 IO* Unit_create_io(Unit* uint, int x, int y, uint8_t is_output) {
 
-    IO* io = IO_new(unit->patch_core, x, y, is_output);
-    
+    IO* io = IO_new(unit->patch_core, (Object*)unit, x, y, is_output);
+
     if(!io)
         return;
 

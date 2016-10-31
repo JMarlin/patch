@@ -17,14 +17,14 @@ int Input_sample_pull_handler(IO* io, double *l_sample, double *r_sample) {
     return 1;
 }
 
-IO* IO_new(PatchCore* patch_core, int x, int y, int is_output) {
+IO* IO_new(PatchCore* patch_core, Object* param_object, int x, int y, int is_output) {
 
     IO* io = (IO*)malloc(sizeof(IO));
     
     if(!io)
         return io;
 
-    if(!IO_init(io, patch_core, x, y, is_output)) {
+    if(!IO_init(io, patch_core, param_object, x, y, is_output)) {
 
         Object_delete(io);
         return (IO*)0;
@@ -36,7 +36,7 @@ IO* IO_new(PatchCore* patch_core, int x, int y, int is_output) {
     return io;
 }
 
-int IO_init(IO* io, PatchCore* patch_core, int x, int y, int is_output) {
+int IO_init(IO* io, PatchCore* patch_core, Object* param_object, int x, int y, int is_output) {
 
     if(!Window_init((Window*)io, x - 3, y - 3, 6, 6,
                     WIN_NODECORATION | WIN_NORAISE, (Context*)0)) 
@@ -46,6 +46,7 @@ int IO_init(IO* io, PatchCore* patch_core, int x, int y, int is_output) {
     io->window.paint_function = IO_paint_handler;
     io->window.mouseclick_function = IO_mouseclick_handler;
     io->patch_core = patch_core; 
+    io->param_object= param_object;
     io->connected_io = (IO*)0;
     io->is_output = is_output;
 

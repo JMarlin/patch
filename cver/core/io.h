@@ -12,12 +12,13 @@ typedef struct IO_struct {
     Window window;
     PatchCore* patch_core; 
     IO* connected_io;
+    Object* param_object;
     int is_output;
     IOSamplePullHandler pull_sample_function;
 } IO;
 
-IO* IO_new(PatchCore* patch_core, int x, int y, int is_output);
-int IO_init(IO* io, PatchCore* patch_core, int x, int y, int is_output);
+IO* IO_new(PatchCore* patch_core, Object* param_object, int x, int y, int is_output);
+int IO_init(IO* io, PatchCore* patch_core, Object* param_object, int x, int y, int is_output);
 void IO_paint_handler(Window* io_window);
 void IO_mouseclick_handler(Window* io_window, int x, int y);
 void IO_connect(IO* io, Input* input);
