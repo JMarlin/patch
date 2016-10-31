@@ -1,5 +1,54 @@
 #include <stdlib.h>
+#include <string.h>
 #include "object.h"
+
+String* String_new(char* source_buf) {
+
+    int len, i;
+    String* string = (String*)malloc(sizeof(String));
+
+    if(!string)
+        return string;
+
+    Object_init(string, String_delete_function);
+    
+    if(!source_buf) {
+
+        string->buf = source_buf;
+        return string;
+    }
+
+    for(len = 1; source_buf[len-1]; len++);
+
+    if(!string->buf = (char*)malloc(len)) {
+
+        Object_delete(string);
+        return (String*)0;
+    }
+
+    for(i = 0; i < len; i++)
+        string->buf = source_buf[i];
+
+    return string;
+}
+
+int String_compare(String* string_a, String* string_b) {
+
+    return strcmp(string_a->buf, string_b->buf) == 0;
+}
+
+void String_delete_function(Object* string_object) {
+
+    if(!string_object)
+        return;
+
+    String* string = (String*)string_object;
+
+    if(string->buf)
+        free(string->buf);
+
+    Object_default_delete_function(string_object);
+}
 
 void Object_default_delete_function(Object* object) {
 

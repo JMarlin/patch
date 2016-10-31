@@ -19,7 +19,9 @@ int Menu_init(Menu* menu, int x, int y, int width) {
 
     if(!Frame_init((Frame*)menu, x, y, width, 4))
         return 0;
-    
+
+    Object_init(menu, Menu_delete_function);
+
     if(!(menu->entries = List_new()))
         return 0;
 

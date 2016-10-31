@@ -31,7 +31,7 @@ PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper) {
 
 int PatchCore_install_module(PatchCore* patch, Module* module) {
 
-    return AssociativeArray_insert(patch->modules, module->name, module);
+    return AssociativeArray_add(patch->modules, module->name, module);
 }
 
 int PatchCore_next_spawn_x(PatchCore* patch) {
@@ -69,9 +69,9 @@ int PatchCore_add_source(PatchCore* patch, IO* source) {
     return List_add(patch->sources, source);
 }
 
-List* PatchCore_list_modules(PatchCore* patch) {
+List* PatchCore_get_module_list(PatchCore* patch) {
 
-    return AssociativeArray_get_keys(patch->modules);
+    return patch->modules->keys;
 }
 
 void PatchCore_connect_action(PatchCore* patch, IO* io) {
@@ -90,7 +90,7 @@ void PatchCore_instantiate_module(PatchCore* patch, char* module_name) {
     Module module;
     Window* window;
 
-    module = (ModuleConstructor)AssociativeArray_get(module_name);
+    module = (ModuleConstructor)AssociativeArray_get(patch->modules, module_name);
     if(!module)
         return;
 
@@ -123,14 +123,13 @@ void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sampl
 }
 
 void PatchCore_delete_function(Object* patch_object) {
-
     
     Module* module;
     PatchCore patch = (PatchCore*)patch_object;
 
-    if(patch->modules) Object_delete(patch->modules);
-    if(patch->sources) Object_delete(patch->sources);
-    if(patch->desktop) Object_delete(patch->desktop);
-    if(patch->inputs)  Object_delete(patch->inputs);
-    free(patch);
+    Object_delete(patch->modules);
+    Object_delete(patch->sources);
+    Object_delete(patch->desktop);
+    Object_delete(patch->inputs);
+    Object_default_delete_function(patch_object);
 }

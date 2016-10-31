@@ -23,7 +23,7 @@ int PatchCore_next_spawn_x(PatchCore* patch);
 int PatchCore_next_spawn_y(PatchCore* patch);
 void PatchCore_start(PatchCore* patch);
 int PatchCore_add_source(PatchCore* patch, Source* source);
-List* PatchCore_list_modules(PatchCore* patch);
+List* PatchCore_get_module_list(PatchCore* patch);
 void PatchCore_connect_action(PatchCore* patch, IO* io);
 void PatchCore_destroy_menu(PatchCore* patch);
 void PatchCore_instantiate_module(PatchCore* patch, char* module_name);
