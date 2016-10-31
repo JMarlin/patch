@@ -69,6 +69,20 @@ int PatchCore_add_source(PatchCore* patch, IO* source) {
     return List_add(patch->sources, source);
 }
 
+void PatchCore_remove_source(PatchCore* patch, IO* source) {
+
+    int i;
+
+    for(i = 0; i < patch->sources->count; i++)
+        if(List_get_at(patch->sources, i) == source)
+            break;
+
+    if(i == patch->sources->count)
+        return;
+
+    List_remove_at(patch->sources, i);
+}
+
 List* PatchCore_get_module_list(PatchCore* patch) {
 
     return patch->modules->keys;

@@ -44,19 +44,15 @@ Unit* MasterOut_constructor(PatchCore* patch_core) {
 
     master_out->slider = Slider_new(10, 10, 30, 130, 0, 1);
     master_out->input = Unit_create_input(master_out, 5, 75);
-    output = IO_new(patch_core, master_out, 0, 0, 1);
+    master_out->output = IO_new(patch_core, master_out, 0, 0, 1);
 
-    if(!(master_out->slider && master_out->input && output)) {
+    if(!(master_out->slider && master_out->input && master_out->output)) {
 
         Object_delete(master_out);
         return (Unit*)0;
     }    
    
-    //TODO: We need to somehow be able to remove any PatchCore sources
-    //associated with a unit if and when that unit is deleted
-    //otherwise, the source's pull function will fail as soon as it
-    //tries to access the pointer to the deleted unit
-    output->pull_sample_function = MasterOut_pull_sample_handler;
+    master_out->output->pull_sample_function = MasterOut_pull_sample_handler;
     PatchCore_add_source(patch_core, output);
 
     return (Unit*)master_out;
