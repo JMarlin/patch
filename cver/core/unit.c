@@ -53,7 +53,7 @@ IO* Unit_create_io(Unit* uint, int x, int y, uint8_t is_output) {
     return io;
 }
 
-void Unit_delete(void* unit_void) {
+void Unit_delete(Object* unit_object) {
 
-    Frame_delete((Frame*)unit_void);
+    Frame_delete((Frame*)unit_object);
 }
