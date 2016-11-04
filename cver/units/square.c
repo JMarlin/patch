@@ -1,6 +1,6 @@
 #include <math.h>
 #include "square.h"
-#include "../platformwrapper/platformwrapper.h"
+#include "../platform/platformwrapper.h"
 
 Module* Square_new() {
 

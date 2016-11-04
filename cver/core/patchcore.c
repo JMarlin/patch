@@ -7,14 +7,13 @@
 #include "../units/square.h"
 #include <stdlib.h>
 
-PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper) {
+PatchCore* PatchCore_new() {
 
     PatchCore* patch;
     if(!(patch = (PatchCore*)malloc(sizeof(PatchCore))))
         return patch;
 
     Object_init(patch, Patch_delete_function);
-    patch->platform_wrapper = platform_wrapper;
     patch->modules = AssociativeArray_new();
     patch->sources = List_new();
     patch->desktop = (PatchDesktop*)0;
@@ -44,6 +43,21 @@ int PatchCore_next_spawn_y(PatchCore* patch) {
     return 0;
 }
 
+void Patch_mouse_callback(Object* patch_object, uint16_t mouse_x,
+                           uint16_t mouse_y, uint8_t mouse_buttons) {
+
+    PatchCore* patch_core = (PatchCore*)patch_object;
+
+    Desktop_process_mouse(patch_core->desktop, mouse_x, mouse_y, mouse_buttons);
+}
+
+void Patch_resize_callback(Object* patch_object, int w, int h) {
+
+    PatchCore* patch_core = (PatchCore*)patch_object;
+
+    Window_resize(patch_core->desktop, w, h);
+}
+
 void PatchCore_start(PatchCore* patch) {
 
     //TODO: This will be replaced by the loading of default modules from a list
@@ -55,9 +69,10 @@ void PatchCore_start(PatchCore* patch) {
     PatchCore_install_module(patch, Square_new());
 
     patch->desktop = PatchDesktop_new(patch);
+    PlatformWrapper_install_resize_callback(patch, Patch_resize_callback);
+    PlatformWrapper_install_mouse_callback(patch, Patch_mouse_callback);
 
-    PlatformWrapper_install_audio_handler(patch->platform_wrapper,
-                                          AudioHandler_new(PatchCore_pull_sample, (Object*)patch));
+    PlatformWrapper_install_audio_handler(AudioHandler_new(PatchCore_pull_sample, (Object*)patch));
 }
 
 

@@ -14,10 +14,9 @@ typedef struct PatchCore_struct {
     AssociativeArray* modules;
     List* sources;
     List* inputs;
-    PlatformWrapper* platform_wrapper;
 } PatchCore;
 
-PatchCore* PatchCore_new(PlatformWrapper* platform_wrapper);
+PatchCore* PatchCore_new();
 int PatchCore_install_module(PatchCore* patch, Module* module);
 int PatchCore_next_spawn_x(PatchCore* patch);
 int PatchCore_next_spawn_y(PatchCore* patch);

@@ -3,12 +3,10 @@
 
 int main(int argc, char* argv[]) {
 
-    PlatformWrapper platform_wrapper = PlatformWrapper_new();
-    PatchCore* core = PatchCore_new(platform_wrapper);
+    PlatformWrapper_init();
+    PatchCore_start(PatchCore_new());
 
-    PatchCore_start(core);
-
-    PlatformWrapper_hold_for_exit(platform_wrapper);
+    PlatformWrapper_hold_for_exit();
 
     return 0;
 }

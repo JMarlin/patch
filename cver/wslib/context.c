@@ -51,7 +51,7 @@ void Context_delete_function(Object* context_object) {
     if(!context_object)
         return;
 
-    Object_delete(context->clip_rects);
+    Object_delete((Object*)context->clip_rects);
     free(context);
 }
 
@@ -180,17 +180,17 @@ void Context_intersect_clip_rect(Context* context, Rect* rect) {
         intersect_rect = Rect_intersect(current_rect, rect);
 
         if(intersect_rect)
-            List_add(output_rects, intersect_rect);
+            List_add(output_rects, (Object*)intersect_rect);
     }
 
     //Delete the original rectangle list
-    Delete_object((Object*)context->clip_rects);
+    Object_delete((Object*)context->clip_rects);
 
     //And re-point it to the new one we built above
     context->clip_rects = output_rects;
 
     //Free the input rect
-    Delete_object(rect);
+    Object_delete((Object*)rect);
 }
 
 //split all existing clip rectangles against the passed rect
@@ -206,7 +206,7 @@ void Context_subtract_clip_rect(Context* context, Rect* subtracted_rect) {
 
     for(i = 0; i < context->clip_rects->count; ) {
 
-        cur_rect = List_get_at(context->clip_rects, i);
+        cur_rect = (Rect*)List_get_at(context->clip_rects, i);
 
         //Standard rect intersect test (if no intersect, skip to next)
         //see here for an example of why this works:
@@ -224,17 +224,17 @@ void Context_subtract_clip_rect(Context* context, Rect* subtracted_rect) {
         //we need to split it
         List_remove_at(context->clip_rects, i); //Original will be replaced w/splits
         split_rects = Rect_split(cur_rect, subtracted_rect); //Do the split
-        Delete_object(cur_rect); //We can throw this away now, we're done with it
+        Object_delete((Object*)cur_rect); //We can throw this away now, we're done with it
 
         //Copy the split, non-overlapping result rectangles into the list 
         while(split_rects->count) {
 
             cur_rect = (Rect*)List_remove_at(split_rects, 0);
-            List_add(context->clip_rects, cur_rect);
+            List_add(context->clip_rects, (Object*)cur_rect);
         }
 
         //Free the empty split_rect list 
-        Delete_object(split_rects);
+        Object_delete((Object*)split_rects);
 
         //Since we removed an item from the list, we need to start counting over again 
         //In this way, we'll only exit this loop once nothing in the list overlaps 
@@ -248,7 +248,7 @@ void Context_add_clip_rect(Context* context, Rect* added_rect) {
 
     //Now that we have made sure none of the existing rectangles overlap
     //with the new rectangle, we can finally insert it 
-    List_add(context->clip_rects, added_rect);
+    List_add(context->clip_rects, (Object*)added_rect);
 }
 
 //Remove all of the clipping rects from the passed context object

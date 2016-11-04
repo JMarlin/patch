@@ -1,7 +1,9 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-typedef void (*DeleteFunction)(void* object); 
+struct Object_struct;
+
+typedef void (*DeleteFunction)(struct Object_struct* object); 
 
 typedef struct Object_struct {
     DeleteFunction delete_function;

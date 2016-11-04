@@ -16,8 +16,7 @@ PatchDesktop* PatchDesktop_new(PatchCore* patch_core) {
     if(!patch_desktop)
         return patch_desktop;
 
-    if(!Desktop_init(patch_desktop,
-                     PlatformWrapper_get_context(patch_core->platform_wrapper))) {
+    if(!Desktop_init(patch_desktop, PlatformWrapper_get_context())) {
     
         Object_delete(patch_desktop);
         return (PatchDesktop*)0;
@@ -28,7 +27,7 @@ PatchDesktop* PatchDesktop_new(PatchCore* patch_core) {
     patch_desktop->desktop.window.mouseclick_function = PatchDesktop_mouseclick_handler;
     patch_desktop->desktop.window.mousemove_function = PatchDesktop_mousemove_handler;
     patch_desktop->desktop.window.paint_function = PatchDesktop_paint_handler;
-    patch_desktop->desktop.mouse_shown = PlatformWrapper_is_mouse_shown(patch_core->platform_wrapper);
+    patch_desktop->desktop.mouse_shown = PlatformWrapper_is_mouse_shown();
     patch_desktop->start_io = (IO*)0;
     patch_desktop->menu = (SessionMenu* menu);
 }

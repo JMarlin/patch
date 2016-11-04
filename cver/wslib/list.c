@@ -119,7 +119,7 @@ Object* List_remove_at(List* list, unsigned int index) {
         list->root_node = current_node->next;
 
     //Now that we've clipped the node out of the list, we must free its memory
-    Delete_object((Object*)current_node); 
+    Object_delete((Object*)current_node); 
 
     //Make sure the count of items is up-to-date
     list->count--; 

@@ -1,6 +1,6 @@
 #include <math.h>
 #include "sine.h"
-#include "../platformwrapper/platformwrapper.h"
+#include "../platform/platformwrapper.h"
 
 Module* Sine_new() {
 

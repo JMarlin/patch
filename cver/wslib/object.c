@@ -10,7 +10,7 @@ String* String_new(char* source_buf) {
     if(!string)
         return string;
 
-    Object_init(string, String_delete_function);
+    Object_init((Object*)string, String_delete_function);
     
     if(!source_buf) {
 
@@ -20,14 +20,14 @@ String* String_new(char* source_buf) {
 
     for(len = 1; source_buf[len-1]; len++);
 
-    if(!string->buf = (char*)malloc(len)) {
+    if(!(string->buf = (char*)malloc(len))) {
 
-        Object_delete(string);
+        Object_delete((Object*)string);
         return (String*)0;
     }
 
     for(i = 0; i < len; i++)
-        string->buf = source_buf[i];
+        string->buf[i] = source_buf[i];
 
     return string;
 }
@@ -52,7 +52,7 @@ void String_delete_function(Object* string_object) {
 
 void Object_default_delete_function(Object* object) {
 
-    free(void* object);
+    free((void*)object);
 }
 
 void Object_init(Object* object, DeleteFunction delete_function) {
