@@ -3,6 +3,7 @@
 
 SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
 
+    int i;
     SessionMenu* session_menu = (SessionMenu*)malloc(sizeof(SessionMenu));
 
     if(!session_menu)
@@ -22,9 +23,9 @@ SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
 
     //TODO: Need to add a sanity check in the case that the new menu entry
     //couldn't be properly instantiated
-    while(session_menu->module_names && session_menu->module_names->count)
+    for(i = 0; session_menu->module_names && (i < session_menu->module_names->count); i++)
         Menu_add_entry((Menu*)session_menu,
-                       MenuEntry_new((String*)List_get_at(session_menu->module_names, 0), 0));
+                       MenuEntry_new((String*)List_get_at(session_menu->module_names, i), 0));
 
     return session_menu;
 }

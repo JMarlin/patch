@@ -767,8 +767,6 @@ void Window_process_mouse(Window* window, uint16_t mouse_x,
         //If we were previously over a child, handle a mouseout event on it and clear the pointer
         if(window->over_child) {
 
-            printf("%8X\n", window->over_child);
-
             Window_mouseout(window->over_child);
             window->over_child = (Window*)0;
             

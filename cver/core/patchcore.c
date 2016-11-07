@@ -43,12 +43,10 @@ int PatchCore_next_spawn_y(PatchCore* patch) {
     return 0;
 }
 
-void Patch_mouse_callback(Object* patch_object, uint16_t mouse_x,
+void Patch_mouse_callback(Object* desktop_object, uint16_t mouse_x,
                            uint16_t mouse_y, uint8_t mouse_buttons) {
 
-    PatchCore* patch_core = (PatchCore*)patch_object;
-
-    Desktop_process_mouse((Desktop*)patch_core->desktop, mouse_x, mouse_y, mouse_buttons);
+    Desktop_process_mouse((Desktop*)desktop_object, mouse_x, mouse_y, mouse_buttons);
 }
 
 void Patch_resize_callback(Object* patch_object, int w, int h) {

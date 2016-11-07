@@ -1,52 +1,53 @@
 echo off
 
+cd build
+
 rem build wslib
-echo . & call  emcc -c -o build/object.bc wslib/object.c
-echo . & call  emcc -c -o build/listnode.bc wslib/listnode.c
-echo . & call  emcc -c -o build/list.bc wslib/list.c
-echo . & call  emcc -c -o build/associativearray.bc wslib/associativearray.c
-echo . & call  emcc -c -o build/context.bc wslib/context.c
-echo . & call  emcc -c -o build/styleutils.bc wslib/styleutils.c
-echo . & call  emcc -c -o build/window.bc wslib/window.c 
-echo . & call  emcc -c -o build/desktop.bc wslib/desktop.c 
-echo . & call  emcc -c -o build/rect.bc wslib/rect.c
-echo . & call  emcc -c -o build/textbox.bc wslib/textbox.c
-echo . & call  emcc -c -o build/button.bc wslib/button.c
+echo . & call  emcc -c -o object.bc ../wslib/object.c -g4 
+echo . & call  emcc -c -o listnode.bc ../wslib/listnode.c -g4
+echo . & call  emcc -c -o list.bc ../wslib/list.c -g4
+echo . & call  emcc -c -o associativearray.bc ../wslib/associativearray.c -g4
+echo . & call  emcc -c -o context.bc ../wslib/context.c -g4
+echo . & call  emcc -c -o styleutils.bc ../wslib/styleutils.c -g4
+echo . & call  emcc -c -o window.bc ../wslib/window.c -g4 
+echo . & call  emcc -c -o desktop.bc ../wslib/desktop.c -g4 
+echo . & call  emcc -c -o rect.bc ../wslib/rect.c -g4
+echo . & call  emcc -c -o textbox.bc ../wslib/textbox.c -g4
+echo . & call  emcc -c -o button.bc ../wslib/button.c -g4
 
 rem build core
-echo . & call  emcc -c -o build/io.bc core/io.c 
-echo . & call  emcc -c -o build/module.bc core/module.c
-echo . & call  emcc -c -o build/patchcore.bc core/patchcore.c
-echo . & call  emcc -c -o build/unit.bc core/unit.c 
+echo . & call  emcc -c -o io.bc ../core/io.c -g4 
+echo . & call  emcc -c -o module.bc ../core/module.c -g4
+echo . & call  emcc -c -o patchcore.bc ../core/patchcore.c -g4
+echo . & call  emcc -c -o unit.bc ../core/unit.c -g4 
 
 rem build platform (will need to be smart about which platform to build and link in the future)
-echo . & call  emcc -c -o build/audiohandler.bc platform/audiohandler.c 
-echo . & call  emcc -c -o build/platformwrapper_emscripten.bc platform/platformwrapper_emscripten.c
+echo . & call  emcc -c -o audiohandler.bc ../platform/audiohandler.c -g4 
+echo . & call  emcc -c -o platformwrapper_emscripten.bc ../platform/platformwrapper_emscripten.c -g4
 
 rem build uilib
-echo . & call  emcc -c -o build/frame.bc uilib/frame.c
-echo . & call  emcc -c -o build/menu.bc uilib/menu.c
-echo . & call  emcc -c -o build/menuentry.bc uilib/menuentry.c
-echo . & call  emcc -c -o build/slider.bc uilib/slider.c
+echo . & call  emcc -c -o frame.bc ../uilib/frame.c -g4
+echo . & call  emcc -c -o menu.bc ../uilib/menu.c -g4
+echo . & call  emcc -c -o menuentry.bc ../uilib/menuentry.c -g4
+echo . & call  emcc -c -o slider.bc ../uilib/slider.c -g4
 
 rem build units
-echo . & call  emcc -c -o build/masterout.bc units/masterout.c
-echo . & call  emcc -c -o build/noise.bc units/noise.c
-echo . & call  emcc -c -o build/pitchknob.bc units/pitchknob.c
-echo . & call  emcc -c -o build/sequence.bc units/sequence.c
-echo . & call  emcc -c -o build/sine.bc units/sine.c
-echo . & call  emcc -c -o build/square.bc units/square.c
+echo . & call  emcc -c -o masterout.bc ../units/masterout.c -g4
+echo . & call  emcc -c -o noise.bc ../units/noise.c -g4
+echo . & call  emcc -c -o pitchknob.bc ../units/pitchknob.c -g4
+echo . & call  emcc -c -o sequence.bc ../units/sequence.c -g4
+echo . & call  emcc -c -o sine.bc ../units/sine.c -g4
+echo . & call  emcc -c -o square.bc ../units/square.c -g4
 
 rem build widgets
-echo . & call  emcc -c -o build/patchdesktop.bc widgets/patchdesktop.c
-echo . & call  emcc -c -o build/sessionmenu.bc widgets/sessionmenu.c
+echo . & call  emcc -c -o patchdesktop.bc ../widgets/patchdesktop.c -g4
+echo . & call  emcc -c -o sessionmenu.bc ../widgets/sessionmenu.c -g4
 
 rem build main and link all
-echo . & call  emcc -c -o build/main.bc main.c 
-cd build
+echo . & call  emcc -c -o main.bc ../main.c -g4 
 set expanded_list=
 for /f "tokens=*" %%F in ('dir /b /a:-d "*.bc"') do call set expanded_list=%%expanded_list%% "%%F"
-echo . & call  emcc -o ../current_build.js %expanded_list% -g -s NO_EXIT_RUNTIME=1
+echo . & call  emcc -o ../current_build.js %expanded_list% -g4 -s NO_EXIT_RUNTIME=1
 cd ..
 
 :end

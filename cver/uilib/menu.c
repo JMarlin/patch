@@ -69,6 +69,6 @@ void Menu_delete_function(Object* menu_object) {
 
     Menu* menu = (Menu*)menu_object; 
 
-    Object_delete((Object*)menu->frame.window.children);
+    Object_delete((Object*)menu->entries);
     Window_delete_function(menu_object);
 }

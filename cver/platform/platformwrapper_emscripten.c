@@ -58,7 +58,6 @@ Context* PlatformWrapper_get_context() {
         //Create and store canvas and information
         window.fo_canvas = document.createElement('canvas');
         document.body.style.margin = '0px';
-        window.fo_canvas.style.cursor = 'none';
         window.fo_canvas.width = $0;
         window.fo_canvas.height = $1;
         window.fo_buf_address = $2;

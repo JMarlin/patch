@@ -15,14 +15,13 @@ PatchDesktop* PatchDesktop_new(PatchCore* patch_core) {
 
     Object_init((Object*)patch_desktop, PatchDesktop_delete_function);
 
+    patch_desktop->patch_core = patch_core;
     patch_desktop->desktop.window.mouseclick_function = PatchDesktop_mouseclick_handler;
     patch_desktop->desktop.window.mousemove_function = PatchDesktop_mousemove_handler;
     patch_desktop->desktop.window.paint_function = PatchDesktop_paint_handler;
     patch_desktop->desktop.mouse_shown = PlatformWrapper_is_mouse_shown();
     patch_desktop->start_io = (IO*)0;
     patch_desktop->menu = (SessionMenu*)0;
-
-    printf("Init: %8X\n", patch_desktop->desktop.window.over_child);
 
     return patch_desktop;
 }

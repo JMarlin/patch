@@ -25,7 +25,7 @@ void MenuEntry_paint_handler(MenuEntry* menu_entry, Context* context) {
 
     //Current code assumes that the font is 12px high
     Context_draw_text(context, menu_entry->text->buf, menu_entry->x,
-                      menu_entry->y, RGB(0, 0, 0));
+                      menu_entry->y - 14, RGB(0, 0, 0));
 }
 
 void MenuEntry_mouseclick_handler(MenuEntry* menu_entry, int x, int y) {
