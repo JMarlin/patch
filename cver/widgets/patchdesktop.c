@@ -7,8 +7,15 @@ PatchDesktop* PatchDesktop_new(PatchCore* patch_core) {
     if(!patch_desktop)
         return patch_desktop;
 
-    if(!Desktop_init((Desktop*)patch_desktop, PlatformWrapper_get_context())) {
+    if(!(patch_desktop->base_context = PlatformWrapper_get_context())) {
+
+        Object_delete((Object*)patch_desktop);
+        return (PatchDesktop*)0;
+    }
+
+    if(!Desktop_init((Desktop*)patch_desktop, patch_desktop->base_context)) {
     
+        Object_delete((Object*)patch_desktop->base_context);
         Object_delete((Object*)patch_desktop);
         return (PatchDesktop*)0;
     }

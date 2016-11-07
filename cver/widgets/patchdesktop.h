@@ -11,6 +11,7 @@ struct PatchDesktop_struct;
 typedef struct PatchDesktop_struct {
     Desktop desktop;
     struct PatchCore_struct* patch_core;
+    Context* base_context;
     struct IO_struct* start_io;
     int wire_x;
     int wire_y;

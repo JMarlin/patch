@@ -52,7 +52,7 @@ void Patch_mouse_callback(Object* desktop_object, uint16_t mouse_x,
 void Patch_resize_callback(Object* desktop_object, int w, int h) {
 
     //Make sure that any changes to the root context get carried to all windows
-    Window_update_context((Window*)desktop_object, ((Window*)desktop_object)->context);
+    Window_update_context((Window*)desktop_object, ((PatchDesktop*)desktop_object)->base_context);
     Window_resize((Window*)desktop_object, w, h);
 }
 
