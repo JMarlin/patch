@@ -47,7 +47,7 @@ rem build main and link all
 echo . & call  emcc -c -o main.bc ../main.c -g4 
 set expanded_list=
 for /f "tokens=*" %%F in ('dir /b /a:-d "*.bc"') do call set expanded_list=%%expanded_list%% "%%F"
-echo . & call  emcc -o ../current_build.js %expanded_list% -g4 -s NO_EXIT_RUNTIME=1
+echo . & call  emcc -o ../current_build.js %expanded_list% -g4 -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1
 cd ..
 
 :end

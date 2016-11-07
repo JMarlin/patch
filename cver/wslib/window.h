@@ -92,6 +92,7 @@ void Window_hide(Window* window);
 void Window_show(Window* window);
 Window* Window_create_window(Window* window, int16_t x, int16_t y,  
                              uint16_t width, int16_t height, uint16_t flags);
+void Window_update_context(Window* window, Context* context);                             
 void Window_insert_child(Window* window, Window* child);   
 void Window_invalidate(Window* window, int top, int left, int bottom, int right);
 void Window_set_title(Window* window, char* new_title);                       

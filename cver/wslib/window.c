@@ -67,6 +67,7 @@ int Window_init(Window* window, int16_t x, int16_t y, uint16_t width,
     window->mouseout_function = (WindowMouseoutHandler)0;
     window->mousemove_function = (WindowMousemoveHandler)0;
     window->mouseclick_function = (WindowMouseclickHandler)0;
+    window->move_function = Window_move_function;
     window->active_child = (Window*)0;
     window->over_child = (Window*)0;
     window->title = (char*)0;
@@ -801,14 +802,15 @@ void Window_process_mouse(Window* window, uint16_t mouse_x,
 void Window_update_context(Window* window, Context* context) {
 
     int i;
-
-    if(window->context)
-        Object_delete((Object*)window->context);
+    Context* old_context = window->context;
 
     window->context = context ? Context_new_from(context) : context;
 
     for(i = 0; i < window->children->count; i++)
         Window_update_context((Window*)List_get_at(window->children, i), context);
+
+    if(old_context)
+        Object_delete((Object*)old_context);
 }
 
 //Quick wrapper for shoving a new entry into the child list

@@ -30,8 +30,8 @@ void Frame_paint_handler(Window* frame_window) {
 
     Context_fill_rect(frame_window->context, 2, 2, frame_window->width - 4,
                       frame_window->height - 4, RGB(155, 165, 185));
-    Context_draw_rect(frame_window->context, 0, 0, frame_window->width - 1,
-                      frame_window->height - 1, RGB(0, 0, 0));
+    Context_draw_rect(frame_window->context, 0, 0, frame_window->width,
+                      frame_window->height, RGB(0, 0, 0));
     Context_draw_rect(frame_window->context, 1, 1, frame_window->width - 2,
                       frame_window->height - 2, RGB(0, 0, 0));
 }

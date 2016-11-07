@@ -49,11 +49,11 @@ void Patch_mouse_callback(Object* desktop_object, uint16_t mouse_x,
     Desktop_process_mouse((Desktop*)desktop_object, mouse_x, mouse_y, mouse_buttons);
 }
 
-void Patch_resize_callback(Object* patch_object, int w, int h) {
+void Patch_resize_callback(Object* desktop_object, int w, int h) {
 
-    PatchCore* patch_core = (PatchCore*)patch_object;
-
-    Window_resize((Window*)patch_core->desktop, w, h);
+    //Make sure that any changes to the root context get carried to all windows
+    Window_update_context((Window*)desktop_object, ((Window*)desktop_object)->context);
+    Window_resize((Window*)desktop_object, w, h);
 }
 
 void PatchCore_start(PatchCore* patch) {

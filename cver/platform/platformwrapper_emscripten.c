@@ -53,7 +53,7 @@ Context* PlatformWrapper_get_context() {
     //Now we'll create the output canvas and insert it into the document
     //(EM_ASM allows us to embed JS into our C)
     //We will also se up the refresh timer here
-    EM_ASM_({
+    EM_ASM_({ 
         
         //Create and store canvas and information
         window.fo_canvas = document.createElement('canvas');
@@ -65,9 +65,13 @@ Context* PlatformWrapper_get_context() {
         document.body.appendChild(window.fo_canvas);
         window.fo_context = window.fo_canvas.getContext('2d');
         window.fo_canvas_data = window.fo_context.getImageData(0, 0, $0, $1);
+        window.fo_draw = true;
 
         //Start refresh handler
         setInterval(function() {
+
+            if(!window.fo_draw)
+                return;
 
             //Create an unsigned byte subarray  
             window.fo_canvas_data.data.set(
@@ -142,7 +146,40 @@ void PlatformWrapper_install_mouse_callback(Object* param_object, MouseCallback_
     mouse_handler.param_object = param_object;
     mouse_handler.callback = callback;
 }
+
+void EMSCRIPTEN_KEEPALIVE doResizeCallback() {
+
+    uint16_t width = EM_ASM_INT({return window.innerWidth},0);
+    uint16_t height = EM_ASM_INT({return window.innerHeight},0);
+
+    free(internal_context->buffer);
+    internal_context->buffer = (uint32_t*)malloc(sizeof(uint32_t) * width * height);
+    internal_context->width = width;
+    internal_context->height = height;
+
+    EM_ASM_({
+        window.fo_buf_address = $0;
+        window.fo_buf_size = 4 * window.fo_canvas.width * window.fo_canvas.height;
+        window.fo_canvas_data = window.fo_context.getImageData(0, 0, window.fo_canvas.width, window.fo_canvas.height);
+        window.fo_draw = true;
+    }, internal_context->buffer);
+
+    resize_handler.callback(resize_handler.param_object, width, height);
+}
+
 void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallback_handler callback) {
 
-    //Todo
+    EM_ASM(
+    
+        window.onresize = function() {
+
+            window.fo_draw = false;
+            window.fo_canvas.width = window.innerWidth;
+            window.fo_canvas.height = window.innerHeight;
+            Module.ccall('doResizeCallback');
+        };
+    );
+
+    resize_handler.param_object = param_object;
+    resize_handler.callback = callback;
 }

@@ -14,7 +14,8 @@ void Slider_knob_move(Window* knob_window, int x, int y) {
     if(y > (slider->window.height - 10))
         y = slider->window.height - 10;
 
-    slider->knob_old_move(knob_window, 0, y);
+    if(slider->knob_old_move)
+        slider->knob_old_move(knob_window, 0, y);
 }
 
 Slider* Slider_new(int x, int y, int width, int height, double min, double max) {
@@ -24,7 +25,7 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
     if(!(slider = (Slider*)malloc(sizeof(Slider))))
         return slider;
 
-    if(!Window_init((Window*)slider, x, y, width, height, WIN_NODECORATION | WIN_BODYDRAG, (Context*)0)) {
+    if(!Window_init((Window*)slider, x, y, width, height, WIN_NODECORATION, (Context*)0)) {
 
         free(slider);
         return (Slider*)0;
@@ -35,6 +36,8 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
         Object_delete((Object*)slider);
         return (Slider*)0;
     }
+
+    Window_insert_child((Window*)slider, (Window*)slider->knob);
 
     slider->value = 0;
     slider->min = min; 
