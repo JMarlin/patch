@@ -1,6 +1,8 @@
 #ifndef SINE_H
 #define SINE_H
 
+struct Sine_struct;
+
 #include "../core/module.h"
 #include "../core/patchcore.h"
 #include "../core/unit.h"

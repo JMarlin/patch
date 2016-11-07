@@ -8,9 +8,9 @@ SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
     if(!session_menu)
         return session_menu;
 
-    if(!Menu_init(session_menu, x, y, 200)) {
+    if(!Menu_init((Menu*)session_menu, x, y, 200)) {
 
-        Object_delete(session_menu);
+        Object_delete((Object*)session_menu);
         return (SessionMenu*)0;
     }
 
@@ -23,8 +23,10 @@ SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
     //TODO: Need to add a sanity check in the case that the new menu entry
     //couldn't be properly instantiated
     while(session_menu->module_names && session_menu->module_names->count)
-        Menu_add_entry(session_menu,
-                       MenuEntry_new(List_get_at(session_menu->module_names, 0), 0));
+        Menu_add_entry((Menu*)session_menu,
+                       MenuEntry_new((String*)List_get_at(session_menu->module_names, 0), 0));
+
+    return session_menu;
 }
 
 void SessionMenu_mouseclick_function(Window* session_menu_window, int x, int y) {
@@ -32,6 +34,6 @@ void SessionMenu_mouseclick_function(Window* session_menu_window, int x, int y) 
     SessionMenu* session_menu = (SessionMenu*)session_menu_window;
 
     PatchCore_instantiate_module(session_menu->patch_core, 
-                                 session_menu->module_names[y/14]->buf);
+                                 (String*)List_get_at(session_menu->module_names, y/14));
     PatchCore_destroy_menu(session_menu->patch_core);
 }

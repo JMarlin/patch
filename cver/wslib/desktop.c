@@ -41,7 +41,7 @@ Desktop* Desktop_new(Context* context) {
 
     if(!Desktop_init(desktop, context)) {
 
-        Delete_object(desktop);
+        Object_delete((Object*)desktop);
         return (Desktop*)0;
     }
 
@@ -110,7 +110,7 @@ void Desktop_process_mouse(Desktop* desktop, uint16_t mouse_x,
         return;
     }
 
-    List_add(dirty_list, mouse_rect);
+    List_add(dirty_list, (Object*)mouse_rect);
 
     //Do a dirty update for the desktop, which will, in turn, do a 
     //dirty update for all affected child windows

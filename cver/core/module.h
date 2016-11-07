@@ -1,11 +1,14 @@
 #ifndef MODULE_H
 #define MODULE_H
 
+struct Module_struct;
+
 #include "../wslib/window.h"
 #include "../wslib/object.h"
 #include "../core/patchcore.h"
+#include "unit.h"
 
-typedef Window* (*ModuleConstructor)(PatchCore* patch_core);
+typedef struct Unit_struct* (*ModuleConstructor)(struct PatchCore_struct* patch_core);
 
 typedef struct Module_struct {
     Object object;

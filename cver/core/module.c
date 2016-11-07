@@ -7,16 +7,16 @@ Module* Module_new(ModuleConstructor constructor, char* name) {
     if(!(module = (Module*)malloc(sizeof(Module))))
         return module;
 
-    Object_init(module, Module_delete_function);    
+    Object_init((Object*)module, Module_delete_function);    
     module->constructor = constructor;
     
     if(!(module->name = String_new(name))) {
 
-        Object_delete(module);
+        Object_delete((Object*)module);
         return (Module*)0;
     }
 
-    return name;
+    return module;
 }
 
 void Module_delete_function(Object* module_object) {
@@ -24,8 +24,8 @@ void Module_delete_function(Object* module_object) {
     if(!module_object)
         return;
 
-    Module* module = (Module* module_object);
+    Module* module = (Module*)module_object;
 
-    Object_delete(module->name);
+    Object_delete((Object*)module->name);
     Object_default_delete_function(module_object);
 } 

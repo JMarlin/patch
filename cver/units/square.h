@@ -1,6 +1,8 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
+struct Square_struct;
+
 #include "../core/module.h"
 #include "../core/patchcore.h"
 #include "../core/unit.h"

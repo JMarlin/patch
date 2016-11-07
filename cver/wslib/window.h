@@ -63,7 +63,6 @@ typedef struct Window_struct {
     WindowMouseclickHandler mouseclick_function;
     WindowMoveHandler move_function;
     char* title;
-    DeleteFunction delete_function;
 } Window;
 
 //Methods
@@ -98,5 +97,6 @@ void Window_invalidate(Window* window, int top, int left, int bottom, int right)
 void Window_set_title(Window* window, char* new_title);                       
 void Window_append_title(Window* window, char* additional_chars);                      
 void Window_delete_function(Object* window_object);
+void Window_resize(Window* window, int w, int h);
 
 #endif //WINDOW_H

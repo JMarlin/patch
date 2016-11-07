@@ -2,6 +2,7 @@
 #define RECT_H
 
 #include "object.h"
+#include "list.h"
 #include <stdlib.h>
 
 //================| Rect Class Declaration |================//

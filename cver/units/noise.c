@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
 #include "noise.h"
 
@@ -32,20 +33,20 @@ Unit* Noise_constructor(PatchCore* patch_core) {
     Noise* noise = (Noise*)malloc(sizeof(Noise));
 
     if(!noise)
-        return noise;
+        return (Unit*)noise;
 
-    if(!Unit_init(noise, patch_core)) {
+    if(!Unit_init((Unit*)noise, patch_core)) {
 
-        Object_delete(noise);
+        Object_delete((Object*)noise);
         return (Unit*)0;
     }
 
-    noise->output = Unit_create_output(noise, 195, 75);
-    Window_resize(noise, 200, 150);
+    noise->output = Unit_create_output((Unit*)noise, 195, 75);
+    Window_resize((Window*)noise, 200, 150);
 
     if(!(noise->output)) {
 
-        Object_delete(noise);
+        Object_delete((Object*)noise);
         return (Unit*)0;
     }    
    

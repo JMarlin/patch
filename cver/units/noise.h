@@ -1,6 +1,8 @@
 #ifndef NOISE_H
 #define NOISE_H
 
+struct Noise_struct;
+
 #include "../core/module.h"
 #include "../core/patchcore.h"
 #include "../core/unit.h"

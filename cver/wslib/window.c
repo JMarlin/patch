@@ -39,7 +39,7 @@ int Window_init(Window* window, int16_t x, int16_t y, uint16_t width,
 
     static unsigned int handle_source = 0;
 
-    Object_init(window, Window_delete_function);
+    Object_init((Object*)window, Window_delete_function);
 
     //Moved over here from the desktop 
     //Create child list or clean up and fail
@@ -307,11 +307,11 @@ void Window_apply_bound_clipping(Window* window, Context* context, int in_recurs
                              screen_y + clipping_window->height - 1,
                              screen_x + clipping_window->width - 1);
         Context_subtract_clip_rect(context, temp_rect);
-        Object_delete(temp_rect);
+        Object_delete((Object*)(Object*)temp_rect);
     }
 
     //Dispose of the used-up list 
-    Object_delete(clip_windows);
+    Object_delete((Object*)clip_windows);
 }
 
 void Window_update_title(Window* window) {
@@ -353,22 +353,22 @@ void Window_invalidate(Window* window, int top, int left, int bottom, int right)
 
     if(!(dirty_rect = Rect_new(top, left, bottom, right))) {
 
-        Object_delete(dirty_regions);
+        Object_delete((Object*)dirty_regions);
         return;
     }
 
-    if(!List_add(dirty_regions, dirty_rect)) {
+    if(!List_add(dirty_regions, (Object*)dirty_rect)) {
 
-        Object_delete(dirty_regions);
-        Object_delete(dirty_rect);
+        Object_delete((Object*)dirty_regions);
+        Object_delete((Object*)dirty_rect);
         return;
     }
 
     Window_paint(window, dirty_regions, 0);
 
     //Clean up the dirty rect list
-    Object_delete(dirty_regions);
-    Object_delete(dirty_rect); 
+    Object_delete((Object*)dirty_regions);
+    Object_delete((Object*)dirty_rect); 
 }
 
 //Another override-redirect function
@@ -424,7 +424,7 @@ void Window_paint(Window* window, List* dirty_regions, uint8_t paint_children) {
                              child_screen_y + current_child->height - 1,
                              child_screen_x + current_child->width - 1);
         Context_subtract_clip_rect(window->context, temp_rect);
-        Object_delete(temp_rect);
+        Object_delete((Object*)temp_rect);
     }
 
     //Finally, with all the clipping set up, we can set the context's 0,0 to the top-left corner
@@ -509,7 +509,7 @@ List* Window_get_windows_above(Window* parent, Window* child) {
     //if the window wasn't found
     for(i++; i < parent->children->count; i++) {
 
-        current_window = List_get_at(parent->children, i);
+        current_window = (Window*)List_get_at(parent->children, i);
 
         if(current_window->flags & WIN_HIDDEN)
             continue;
@@ -519,7 +519,7 @@ List* Window_get_windows_above(Window* parent, Window* child) {
 		   (current_window->x + current_window->width - 1) >= child->x &&
 		   current_window->y <= (child->y + child->height - 1) &&
 		   (current_window->y + current_window->height - 1) >= child->y)
-            List_add(return_list, current_window); //Insert the overlapping window
+            List_add(return_list, (Object*)current_window); //Insert the overlapping window
     }
 
     return return_list; 
@@ -551,7 +551,7 @@ List* Window_get_windows_below(Window* parent, Window* child) {
     //if the window wasn't found
     for(i--; i > -1; i--) {
 
-        current_window = List_get_at(parent->children, i);
+        current_window = (Window*)List_get_at(parent->children, i);
 
         if(current_window->flags & WIN_HIDDEN)
             continue;
@@ -561,7 +561,7 @@ List* Window_get_windows_below(Window* parent, Window* child) {
 		   (current_window->x + current_window->width - 1) >= child->x &&
 		   current_window->y <= (child->y + child->height - 1) &&
 		   (current_window->y + current_window->height - 1) >= child->y)
-            List_add(return_list, current_window); //Insert the overlapping window
+            List_add(return_list, (Object*)current_window); //Insert the overlapping window
     }
 
     return return_list; 
@@ -681,8 +681,8 @@ void Window_move_function(Window* window, int new_x, int new_y) {
     Window_paint(window->parent, dirty_list, 0);
 
     //We're done with the lists, so we can dump them
-    Object_delete(dirty_list);
-    Object_delete(dirty_windows);
+    Object_delete((Object*)dirty_list);
+    Object_delete((Object*)dirty_windows);
 
     //With the dirtied siblings redrawn, we can do the final update of 
     //the window location and paint it at that new position
@@ -767,6 +767,8 @@ void Window_process_mouse(Window* window, uint16_t mouse_x,
         //If we were previously over a child, handle a mouseout event on it and clear the pointer
         if(window->over_child) {
 
+            printf("%8X\n", window->over_child);
+
             Window_mouseout(window->over_child);
             window->over_child = (Window*)0;
             
@@ -803,7 +805,7 @@ void Window_update_context(Window* window, Context* context) {
     int i;
 
     if(window->context)
-        Context_delete(window->context);
+        Object_delete((Object*)window->context);
 
     window->context = context ? Context_new_from(context) : context;
 
@@ -817,7 +819,7 @@ void Window_insert_child(Window* window, Window* child) {
     Window* old_active = window->active_child;
 
     child->parent = window;
-    List_add(window->children, child);   
+    List_add(window->children, (Object*)child);   
     Window_update_context(child, window->context);
     Window_raise(child, 1);
 }
@@ -836,7 +838,7 @@ Window* Window_create_window(Window* window, int16_t x, int16_t y,
     //If we fail, make sure to clean up all of our allocations so far 
     if(!List_add(window->children, (void*)new_window)) {
 
-        Object_delete(new_window);
+        Object_delete((Object*)new_window);
         return (Window*)0;
     }
 
@@ -944,17 +946,17 @@ void Window_hide(Window* window) {
                                Window_screen_y(window) + window->height - 1,
                                Window_screen_x(window) + window->width - 1))) {
 
-        Object_delete(dirty_list);
+        Object_delete((Object*)dirty_list);
         return;
     }
 
-    List_add(dirty_list, dirty_rect);
+    List_add(dirty_list, (Object*)dirty_rect);
 
     //Do a dirty update for the desktop, which will, in turn, do a 
     //dirty update for all affected child windows
     Window_paint(window->parent, dirty_list, 1); 
 
-    Object_delete(dirty_list);
+    Object_delete((Object*)dirty_list);
 }
 
 void Window_show(Window* window) {
@@ -988,8 +990,8 @@ void Window_delete_function(Object* window_object) {
             List_remove_at(window->parent->children, i);
     }
 
-    Object_delete(window->children);
-    Object_delete(window->context);
+    Object_delete((Object*)window->children);
+    Object_delete((Object*)window->context);
     free(window);
 }
 

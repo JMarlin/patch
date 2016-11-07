@@ -1,6 +1,8 @@
 #ifndef MENUENTRY_H
 #define MENUENTRY_H
 
+struct MenuEntry_struct;
+
 #include "menu.h"
 
 typedef void (*MenuEntryClickCallback)(void);

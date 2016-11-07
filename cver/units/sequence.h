@@ -1,6 +1,8 @@
 #ifndef SEQUENCE_H
 #define SEQUENCE_H
 
+struct Sequence_struct;
+
 #include "../core/module.h"
 #include "../core/patchcore.h"
 #include "../core/unit.h"

@@ -10,9 +10,9 @@ void PlatformWrapper_init() {
 
     internal_context = (Context*)0;
     mouse_handler.param_object = (Object*)0;
-    mouse_handler.callback = (MouseCallback)0;
+    mouse_handler.callback = (MouseCallback_handler)0;
     resize_handler.param_object = (Object*)0;
-    resize_handler.callback = (MouseCallback)0;
+    resize_handler.callback = (ResizeCallback_handler)0;
 }
 
 void PlatformWrapper_hold_for_exit() {
@@ -43,7 +43,7 @@ Context* PlatformWrapper_get_context() {
 
     //Attempt to create the framebuffer array 
     if(!(return_buffer = (uint32_t*)malloc(sizeof(uint32_t) * width * height)))
-        return (Context*)0); //Exit early indicating error with an empty pointer 
+        return (Context*)0; //Exit early indicating error with an empty pointer 
 
     //Clear the framebuffer to black
     int i;

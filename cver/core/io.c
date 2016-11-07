@@ -1,5 +1,8 @@
 #include "io.h"
 
+//NOTE: IOs need to automatically disconnect from anything they might be
+//      connected to upon deletion so that we don't get invalid pulls
+
 int Output_initial_sample_pull_handler(IO* io, double *l_sample, double *r_sample) {
 
     *l_sample = *r_sample = 0.0;
@@ -26,12 +29,12 @@ IO* IO_new(PatchCore* patch_core, Object* param_object, int x, int y, int is_out
 
     if(!IO_init(io, patch_core, param_object, x, y, is_output)) {
 
-        Object_delete(io);
+        Object_delete((Object*)io);
         return (IO*)0;
     }
 
     if(!is_output)
-        List_add(patch_core->inputs, io);
+        List_add(patch_core->inputs, (Object*)io);
 
     return io;
 }
@@ -54,6 +57,8 @@ int IO_init(IO* io, PatchCore* patch_core, Object* param_object, int x, int y, i
         io->pull_sample_function = Output_initial_sample_pull_handler;
     else
         io->pull_sample_function = Input_sample_pull_handler;
+
+    return 1;
 }
 
 void IO_paint_handler(Window* io_window) {
@@ -73,7 +78,7 @@ void IO_mouseclick_handler(Window* io_window, int x, int y) {
         io->connected_io = (IO*)0;
     }
 
-    Patch_connect_action(io->patch, io);
+    PatchCore_connect_action(io->patch_core, io);
 }
 
 void IO_connect(IO* io, IO* connected_io) {

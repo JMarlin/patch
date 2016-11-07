@@ -1,4 +1,7 @@
 #ifndef AUDIOHANDLER_H
+#define AUDIOHANDLER_H
+
+#include "../wslib/object.h"
 
 typedef void (*AudioHandlerFunction)(Object*, double*, double*);
 

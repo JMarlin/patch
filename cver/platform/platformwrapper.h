@@ -1,6 +1,11 @@
 #ifndef PLATFORMWRAPPER_H
 #define PLATFORMWRAPPER_H
 
+#define SAMPLE_RATE 44100
+
+struct MouseCallback_struct;
+struct ResizeCallback_struct;
+
 #include <inttypes.h>
 #include "audiohandler.h"
 #include "../wslib/object.h"
@@ -16,7 +21,7 @@ typedef struct MouseCallback_struct {
 
 typedef struct ResizeCallback_struct {
     Object* param_object;
-    ReizeCallback_handler callback; 
+    ResizeCallback_handler callback; 
 } ResizeCallback;
 
 void PlatformWrapper_init();

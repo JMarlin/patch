@@ -7,7 +7,7 @@ Module* Sequence_new() {
 
 int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
 
-    (Sequence*)sequence = (Sequence*)io->param_object;
+    Sequence* sequence = (Sequence*)io->param_object;
 
     int i;
     double current_clock_sample_l,
@@ -29,7 +29,7 @@ int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
     for(i = 0; i < 8; i++) {
 
         if(!IO_pull_sample((IO*)List_get_at(sequence->step_list, i), 
-                           &step_sample_l[i], &step_sample_r[i]));
+                           &step_sample_l[i], &step_sample_r[i]))
             return 0;
     }
 
@@ -41,7 +41,7 @@ int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
 
 void Sequence_delete_function(Object* sequence_object) {
 
-    (Sequence*)sequence = (Sequence*)sequence_object;
+    Sequence* sequence = (Sequence*)sequence_object;
 
     //Clear the list so that the elements don't get freed on list
     //deletion and then double-freed on window deletion
@@ -49,7 +49,7 @@ void Sequence_delete_function(Object* sequence_object) {
         List_remove_at(sequence->step_list, 0);
 
     //Delete the emptied step list
-    Object_delete(sequence->step_list);
+    Object_delete((Object*)sequence->step_list);
     Unit_delete(sequence_object);
 }
 
@@ -60,48 +60,48 @@ Unit* Sequence_constructor(PatchCore* patch_core) {
     Sequence* sequence = (Sequence*)malloc(sizeof(Sequence));
 
     if(!sequence)
-        return sequence;
+        return (Unit*)sequence;
 
-    if(!Unit_init(sequence, patch_core)) {
+    if(!Unit_init((Unit*)sequence, patch_core)) {
 
-        Object_delete(sequence);
+        Object_delete((Object*)sequence);
         return (Unit*)0;
     }
 
-    Object_init(sequence, Sequence_delete_function);
+    Object_init((Object*)sequence, Sequence_delete_function);
 
     sequence->step_list = List_new();
 
     if(!sequence->step_list) {
 
-        Object_delete(sequence);
+        Object_delete((Object*)sequence);
         return (Unit*)0;
     }    
 
     
     for(i = 0; i < 8; i++) {
 
-        temp_input = Unit_create_input(sequence, 20*(i+1), 5);
+        temp_input = Unit_create_input((Unit*)sequence, 20*(i+1), 5);
 
         if(!temp_input) {
 
-            Object_delete(sequence);
+            Object_delete((Object*)sequence);
             return (Unit*)0;
         }    
 
-        List_add(sequence->step_list, temp_input);
+        List_add(sequence->step_list, (Object*)temp_input);
     }
 
-    sequence->output = Unit_create_output(sequence, 195, 75);
-    sequence->clock_in = Unit_create_input(sequence, 5, 75);
+    sequence->output = Unit_create_output((Unit*)sequence, 195, 75);
+    sequence->clock_in = Unit_create_input((Unit*)sequence, 5, 75);
 
     if(!(sequence->clock_in && sequence->output)) {
 
-        Object_delete(sequence);
+        Object_delete((Object*)sequence);
         return (Unit*)0;
     }    
 
-    Window_resize(sequence, 200, 150);
+    Window_resize((Window*)sequence, 200, 150);
     sequence->output->pull_sample_function = Sequence_pull_sample_handler;
     sequence->current_step = 0;
     sequence->last_clock_sample = 0;

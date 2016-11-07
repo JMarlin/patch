@@ -1,18 +1,9 @@
 #include "slider.h"
 
-typedef struct Slider_struct {
-    Window window; //Inherits window
-    Frame* knob;
-    double value;
-    double min;
-    double max;
-    WindowMoveHandler knob_old_move;
-} Slider;
-
 void Slider_knob_move(Window* knob_window, int x, int y) {
 
     Frame* knob = (Frame*)knob_window;
-    Slider* slider = (Slider*)knob->parent;
+    Slider* slider = (Slider*)knob->window.parent;
 
     if(!slider)
         return;
@@ -30,10 +21,10 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
 
     Slider* slider;
 
-    if(!(slider = (Slider*)Malloc(sizeof(Slider))))
+    if(!(slider = (Slider*)malloc(sizeof(Slider))))
         return slider;
 
-    if(!Window_init((Window*)slider, x, y, width, height, (Context*)0)) {
+    if(!Window_init((Window*)slider, x, y, width, height, WIN_NODECORATION | WIN_BODYDRAG, (Context*)0)) {
 
         free(slider);
         return (Slider*)0;
@@ -41,16 +32,18 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
 
     if(!(slider->knob = Frame_new(0, 0, width, 10))) {
 
-        Window_delete(slider);
+        Object_delete((Object*)slider);
         return (Slider*)0;
     }
 
     slider->value = 0;
     slider->min = min; 
     slider->max = max; 
-    slider->knob_old_move = slider->knob->window.move; 
-    slider->knob->window.move = Slider_knob_move;
+    slider->knob_old_move = slider->knob->window.move_function; 
+    slider->knob->window.move_function = Slider_knob_move;
     slider->window.object.delete_function = Slider_delete_function;
+
+    return slider;
 }
 
 double Slider_get_value(Slider* slider) {
@@ -78,10 +71,10 @@ void Slider_set_value(Slider* slider, double new_value) {
     Window_move((Window*)slider->knob, 0, (int)new_y);
 }
 
-Slider* Slider_delete_function(Object* slider_object) {
+void Slider_delete_function(Object* slider_object) {
 
     Slider* slider = (Slider*)slider_object;
 
-    Object_delete(slider->knob);
+    Object_delete((Object*)slider->knob);
     Window_delete_function(slider_object);
 }

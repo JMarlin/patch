@@ -7,14 +7,14 @@ MenuEntry* MenuEntry_new(String* text, MenuEntryClickCallback click_action) {
     if(!(menu_entry = (MenuEntry*)malloc(sizeof(MenuEntry))))
         return menu_entry;
 
-    Object_init((Object*)menu_entry, Menu_entry_delete_function);
+    Object_init((Object*)menu_entry, MenuEntry_delete_function);
     menu_entry->x = 0;
     menu_entry->y = 0;
     menu_entry->click_action = click_action;
 
     if(!(menu_entry->text = String_new(text->buf))) {
 
-        Object_delete(menu_entry);
+        Object_delete((Object*)menu_entry);
         return (MenuEntry*)0;
     }
 
@@ -41,6 +41,6 @@ void MenuEntry_delete_function(Object* menu_entry_object) {
 
     MenuEntry* menu_entry = (MenuEntry*)menu_entry_object;
 
-    Object_delete(menu_entry->text);
+    Object_delete((Object*)menu_entry->text);
     Object_default_delete_function(menu_entry_object);
 }

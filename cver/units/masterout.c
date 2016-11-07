@@ -30,11 +30,11 @@ int MasterOut_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
 
 void MasterOut_delete_function(Object* master_out_object) {
 
-    (MasterOut*)master_out = (MasterOut*)master_out_object;
+    MasterOut* master_out = (MasterOut*)master_out_object;
 
     //Need to do this since, because the output IO never gets installed 
     //as a child of the window, it won't be deleted by the window deleter
-    Object_delete(master_out->output);
+    Object_delete((Object*)(Object*)master_out->output);
     Unit_delete(master_out_object);
 }
 
@@ -43,30 +43,30 @@ Unit* MasterOut_constructor(PatchCore* patch_core) {
     MasterOut* master_out = (MasterOut*)malloc(sizeof(MasterOut));
 
     if(!master_out)
-        return master_out;
+        return (Unit*)master_out;
 
-    if(!Unit_init(master_out, patch_core)) {
+    if(!Unit_init((Unit*)master_out, patch_core)) {
 
-        Object_delete(master_out);
+        Object_delete((Object*)master_out);
         return (Unit*)0;
     }
 
-    Object_init(master_out, MasterOut_delete_function);
+    Object_init((Object*)master_out, MasterOut_delete_function);
     master_out->slider = Slider_new(10, 10, 30, 130, 0, 1);
-    master_out->input = Unit_create_input(master_out, 5, 75);
-    master_out->output = IO_new(patch_core, master_out, 0, 0, 1);
+    master_out->input = Unit_create_input((Unit*)master_out, 5, 75);
+    master_out->output = IO_new(patch_core, (Object*)master_out, 0, 0, 1);
 
     if(!(master_out->slider && master_out->input && master_out->output)) {
 
-        Object_delete(master_out);
+        Object_delete((Object*)master_out);
         return (Unit*)0;
     }    
 
-    Window_insert_child(master_out, master_out->slider);
-    Window_resize(master_out, 200, 150);
+    Window_insert_child((Window*)master_out, (Window*)master_out->slider);
+    Window_resize((Window*)master_out, 200, 150);
 
     master_out->output->pull_sample_function = MasterOut_pull_sample_handler;
-    PatchCore_add_source(patch_core, output);
+    PatchCore_add_source(patch_core, master_out->output);
 
     return (Unit*)master_out;
 }

@@ -1,6 +1,8 @@
 #ifndef FRAME_H
 #define FRAME_H 
 
+struct Frame_struct;
+
 #include "../wslib/window.h"
 
 typedef struct Frame_struct {

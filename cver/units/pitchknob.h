@@ -1,6 +1,8 @@
 #ifndef PITCHKNOB_H
 #define PITCHKNOB_H
 
+struct PitchKnob_struct;
+
 #include "../core/module.h"
 #include "../core/patchcore.h"
 #include "../core/unit.h"
