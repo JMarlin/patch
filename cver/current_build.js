@@ -12219,222 +12219,68 @@ function _Frame_paint_handler($frame_window) {
  _Context_draw_rect($27,1,1,$32,$37,-16777216); //@line 35 "../uilib/frame.c"
  STACKTOP = sp;return; //@line 37 "../uilib/frame.c"
 }
-function _Menu_init($menu,$x,$y,$width) {
- $menu = $menu|0;
- $x = $x|0;
- $y = $y|0;
- $width = $width|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
- var $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, label = 0, sp = 0;
- sp = STACKTOP;
- STACKTOP = STACKTOP + 32|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $1 = $menu;
- $2 = $x;
- $3 = $y;
- $4 = $width;
- $5 = $1; //@line 25 "../uilib/menu.c"
- $6 = $2; //@line 25 "../uilib/menu.c"
- $7 = $3; //@line 25 "../uilib/menu.c"
- $8 = $4; //@line 25 "../uilib/menu.c"
- $9 = (_Frame_init($5,$6,$7,$8,4)|0); //@line 25 "../uilib/menu.c"
- $10 = ($9|0)!=(0); //@line 25 "../uilib/menu.c"
- if (!($10)) {
-  $0 = 0; //@line 26 "../uilib/menu.c"
-  $26 = $0; //@line 39 "../uilib/menu.c"
-  STACKTOP = sp;return ($26|0); //@line 39 "../uilib/menu.c"
- }
- $11 = $1; //@line 28 "../uilib/menu.c"
- _Object_init($11,21); //@line 28 "../uilib/menu.c"
- $12 = (_List_new()|0); //@line 30 "../uilib/menu.c"
- $13 = $1; //@line 30 "../uilib/menu.c"
- $14 = ((($13)) + 88|0); //@line 30 "../uilib/menu.c"
- HEAP32[$14>>2] = $12; //@line 30 "../uilib/menu.c"
- $15 = ($12|0)!=(0|0); //@line 30 "../uilib/menu.c"
- if ($15) {
-  $16 = $1; //@line 33 "../uilib/menu.c"
-  $17 = ((($16)) + 52|0); //@line 33 "../uilib/menu.c"
-  $18 = HEAP32[$17>>2]|0; //@line 33 "../uilib/menu.c"
-  $19 = $1; //@line 33 "../uilib/menu.c"
-  $20 = ((($19)) + 92|0); //@line 33 "../uilib/menu.c"
-  HEAP32[$20>>2] = $18; //@line 33 "../uilib/menu.c"
-  $21 = $1; //@line 34 "../uilib/menu.c"
-  $22 = ((($21)) + 52|0); //@line 34 "../uilib/menu.c"
-  HEAP32[$22>>2] = 22; //@line 34 "../uilib/menu.c"
-  $23 = $1; //@line 35 "../uilib/menu.c"
-  $24 = ((($23)) + 76|0); //@line 35 "../uilib/menu.c"
-  HEAP32[$24>>2] = 23; //@line 35 "../uilib/menu.c"
-  $25 = $1; //@line 36 "../uilib/menu.c"
-  HEAP32[$25>>2] = 21; //@line 36 "../uilib/menu.c"
-  $0 = 1; //@line 38 "../uilib/menu.c"
-  $26 = $0; //@line 39 "../uilib/menu.c"
-  STACKTOP = sp;return ($26|0); //@line 39 "../uilib/menu.c"
- } else {
-  $0 = 0; //@line 31 "../uilib/menu.c"
-  $26 = $0; //@line 39 "../uilib/menu.c"
-  STACKTOP = sp;return ($26|0); //@line 39 "../uilib/menu.c"
- }
- return (0)|0;
-}
-function _Menu_mouseclick_handler($menu_window,$x,$y) {
- $menu_window = $menu_window|0;
- $x = $x|0;
- $y = $y|0;
- var $0 = 0, $1 = 0, $2 = 0, label = 0, sp = 0;
- sp = STACKTOP;
- STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $0 = $menu_window;
- $1 = $x;
- $2 = $y;
- STACKTOP = sp;return; //@line 21 "../uilib/menu.c"
-}
-function _Menu_delete_function($menu_object) {
- $menu_object = $menu_object|0;
- var $0 = 0, $1 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $menu = 0, label = 0, sp = 0;
- sp = STACKTOP;
- STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $0 = $menu_object;
- $1 = $0; //@line 70 "../uilib/menu.c"
- $menu = $1; //@line 70 "../uilib/menu.c"
- $2 = $menu; //@line 72 "../uilib/menu.c"
- $3 = ((($2)) + 88|0); //@line 72 "../uilib/menu.c"
- $4 = HEAP32[$3>>2]|0; //@line 72 "../uilib/menu.c"
- _Object_delete($4); //@line 72 "../uilib/menu.c"
- $5 = $0; //@line 73 "../uilib/menu.c"
- _Window_delete_function($5); //@line 73 "../uilib/menu.c"
- STACKTOP = sp;return; //@line 74 "../uilib/menu.c"
-}
-function _Menu_paint_handler($menu_window) {
- $menu_window = $menu_window|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
- var $27 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, $current_entry = 0, $i = 0, $menu = 0, label = 0, sp = 0;
- sp = STACKTOP;
- STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $0 = $menu_window;
- $1 = $0; //@line 46 "../uilib/menu.c"
- $menu = $1; //@line 46 "../uilib/menu.c"
- $2 = $menu; //@line 48 "../uilib/menu.c"
- $3 = ((($2)) + 92|0); //@line 48 "../uilib/menu.c"
- $4 = HEAP32[$3>>2]|0; //@line 48 "../uilib/menu.c"
- $5 = ($4|0)!=(0|0); //@line 48 "../uilib/menu.c"
- if ($5) {
-  $6 = $menu; //@line 49 "../uilib/menu.c"
-  $7 = ((($6)) + 92|0); //@line 49 "../uilib/menu.c"
-  $8 = HEAP32[$7>>2]|0; //@line 49 "../uilib/menu.c"
-  $9 = $0; //@line 49 "../uilib/menu.c"
-  FUNCTION_TABLE_vi[$8 & 63]($9); //@line 49 "../uilib/menu.c"
- }
- $i = 0; //@line 51 "../uilib/menu.c"
- while(1) {
-  $10 = $i; //@line 51 "../uilib/menu.c"
-  $11 = $menu; //@line 51 "../uilib/menu.c"
-  $12 = ((($11)) + 88|0); //@line 51 "../uilib/menu.c"
-  $13 = HEAP32[$12>>2]|0; //@line 51 "../uilib/menu.c"
-  $14 = ((($13)) + 4|0); //@line 51 "../uilib/menu.c"
-  $15 = HEAP32[$14>>2]|0; //@line 51 "../uilib/menu.c"
-  $16 = ($10>>>0)<($15>>>0); //@line 51 "../uilib/menu.c"
-  if (!($16)) {
-   break;
-  }
-  $17 = $menu; //@line 54 "../uilib/menu.c"
-  $18 = ((($17)) + 88|0); //@line 54 "../uilib/menu.c"
-  $19 = HEAP32[$18>>2]|0; //@line 54 "../uilib/menu.c"
-  $20 = $i; //@line 54 "../uilib/menu.c"
-  $21 = (_List_get_at($19,$20)|0); //@line 54 "../uilib/menu.c"
-  $current_entry = $21; //@line 54 "../uilib/menu.c"
-  $22 = $current_entry; //@line 55 "../uilib/menu.c"
-  $23 = $menu; //@line 55 "../uilib/menu.c"
-  $24 = ((($23)) + 24|0); //@line 55 "../uilib/menu.c"
-  $25 = HEAP32[$24>>2]|0; //@line 55 "../uilib/menu.c"
-  _MenuEntry_paint_handler($22,$25); //@line 55 "../uilib/menu.c"
-  $26 = $i; //@line 51 "../uilib/menu.c"
-  $27 = (($26) + 1)|0; //@line 51 "../uilib/menu.c"
-  $i = $27; //@line 51 "../uilib/menu.c"
- }
- STACKTOP = sp;return; //@line 57 "../uilib/menu.c"
-}
-function _Menu_add_entry($menu,$menu_entry) {
- $menu = $menu|0;
- $menu_entry = $menu_entry|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0;
- var $7 = 0, $8 = 0, $9 = 0, label = 0, sp = 0;
- sp = STACKTOP;
- STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $0 = $menu;
- $1 = $menu_entry;
- $2 = $0; //@line 61 "../uilib/menu.c"
- $3 = ((($2)) + 88|0); //@line 61 "../uilib/menu.c"
- $4 = HEAP32[$3>>2]|0; //@line 61 "../uilib/menu.c"
- $5 = $1; //@line 61 "../uilib/menu.c"
- (_List_add($4,$5)|0); //@line 61 "../uilib/menu.c"
- $6 = $1; //@line 63 "../uilib/menu.c"
- $7 = ((($6)) + 8|0); //@line 63 "../uilib/menu.c"
- HEAP32[$7>>2] = 2; //@line 63 "../uilib/menu.c"
- $8 = $0; //@line 64 "../uilib/menu.c"
- $9 = ((($8)) + 88|0); //@line 64 "../uilib/menu.c"
- $10 = HEAP32[$9>>2]|0; //@line 64 "../uilib/menu.c"
- $11 = ((($10)) + 4|0); //@line 64 "../uilib/menu.c"
- $12 = HEAP32[$11>>2]|0; //@line 64 "../uilib/menu.c"
- $13 = ($12*14)|0; //@line 64 "../uilib/menu.c"
- $14 = (($13) + 1)|0; //@line 64 "../uilib/menu.c"
- $15 = $1; //@line 64 "../uilib/menu.c"
- $16 = ((($15)) + 12|0); //@line 64 "../uilib/menu.c"
- HEAP32[$16>>2] = $14; //@line 64 "../uilib/menu.c"
- $17 = $0; //@line 65 "../uilib/menu.c"
- $18 = ((($17)) + 18|0); //@line 65 "../uilib/menu.c"
- $19 = HEAP16[$18>>1]|0; //@line 65 "../uilib/menu.c"
- $20 = $19&65535; //@line 65 "../uilib/menu.c"
- $21 = (($20) + 14)|0; //@line 65 "../uilib/menu.c"
- $22 = $21&65535; //@line 65 "../uilib/menu.c"
- HEAP16[$18>>1] = $22; //@line 65 "../uilib/menu.c"
- STACKTOP = sp;return; //@line 66 "../uilib/menu.c"
-}
 function _MenuEntry_new($text,$click_action) {
  $text = $text|0;
  $click_action = $click_action|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0;
- var $8 = 0, $9 = 0, $menu_entry = 0, label = 0, sp = 0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
+ var $27 = 0, $28 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, $menu_entry = 0, label = 0, sp = 0;
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
  $1 = $text;
  $2 = $click_action;
- $3 = (_malloc(20)|0); //@line 7 "../uilib/menuentry.c"
+ $3 = (_malloc(96)|0); //@line 7 "../uilib/menuentry.c"
  $menu_entry = $3; //@line 7 "../uilib/menuentry.c"
  $4 = ($3|0)!=(0|0); //@line 7 "../uilib/menuentry.c"
  $5 = $menu_entry; //@line 10 "../uilib/menuentry.c"
  if (!($4)) {
   $0 = $5; //@line 8 "../uilib/menuentry.c"
-  $21 = $0; //@line 22 "../uilib/menuentry.c"
-  STACKTOP = sp;return ($21|0); //@line 22 "../uilib/menuentry.c"
+  $28 = $0; //@line 31 "../uilib/menuentry.c"
+  STACKTOP = sp;return ($28|0); //@line 31 "../uilib/menuentry.c"
  }
- _Object_init($5,24); //@line 10 "../uilib/menuentry.c"
- $6 = $menu_entry; //@line 11 "../uilib/menuentry.c"
- $7 = ((($6)) + 8|0); //@line 11 "../uilib/menuentry.c"
- HEAP32[$7>>2] = 0; //@line 11 "../uilib/menuentry.c"
- $8 = $menu_entry; //@line 12 "../uilib/menuentry.c"
- $9 = ((($8)) + 12|0); //@line 12 "../uilib/menuentry.c"
- HEAP32[$9>>2] = 0; //@line 12 "../uilib/menuentry.c"
- $10 = $2; //@line 13 "../uilib/menuentry.c"
- $11 = $menu_entry; //@line 13 "../uilib/menuentry.c"
- $12 = ((($11)) + 16|0); //@line 13 "../uilib/menuentry.c"
- HEAP32[$12>>2] = $10; //@line 13 "../uilib/menuentry.c"
- $13 = $1; //@line 15 "../uilib/menuentry.c"
- $14 = ((($13)) + 4|0); //@line 15 "../uilib/menuentry.c"
- $15 = HEAP32[$14>>2]|0; //@line 15 "../uilib/menuentry.c"
- $16 = (_String_new($15)|0); //@line 15 "../uilib/menuentry.c"
- $17 = $menu_entry; //@line 15 "../uilib/menuentry.c"
- $18 = ((($17)) + 4|0); //@line 15 "../uilib/menuentry.c"
- HEAP32[$18>>2] = $16; //@line 15 "../uilib/menuentry.c"
- $19 = ($16|0)!=(0|0); //@line 15 "../uilib/menuentry.c"
- $20 = $menu_entry; //@line 21 "../uilib/menuentry.c"
- if ($19) {
-  $0 = $20; //@line 21 "../uilib/menuentry.c"
-  $21 = $0; //@line 22 "../uilib/menuentry.c"
-  STACKTOP = sp;return ($21|0); //@line 22 "../uilib/menuentry.c"
+ $6 = (_Window_init($5,0,0,100,14,3,0)|0); //@line 10 "../uilib/menuentry.c"
+ $7 = ($6|0)!=(0); //@line 10 "../uilib/menuentry.c"
+ $8 = $menu_entry; //@line 16 "../uilib/menuentry.c"
+ if (!($7)) {
+  _Object_delete($8); //@line 12 "../uilib/menuentry.c"
+  $0 = 0; //@line 13 "../uilib/menuentry.c"
+  $28 = $0; //@line 31 "../uilib/menuentry.c"
+  STACKTOP = sp;return ($28|0); //@line 31 "../uilib/menuentry.c"
+ }
+ _Object_init($8,21); //@line 16 "../uilib/menuentry.c"
+ $9 = $1; //@line 18 "../uilib/menuentry.c"
+ $10 = ((($9)) + 4|0); //@line 18 "../uilib/menuentry.c"
+ $11 = HEAP32[$10>>2]|0; //@line 18 "../uilib/menuentry.c"
+ $12 = (_String_new($11)|0); //@line 18 "../uilib/menuentry.c"
+ $13 = $menu_entry; //@line 18 "../uilib/menuentry.c"
+ $14 = ((($13)) + 88|0); //@line 18 "../uilib/menuentry.c"
+ HEAP32[$14>>2] = $12; //@line 18 "../uilib/menuentry.c"
+ $15 = ($12|0)!=(0|0); //@line 18 "../uilib/menuentry.c"
+ $16 = $menu_entry; //@line 24 "../uilib/menuentry.c"
+ if ($15) {
+  $17 = ((($16)) + 92|0); //@line 24 "../uilib/menuentry.c"
+  HEAP32[$17>>2] = 0; //@line 24 "../uilib/menuentry.c"
+  $18 = $menu_entry; //@line 25 "../uilib/menuentry.c"
+  $19 = ((($18)) + 52|0); //@line 25 "../uilib/menuentry.c"
+  HEAP32[$19>>2] = 22; //@line 25 "../uilib/menuentry.c"
+  $20 = $2; //@line 26 "../uilib/menuentry.c"
+  $21 = $menu_entry; //@line 26 "../uilib/menuentry.c"
+  $22 = ((($21)) + 76|0); //@line 26 "../uilib/menuentry.c"
+  HEAP32[$22>>2] = $20; //@line 26 "../uilib/menuentry.c"
+  $23 = $menu_entry; //@line 27 "../uilib/menuentry.c"
+  $24 = ((($23)) + 64|0); //@line 27 "../uilib/menuentry.c"
+  HEAP32[$24>>2] = 23; //@line 27 "../uilib/menuentry.c"
+  $25 = $menu_entry; //@line 28 "../uilib/menuentry.c"
+  $26 = ((($25)) + 68|0); //@line 28 "../uilib/menuentry.c"
+  HEAP32[$26>>2] = 24; //@line 28 "../uilib/menuentry.c"
+  $27 = $menu_entry; //@line 30 "../uilib/menuentry.c"
+  $0 = $27; //@line 30 "../uilib/menuentry.c"
+  $28 = $0; //@line 31 "../uilib/menuentry.c"
+  STACKTOP = sp;return ($28|0); //@line 31 "../uilib/menuentry.c"
  } else {
-  _Object_delete($20); //@line 17 "../uilib/menuentry.c"
-  $0 = 0; //@line 18 "../uilib/menuentry.c"
-  $21 = $0; //@line 22 "../uilib/menuentry.c"
-  STACKTOP = sp;return ($21|0); //@line 22 "../uilib/menuentry.c"
+  _Object_delete($16); //@line 20 "../uilib/menuentry.c"
+  $0 = 0; //@line 21 "../uilib/menuentry.c"
+  $28 = $0; //@line 31 "../uilib/menuentry.c"
+  STACKTOP = sp;return ($28|0); //@line 31 "../uilib/menuentry.c"
  }
  return (0)|0;
 }
@@ -12444,44 +12290,226 @@ function _MenuEntry_delete_function($menu_entry_object) {
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
  $0 = $menu_entry_object;
- $1 = $0; //@line 39 "../uilib/menuentry.c"
- $2 = ($1|0)!=(0|0); //@line 39 "../uilib/menuentry.c"
+ $1 = $0; //@line 66 "../uilib/menuentry.c"
+ $2 = ($1|0)!=(0|0); //@line 66 "../uilib/menuentry.c"
  if (!($2)) {
-  STACKTOP = sp;return; //@line 46 "../uilib/menuentry.c"
+  STACKTOP = sp;return; //@line 73 "../uilib/menuentry.c"
  }
- $3 = $0; //@line 42 "../uilib/menuentry.c"
- $menu_entry = $3; //@line 42 "../uilib/menuentry.c"
- $4 = $menu_entry; //@line 44 "../uilib/menuentry.c"
- $5 = ((($4)) + 4|0); //@line 44 "../uilib/menuentry.c"
- $6 = HEAP32[$5>>2]|0; //@line 44 "../uilib/menuentry.c"
- _Object_delete($6); //@line 44 "../uilib/menuentry.c"
- $7 = $0; //@line 45 "../uilib/menuentry.c"
- _Object_default_delete_function($7); //@line 45 "../uilib/menuentry.c"
- STACKTOP = sp;return; //@line 46 "../uilib/menuentry.c"
+ $3 = $0; //@line 69 "../uilib/menuentry.c"
+ $menu_entry = $3; //@line 69 "../uilib/menuentry.c"
+ $4 = $menu_entry; //@line 71 "../uilib/menuentry.c"
+ $5 = ((($4)) + 88|0); //@line 71 "../uilib/menuentry.c"
+ $6 = HEAP32[$5>>2]|0; //@line 71 "../uilib/menuentry.c"
+ _Object_delete($6); //@line 71 "../uilib/menuentry.c"
+ $7 = $0; //@line 72 "../uilib/menuentry.c"
+ _Window_delete_function($7); //@line 72 "../uilib/menuentry.c"
+ STACKTOP = sp;return; //@line 73 "../uilib/menuentry.c"
 }
-function _MenuEntry_paint_handler($menu_entry,$context) {
- $menu_entry = $menu_entry|0;
- $context = $context|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, label = 0, sp = 0;
+function _MenuEntry_paint_handler($menu_entry_window) {
+ $menu_entry_window = $menu_entry_window|0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
+ var $27 = 0, $28 = 0, $29 = 0, $3 = 0, $30 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, $menu_entry = 0, label = 0, sp = 0;
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $0 = $menu_entry;
- $1 = $context;
- $2 = $1; //@line 27 "../uilib/menuentry.c"
- $3 = $0; //@line 27 "../uilib/menuentry.c"
- $4 = ((($3)) + 4|0); //@line 27 "../uilib/menuentry.c"
- $5 = HEAP32[$4>>2]|0; //@line 27 "../uilib/menuentry.c"
- $6 = ((($5)) + 4|0); //@line 27 "../uilib/menuentry.c"
- $7 = HEAP32[$6>>2]|0; //@line 27 "../uilib/menuentry.c"
- $8 = $0; //@line 27 "../uilib/menuentry.c"
- $9 = ((($8)) + 8|0); //@line 27 "../uilib/menuentry.c"
- $10 = HEAP32[$9>>2]|0; //@line 27 "../uilib/menuentry.c"
- $11 = $0; //@line 28 "../uilib/menuentry.c"
- $12 = ((($11)) + 12|0); //@line 28 "../uilib/menuentry.c"
- $13 = HEAP32[$12>>2]|0; //@line 28 "../uilib/menuentry.c"
- $14 = (($13) - 13)|0; //@line 28 "../uilib/menuentry.c"
- _Context_draw_text($2,$7,$10,$14,-16777216); //@line 27 "../uilib/menuentry.c"
- STACKTOP = sp;return; //@line 29 "../uilib/menuentry.c"
+ $0 = $menu_entry_window;
+ $1 = $0; //@line 54 "../uilib/menuentry.c"
+ $menu_entry = $1; //@line 54 "../uilib/menuentry.c"
+ $2 = $0; //@line 57 "../uilib/menuentry.c"
+ $3 = ((($2)) + 24|0); //@line 57 "../uilib/menuentry.c"
+ $4 = HEAP32[$3>>2]|0; //@line 57 "../uilib/menuentry.c"
+ $5 = $0; //@line 57 "../uilib/menuentry.c"
+ $6 = ((($5)) + 16|0); //@line 57 "../uilib/menuentry.c"
+ $7 = HEAP16[$6>>1]|0; //@line 57 "../uilib/menuentry.c"
+ $8 = $7&65535; //@line 57 "../uilib/menuentry.c"
+ $9 = $0; //@line 58 "../uilib/menuentry.c"
+ $10 = ((($9)) + 18|0); //@line 58 "../uilib/menuentry.c"
+ $11 = HEAP16[$10>>1]|0; //@line 58 "../uilib/menuentry.c"
+ $12 = $11&65535; //@line 58 "../uilib/menuentry.c"
+ $13 = $menu_entry; //@line 59 "../uilib/menuentry.c"
+ $14 = ((($13)) + 92|0); //@line 59 "../uilib/menuentry.c"
+ $15 = HEAP32[$14>>2]|0; //@line 59 "../uilib/menuentry.c"
+ $16 = ($15|0)!=(0); //@line 59 "../uilib/menuentry.c"
+ $17 = $16 ? -16777216 : -1; //@line 59 "../uilib/menuentry.c"
+ _Context_fill_rect($4,0,0,$8,$12,$17); //@line 57 "../uilib/menuentry.c"
+ $18 = $0; //@line 60 "../uilib/menuentry.c"
+ $19 = ((($18)) + 24|0); //@line 60 "../uilib/menuentry.c"
+ $20 = HEAP32[$19>>2]|0; //@line 60 "../uilib/menuentry.c"
+ $21 = $menu_entry; //@line 60 "../uilib/menuentry.c"
+ $22 = ((($21)) + 88|0); //@line 60 "../uilib/menuentry.c"
+ $23 = HEAP32[$22>>2]|0; //@line 60 "../uilib/menuentry.c"
+ $24 = ((($23)) + 4|0); //@line 60 "../uilib/menuentry.c"
+ $25 = HEAP32[$24>>2]|0; //@line 60 "../uilib/menuentry.c"
+ $26 = $menu_entry; //@line 61 "../uilib/menuentry.c"
+ $27 = ((($26)) + 92|0); //@line 61 "../uilib/menuentry.c"
+ $28 = HEAP32[$27>>2]|0; //@line 61 "../uilib/menuentry.c"
+ $29 = ($28|0)!=(0); //@line 61 "../uilib/menuentry.c"
+ $30 = $29 ? -1 : -16777216; //@line 61 "../uilib/menuentry.c"
+ _Context_draw_text($20,$25,1,1,$30); //@line 60 "../uilib/menuentry.c"
+ STACKTOP = sp;return; //@line 62 "../uilib/menuentry.c"
+}
+function _MenuEntry_mouseover_handler($menu_entry_window) {
+ $menu_entry_window = $menu_entry_window|0;
+ var $0 = 0, $1 = 0, label = 0, sp = 0;
+ sp = STACKTOP;
+ STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
+ $0 = $menu_entry_window;
+ $1 = $0; //@line 44 "../uilib/menuentry.c"
+ _MenuEntry_toggle_over($1,1); //@line 44 "../uilib/menuentry.c"
+ STACKTOP = sp;return; //@line 45 "../uilib/menuentry.c"
+}
+function _MenuEntry_mouseout_handler($menu_entry_window) {
+ $menu_entry_window = $menu_entry_window|0;
+ var $0 = 0, $1 = 0, label = 0, sp = 0;
+ sp = STACKTOP;
+ STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
+ $0 = $menu_entry_window;
+ $1 = $0; //@line 49 "../uilib/menuentry.c"
+ _MenuEntry_toggle_over($1,0); //@line 49 "../uilib/menuentry.c"
+ STACKTOP = sp;return; //@line 50 "../uilib/menuentry.c"
+}
+function _MenuEntry_toggle_over($menu_entry_window,$over) {
+ $menu_entry_window = $menu_entry_window|0;
+ $over = $over|0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, $menu_entry = 0, label = 0, sp = 0;
+ sp = STACKTOP;
+ STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
+ $0 = $menu_entry_window;
+ $1 = $over;
+ $2 = $0; //@line 35 "../uilib/menuentry.c"
+ $menu_entry = $2; //@line 35 "../uilib/menuentry.c"
+ $3 = $1; //@line 37 "../uilib/menuentry.c"
+ $4 = $menu_entry; //@line 37 "../uilib/menuentry.c"
+ $5 = ((($4)) + 92|0); //@line 37 "../uilib/menuentry.c"
+ HEAP32[$5>>2] = $3; //@line 37 "../uilib/menuentry.c"
+ $6 = $0; //@line 38 "../uilib/menuentry.c"
+ $7 = $0; //@line 38 "../uilib/menuentry.c"
+ $8 = ((($7)) + 18|0); //@line 38 "../uilib/menuentry.c"
+ $9 = HEAP16[$8>>1]|0; //@line 38 "../uilib/menuentry.c"
+ $10 = $9&65535; //@line 38 "../uilib/menuentry.c"
+ $11 = (($10) - 1)|0; //@line 38 "../uilib/menuentry.c"
+ $12 = $0; //@line 39 "../uilib/menuentry.c"
+ $13 = ((($12)) + 16|0); //@line 39 "../uilib/menuentry.c"
+ $14 = HEAP16[$13>>1]|0; //@line 39 "../uilib/menuentry.c"
+ $15 = $14&65535; //@line 39 "../uilib/menuentry.c"
+ $16 = (($15) - 1)|0; //@line 39 "../uilib/menuentry.c"
+ _Window_invalidate($6,0,0,$11,$16); //@line 38 "../uilib/menuentry.c"
+ STACKTOP = sp;return; //@line 40 "../uilib/menuentry.c"
+}
+function _SessionMenu_new($patch_core,$x,$y) {
+ $patch_core = $patch_core|0;
+ $x = $x|0;
+ $y = $y|0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
+ var $27 = 0, $28 = 0, $29 = 0, $3 = 0, $30 = 0, $31 = 0, $32 = 0, $33 = 0, $34 = 0, $35 = 0, $36 = 0, $37 = 0, $38 = 0, $39 = 0, $4 = 0, $40 = 0, $41 = 0, $5 = 0, $6 = 0, $7 = 0;
+ var $8 = 0, $9 = 0, $i = 0, $session_menu = 0, label = 0, sp = 0;
+ sp = STACKTOP;
+ STACKTOP = STACKTOP + 32|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
+ $1 = $patch_core;
+ $2 = $x;
+ $3 = $y;
+ $4 = (_malloc(96)|0); //@line 7 "../widgets/sessionmenu.c"
+ $session_menu = $4; //@line 7 "../widgets/sessionmenu.c"
+ $5 = $session_menu; //@line 9 "../widgets/sessionmenu.c"
+ $6 = ($5|0)!=(0|0); //@line 9 "../widgets/sessionmenu.c"
+ $7 = $session_menu; //@line 12 "../widgets/sessionmenu.c"
+ if (!($6)) {
+  $0 = $7; //@line 10 "../widgets/sessionmenu.c"
+  $40 = $0; //@line 28 "../widgets/sessionmenu.c"
+  STACKTOP = sp;return ($40|0); //@line 28 "../widgets/sessionmenu.c"
+ }
+ $8 = $2; //@line 12 "../widgets/sessionmenu.c"
+ $9 = $3; //@line 12 "../widgets/sessionmenu.c"
+ $10 = (_Menu_init($7,$8,$9,200)|0); //@line 12 "../widgets/sessionmenu.c"
+ $11 = ($10|0)!=(0); //@line 12 "../widgets/sessionmenu.c"
+ if (!($11)) {
+  $12 = $session_menu; //@line 14 "../widgets/sessionmenu.c"
+  _Object_delete($12); //@line 14 "../widgets/sessionmenu.c"
+  $0 = 0; //@line 15 "../widgets/sessionmenu.c"
+  $40 = $0; //@line 28 "../widgets/sessionmenu.c"
+  STACKTOP = sp;return ($40|0); //@line 28 "../widgets/sessionmenu.c"
+ }
+ $13 = $1; //@line 18 "../widgets/sessionmenu.c"
+ $14 = $session_menu; //@line 18 "../widgets/sessionmenu.c"
+ $15 = ((($14)) + 88|0); //@line 18 "../widgets/sessionmenu.c"
+ HEAP32[$15>>2] = $13; //@line 18 "../widgets/sessionmenu.c"
+ $16 = $1; //@line 19 "../widgets/sessionmenu.c"
+ $17 = (_PatchCore_get_module_list($16)|0); //@line 19 "../widgets/sessionmenu.c"
+ $18 = $session_menu; //@line 19 "../widgets/sessionmenu.c"
+ $19 = ((($18)) + 92|0); //@line 19 "../widgets/sessionmenu.c"
+ HEAP32[$19>>2] = $17; //@line 19 "../widgets/sessionmenu.c"
+ $i = 0; //@line 23 "../widgets/sessionmenu.c"
+ while(1) {
+  $20 = $session_menu; //@line 23 "../widgets/sessionmenu.c"
+  $21 = ((($20)) + 92|0); //@line 23 "../widgets/sessionmenu.c"
+  $22 = HEAP32[$21>>2]|0; //@line 23 "../widgets/sessionmenu.c"
+  $23 = ($22|0)!=(0|0); //@line 23 "../widgets/sessionmenu.c"
+  if ($23) {
+   $24 = $i; //@line 23 "../widgets/sessionmenu.c"
+   $25 = $session_menu; //@line 23 "../widgets/sessionmenu.c"
+   $26 = ((($25)) + 92|0); //@line 23 "../widgets/sessionmenu.c"
+   $27 = HEAP32[$26>>2]|0; //@line 23 "../widgets/sessionmenu.c"
+   $28 = ((($27)) + 4|0); //@line 23 "../widgets/sessionmenu.c"
+   $29 = HEAP32[$28>>2]|0; //@line 23 "../widgets/sessionmenu.c"
+   $30 = ($24>>>0)<($29>>>0); //@line 23 "../widgets/sessionmenu.c"
+   $41 = $30;
+  } else {
+   $41 = 0;
+  }
+  $31 = $session_menu; //@line 24 "../widgets/sessionmenu.c"
+  if (!($41)) {
+   break;
+  }
+  $32 = $session_menu; //@line 25 "../widgets/sessionmenu.c"
+  $33 = ((($32)) + 92|0); //@line 25 "../widgets/sessionmenu.c"
+  $34 = HEAP32[$33>>2]|0; //@line 25 "../widgets/sessionmenu.c"
+  $35 = $i; //@line 25 "../widgets/sessionmenu.c"
+  $36 = (_List_get_at($34,$35)|0); //@line 25 "../widgets/sessionmenu.c"
+  $37 = (_MenuEntry_new($36,25)|0); //@line 25 "../widgets/sessionmenu.c"
+  _Menu_add_entry($31,$37); //@line 24 "../widgets/sessionmenu.c"
+  $38 = $i; //@line 23 "../widgets/sessionmenu.c"
+  $39 = (($38) + 1)|0; //@line 23 "../widgets/sessionmenu.c"
+  $i = $39; //@line 23 "../widgets/sessionmenu.c"
+ }
+ $0 = $31; //@line 27 "../widgets/sessionmenu.c"
+ $40 = $0; //@line 28 "../widgets/sessionmenu.c"
+ STACKTOP = sp;return ($40|0); //@line 28 "../widgets/sessionmenu.c"
+}
+function _SessionMenu_mouseclick_function($session_menu_entry_window,$x,$y) {
+ $session_menu_entry_window = $session_menu_entry_window|0;
+ $x = $x|0;
+ $y = $y|0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0;
+ var $menu_entry = 0, $session_menu = 0, label = 0, sp = 0;
+ sp = STACKTOP;
+ STACKTOP = STACKTOP + 32|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
+ $0 = $session_menu_entry_window;
+ $1 = $x;
+ $2 = $y;
+ $3 = $0; //@line 32 "../widgets/sessionmenu.c"
+ $4 = ((($3)) + 4|0); //@line 32 "../widgets/sessionmenu.c"
+ $5 = HEAP32[$4>>2]|0; //@line 32 "../widgets/sessionmenu.c"
+ $6 = ($5|0)!=(0|0); //@line 32 "../widgets/sessionmenu.c"
+ if (!($6)) {
+  STACKTOP = sp;return; //@line 40 "../widgets/sessionmenu.c"
+ }
+ $7 = $0; //@line 35 "../widgets/sessionmenu.c"
+ $menu_entry = $7; //@line 35 "../widgets/sessionmenu.c"
+ $8 = $0; //@line 36 "../widgets/sessionmenu.c"
+ $9 = ((($8)) + 4|0); //@line 36 "../widgets/sessionmenu.c"
+ $10 = HEAP32[$9>>2]|0; //@line 36 "../widgets/sessionmenu.c"
+ $session_menu = $10; //@line 36 "../widgets/sessionmenu.c"
+ $11 = $session_menu; //@line 38 "../widgets/sessionmenu.c"
+ $12 = ((($11)) + 88|0); //@line 38 "../widgets/sessionmenu.c"
+ $13 = HEAP32[$12>>2]|0; //@line 38 "../widgets/sessionmenu.c"
+ $14 = $menu_entry; //@line 38 "../widgets/sessionmenu.c"
+ $15 = ((($14)) + 88|0); //@line 38 "../widgets/sessionmenu.c"
+ $16 = HEAP32[$15>>2]|0; //@line 38 "../widgets/sessionmenu.c"
+ _PatchCore_instantiate_module($13,$16); //@line 38 "../widgets/sessionmenu.c"
+ $17 = $session_menu; //@line 39 "../widgets/sessionmenu.c"
+ $18 = ((($17)) + 88|0); //@line 39 "../widgets/sessionmenu.c"
+ $19 = HEAP32[$18>>2]|0; //@line 39 "../widgets/sessionmenu.c"
+ _PatchCore_destroy_menu($19); //@line 39 "../widgets/sessionmenu.c"
+ STACKTOP = sp;return; //@line 40 "../widgets/sessionmenu.c"
 }
 function _Slider_knob_move($knob_window,$x,$y) {
  $knob_window = $knob_window|0;
@@ -12619,9 +12647,9 @@ function _Slider_new($x,$y,$width,$height,$min,$max) {
   $46 = ((($45)) + 88|0); //@line 46 "../uilib/slider.c"
   $47 = HEAP32[$46>>2]|0; //@line 46 "../uilib/slider.c"
   $48 = ((($47)) + 80|0); //@line 46 "../uilib/slider.c"
-  HEAP32[$48>>2] = 25; //@line 46 "../uilib/slider.c"
+  HEAP32[$48>>2] = 26; //@line 46 "../uilib/slider.c"
   $49 = $slider; //@line 47 "../uilib/slider.c"
-  HEAP32[$49>>2] = 26; //@line 47 "../uilib/slider.c"
+  HEAP32[$49>>2] = 27; //@line 47 "../uilib/slider.c"
   $50 = $slider; //@line 49 "../uilib/slider.c"
   $0 = $50; //@line 49 "../uilib/slider.c"
   $51 = $0; //@line 50 "../uilib/slider.c"
@@ -12702,7 +12730,7 @@ function _Slider_get_value($slider) {
 function _MasterOut_new() {
  var $0 = 0, label = 0, sp = 0;
  sp = STACKTOP;
- $0 = (_Module_new(27,5224)|0); //@line 6 "../units/masterout.c"
+ $0 = (_Module_new(28,5224)|0); //@line 6 "../units/masterout.c"
  return ($0|0); //@line 6 "../units/masterout.c"
 }
 function _MasterOut_constructor($patch_core) {
@@ -12733,7 +12761,7 @@ function _MasterOut_constructor($patch_core) {
   $49 = $0; //@line 72 "../units/masterout.c"
   STACKTOP = sp;return ($49|0); //@line 72 "../units/masterout.c"
  }
- _Object_init($9,28); //@line 54 "../units/masterout.c"
+ _Object_init($9,29); //@line 54 "../units/masterout.c"
  $10 = (_Slider_new(10,10,30,130,0.0,1.0)|0); //@line 55 "../units/masterout.c"
  $11 = $master_out; //@line 55 "../units/masterout.c"
  $12 = ((($11)) + 96|0); //@line 55 "../units/masterout.c"
@@ -12775,7 +12803,7 @@ function _MasterOut_constructor($patch_core) {
     $41 = ((($40)) + 104|0); //@line 68 "../units/masterout.c"
     $42 = HEAP32[$41>>2]|0; //@line 68 "../units/masterout.c"
     $43 = ((($42)) + 104|0); //@line 68 "../units/masterout.c"
-    HEAP32[$43>>2] = 29; //@line 68 "../units/masterout.c"
+    HEAP32[$43>>2] = 30; //@line 68 "../units/masterout.c"
     $44 = $1; //@line 69 "../units/masterout.c"
     $45 = $master_out; //@line 69 "../units/masterout.c"
     $46 = ((($45)) + 104|0); //@line 69 "../units/masterout.c"
@@ -12889,7 +12917,7 @@ function _MasterOut_delete_function($master_out_object) {
 function _Noise_new() {
  var $0 = 0, label = 0, sp = 0;
  sp = STACKTOP;
- $0 = (_Module_new(30,5235)|0); //@line 8 "../units/noise.c"
+ $0 = (_Module_new(31,5235)|0); //@line 8 "../units/noise.c"
  return ($0|0); //@line 8 "../units/noise.c"
 }
 function _Noise_constructor($patch_core) {
@@ -12934,7 +12962,7 @@ function _Noise_constructor($patch_core) {
   $19 = ((($18)) + 96|0); //@line 53 "../units/noise.c"
   $20 = HEAP32[$19>>2]|0; //@line 53 "../units/noise.c"
   $21 = ((($20)) + 104|0); //@line 53 "../units/noise.c"
-  HEAP32[$21>>2] = 31; //@line 53 "../units/noise.c"
+  HEAP32[$21>>2] = 32; //@line 53 "../units/noise.c"
   $22 = $noise; //@line 55 "../units/noise.c"
   $0 = $22; //@line 55 "../units/noise.c"
   $23 = $0; //@line 56 "../units/noise.c"
@@ -12986,7 +13014,7 @@ function _Noise_pull_sample_handler($io,$sample_l,$sample_r) {
 function _PitchKnob_new() {
  var $0 = 0, label = 0, sp = 0;
  sp = STACKTOP;
- $0 = (_Module_new(32,5241)|0); //@line 6 "../units/pitchknob.c"
+ $0 = (_Module_new(33,5241)|0); //@line 6 "../units/pitchknob.c"
  return ($0|0); //@line 6 "../units/pitchknob.c"
 }
 function _PitchKnob_constructor($patch_core) {
@@ -13053,7 +13081,7 @@ function _PitchKnob_constructor($patch_core) {
    $36 = ((($35)) + 96|0); //@line 46 "../units/pitchknob.c"
    $37 = HEAP32[$36>>2]|0; //@line 46 "../units/pitchknob.c"
    $38 = ((($37)) + 104|0); //@line 46 "../units/pitchknob.c"
-   HEAP32[$38>>2] = 33; //@line 46 "../units/pitchknob.c"
+   HEAP32[$38>>2] = 34; //@line 46 "../units/pitchknob.c"
    $39 = $pitch_knob; //@line 48 "../units/pitchknob.c"
    $0 = $39; //@line 48 "../units/pitchknob.c"
    $40 = $0; //@line 49 "../units/pitchknob.c"
@@ -13097,7 +13125,7 @@ function _PitchKnob_pull_sample_handler($io,$sample_l,$sample_r) {
 function _Sequence_new() {
  var $0 = 0, label = 0, sp = 0;
  sp = STACKTOP;
- $0 = (_Module_new(34,5252)|0); //@line 5 "../units/sequence.c"
+ $0 = (_Module_new(35,5252)|0); //@line 5 "../units/sequence.c"
  return ($0|0); //@line 5 "../units/sequence.c"
 }
 function _Sequence_constructor($patch_core) {
@@ -13129,7 +13157,7 @@ function _Sequence_constructor($patch_core) {
   $59 = $0; //@line 110 "../units/sequence.c"
   STACKTOP = sp;return ($59|0); //@line 110 "../units/sequence.c"
  }
- _Object_init($9,35); //@line 71 "../units/sequence.c"
+ _Object_init($9,36); //@line 71 "../units/sequence.c"
  $10 = (_List_new()|0); //@line 73 "../units/sequence.c"
  $11 = $sequence; //@line 73 "../units/sequence.c"
  $12 = ((($11)) + 104|0); //@line 73 "../units/sequence.c"
@@ -13204,7 +13232,7 @@ function _Sequence_constructor($patch_core) {
    $51 = ((($50)) + 96|0); //@line 105 "../units/sequence.c"
    $52 = HEAP32[$51>>2]|0; //@line 105 "../units/sequence.c"
    $53 = ((($52)) + 104|0); //@line 105 "../units/sequence.c"
-   HEAP32[$53>>2] = 36; //@line 105 "../units/sequence.c"
+   HEAP32[$53>>2] = 37; //@line 105 "../units/sequence.c"
    $54 = $sequence; //@line 106 "../units/sequence.c"
    $55 = ((($54)) + 120|0); //@line 106 "../units/sequence.c"
    HEAP32[$55>>2] = 0; //@line 106 "../units/sequence.c"
@@ -13374,7 +13402,7 @@ function _Sequence_delete_function($sequence_object) {
 function _Sine_new() {
  var $0 = 0, label = 0, sp = 0;
  sp = STACKTOP;
- $0 = (_Module_new(37,5261)|0); //@line 7 "../units/sine.c"
+ $0 = (_Module_new(38,5261)|0); //@line 7 "../units/sine.c"
  return ($0|0); //@line 7 "../units/sine.c"
 }
 function _Sine_constructor($patch_core) {
@@ -13432,7 +13460,7 @@ function _Sine_constructor($patch_core) {
    $30 = ((($29)) + 96|0); //@line 52 "../units/sine.c"
    $31 = HEAP32[$30>>2]|0; //@line 52 "../units/sine.c"
    $32 = ((($31)) + 104|0); //@line 52 "../units/sine.c"
-   HEAP32[$32>>2] = 38; //@line 52 "../units/sine.c"
+   HEAP32[$32>>2] = 39; //@line 52 "../units/sine.c"
    $33 = $sine; //@line 54 "../units/sine.c"
    $0 = $33; //@line 54 "../units/sine.c"
    $34 = $0; //@line 55 "../units/sine.c"
@@ -13509,7 +13537,7 @@ function _Sine_pull_sample_handler($io,$sample_l,$sample_r) {
 function _Square_new() {
  var $0 = 0, label = 0, sp = 0;
  sp = STACKTOP;
- $0 = (_Module_new(39,5266)|0); //@line 7 "../units/square.c"
+ $0 = (_Module_new(40,5266)|0); //@line 7 "../units/square.c"
  return ($0|0); //@line 7 "../units/square.c"
 }
 function _Square_constructor($patch_core) {
@@ -13567,7 +13595,7 @@ function _Square_constructor($patch_core) {
    $30 = ((($29)) + 96|0); //@line 52 "../units/square.c"
    $31 = HEAP32[$30>>2]|0; //@line 52 "../units/square.c"
    $32 = ((($31)) + 104|0); //@line 52 "../units/square.c"
-   HEAP32[$32>>2] = 40; //@line 52 "../units/square.c"
+   HEAP32[$32>>2] = 41; //@line 52 "../units/square.c"
    $33 = $square; //@line 54 "../units/square.c"
    $0 = $33; //@line 54 "../units/square.c"
    $34 = $0; //@line 55 "../units/square.c"
@@ -13679,20 +13707,20 @@ function _PatchDesktop_new($patch_core) {
  $15 = ($14|0)!=(0); //@line 16 "../widgets/patchdesktop.c"
  $16 = $patch_desktop; //@line 23 "../widgets/patchdesktop.c"
  if ($15) {
-  _Object_init($16,41); //@line 23 "../widgets/patchdesktop.c"
+  _Object_init($16,42); //@line 23 "../widgets/patchdesktop.c"
   $20 = $1; //@line 25 "../widgets/patchdesktop.c"
   $21 = $patch_desktop; //@line 25 "../widgets/patchdesktop.c"
   $22 = ((($21)) + 96|0); //@line 25 "../widgets/patchdesktop.c"
   HEAP32[$22>>2] = $20; //@line 25 "../widgets/patchdesktop.c"
   $23 = $patch_desktop; //@line 26 "../widgets/patchdesktop.c"
   $24 = ((($23)) + 76|0); //@line 26 "../widgets/patchdesktop.c"
-  HEAP32[$24>>2] = 42; //@line 26 "../widgets/patchdesktop.c"
+  HEAP32[$24>>2] = 43; //@line 26 "../widgets/patchdesktop.c"
   $25 = $patch_desktop; //@line 27 "../widgets/patchdesktop.c"
   $26 = ((($25)) + 72|0); //@line 27 "../widgets/patchdesktop.c"
-  HEAP32[$26>>2] = 43; //@line 27 "../widgets/patchdesktop.c"
+  HEAP32[$26>>2] = 44; //@line 27 "../widgets/patchdesktop.c"
   $27 = $patch_desktop; //@line 28 "../widgets/patchdesktop.c"
   $28 = ((($27)) + 52|0); //@line 28 "../widgets/patchdesktop.c"
-  HEAP32[$28>>2] = 44; //@line 28 "../widgets/patchdesktop.c"
+  HEAP32[$28>>2] = 45; //@line 28 "../widgets/patchdesktop.c"
   $29 = (_PlatformWrapper_is_mouse_shown()|0); //@line 29 "../widgets/patchdesktop.c"
   $30 = $29&255; //@line 29 "../widgets/patchdesktop.c"
   $31 = $patch_desktop; //@line 29 "../widgets/patchdesktop.c"
@@ -14128,115 +14156,69 @@ function _PatchDesktop_begin_connection($patch_desktop,$io) {
  HEAP32[$4>>2] = $2; //@line 127 "../widgets/patchdesktop.c"
  STACKTOP = sp;return; //@line 128 "../widgets/patchdesktop.c"
 }
-function _SessionMenu_new($patch_core,$x,$y) {
- $patch_core = $patch_core|0;
+function _Menu_init($menu,$x,$y,$width) {
+ $menu = $menu|0;
  $x = $x|0;
  $y = $y|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
- var $27 = 0, $28 = 0, $29 = 0, $3 = 0, $30 = 0, $31 = 0, $32 = 0, $33 = 0, $34 = 0, $35 = 0, $36 = 0, $37 = 0, $38 = 0, $39 = 0, $4 = 0, $40 = 0, $41 = 0, $42 = 0, $43 = 0, $5 = 0;
- var $6 = 0, $7 = 0, $8 = 0, $9 = 0, $i = 0, $session_menu = 0, label = 0, sp = 0;
- sp = STACKTOP;
- STACKTOP = STACKTOP + 32|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $1 = $patch_core;
- $2 = $x;
- $3 = $y;
- $4 = (_malloc(104)|0); //@line 7 "../widgets/sessionmenu.c"
- $session_menu = $4; //@line 7 "../widgets/sessionmenu.c"
- $5 = $session_menu; //@line 9 "../widgets/sessionmenu.c"
- $6 = ($5|0)!=(0|0); //@line 9 "../widgets/sessionmenu.c"
- $7 = $session_menu; //@line 12 "../widgets/sessionmenu.c"
- if (!($6)) {
-  $0 = $7; //@line 10 "../widgets/sessionmenu.c"
-  $42 = $0; //@line 31 "../widgets/sessionmenu.c"
-  STACKTOP = sp;return ($42|0); //@line 31 "../widgets/sessionmenu.c"
- }
- $8 = $2; //@line 12 "../widgets/sessionmenu.c"
- $9 = $3; //@line 12 "../widgets/sessionmenu.c"
- $10 = (_Menu_init($7,$8,$9,200)|0); //@line 12 "../widgets/sessionmenu.c"
- $11 = ($10|0)!=(0); //@line 12 "../widgets/sessionmenu.c"
- if (!($11)) {
-  $12 = $session_menu; //@line 14 "../widgets/sessionmenu.c"
-  _Object_delete($12); //@line 14 "../widgets/sessionmenu.c"
-  $0 = 0; //@line 15 "../widgets/sessionmenu.c"
-  $42 = $0; //@line 31 "../widgets/sessionmenu.c"
-  STACKTOP = sp;return ($42|0); //@line 31 "../widgets/sessionmenu.c"
- }
- $13 = $1; //@line 18 "../widgets/sessionmenu.c"
- $14 = $session_menu; //@line 18 "../widgets/sessionmenu.c"
- $15 = ((($14)) + 96|0); //@line 18 "../widgets/sessionmenu.c"
- HEAP32[$15>>2] = $13; //@line 18 "../widgets/sessionmenu.c"
- $16 = $session_menu; //@line 19 "../widgets/sessionmenu.c"
- $17 = ((($16)) + 76|0); //@line 19 "../widgets/sessionmenu.c"
- HEAP32[$17>>2] = 45; //@line 19 "../widgets/sessionmenu.c"
- $18 = $1; //@line 22 "../widgets/sessionmenu.c"
- $19 = (_PatchCore_get_module_list($18)|0); //@line 22 "../widgets/sessionmenu.c"
- $20 = $session_menu; //@line 22 "../widgets/sessionmenu.c"
- $21 = ((($20)) + 100|0); //@line 22 "../widgets/sessionmenu.c"
- HEAP32[$21>>2] = $19; //@line 22 "../widgets/sessionmenu.c"
- $i = 0; //@line 26 "../widgets/sessionmenu.c"
- while(1) {
-  $22 = $session_menu; //@line 26 "../widgets/sessionmenu.c"
-  $23 = ((($22)) + 100|0); //@line 26 "../widgets/sessionmenu.c"
-  $24 = HEAP32[$23>>2]|0; //@line 26 "../widgets/sessionmenu.c"
-  $25 = ($24|0)!=(0|0); //@line 26 "../widgets/sessionmenu.c"
-  if ($25) {
-   $26 = $i; //@line 26 "../widgets/sessionmenu.c"
-   $27 = $session_menu; //@line 26 "../widgets/sessionmenu.c"
-   $28 = ((($27)) + 100|0); //@line 26 "../widgets/sessionmenu.c"
-   $29 = HEAP32[$28>>2]|0; //@line 26 "../widgets/sessionmenu.c"
-   $30 = ((($29)) + 4|0); //@line 26 "../widgets/sessionmenu.c"
-   $31 = HEAP32[$30>>2]|0; //@line 26 "../widgets/sessionmenu.c"
-   $32 = ($26>>>0)<($31>>>0); //@line 26 "../widgets/sessionmenu.c"
-   $43 = $32;
-  } else {
-   $43 = 0;
-  }
-  $33 = $session_menu; //@line 27 "../widgets/sessionmenu.c"
-  if (!($43)) {
-   break;
-  }
-  $34 = $session_menu; //@line 28 "../widgets/sessionmenu.c"
-  $35 = ((($34)) + 100|0); //@line 28 "../widgets/sessionmenu.c"
-  $36 = HEAP32[$35>>2]|0; //@line 28 "../widgets/sessionmenu.c"
-  $37 = $i; //@line 28 "../widgets/sessionmenu.c"
-  $38 = (_List_get_at($36,$37)|0); //@line 28 "../widgets/sessionmenu.c"
-  $39 = (_MenuEntry_new($38,0)|0); //@line 28 "../widgets/sessionmenu.c"
-  _Menu_add_entry($33,$39); //@line 27 "../widgets/sessionmenu.c"
-  $40 = $i; //@line 26 "../widgets/sessionmenu.c"
-  $41 = (($40) + 1)|0; //@line 26 "../widgets/sessionmenu.c"
-  $i = $41; //@line 26 "../widgets/sessionmenu.c"
- }
- $0 = $33; //@line 30 "../widgets/sessionmenu.c"
- $42 = $0; //@line 31 "../widgets/sessionmenu.c"
- STACKTOP = sp;return ($42|0); //@line 31 "../widgets/sessionmenu.c"
-}
-function _SessionMenu_mouseclick_function($session_menu_window,$x,$y) {
- $session_menu_window = $session_menu_window|0;
- $x = $x|0;
- $y = $y|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, $session_menu = 0, label = 0, sp = 0;
+ $width = $width|0;
+ var $0 = 0, $1 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, label = 0, sp = 0;
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $0 = $session_menu_window;
+ $0 = $menu;
  $1 = $x;
  $2 = $y;
- $3 = $0; //@line 35 "../widgets/sessionmenu.c"
- $session_menu = $3; //@line 35 "../widgets/sessionmenu.c"
- $4 = $session_menu; //@line 37 "../widgets/sessionmenu.c"
- $5 = ((($4)) + 96|0); //@line 37 "../widgets/sessionmenu.c"
- $6 = HEAP32[$5>>2]|0; //@line 37 "../widgets/sessionmenu.c"
- $7 = $session_menu; //@line 38 "../widgets/sessionmenu.c"
- $8 = ((($7)) + 100|0); //@line 38 "../widgets/sessionmenu.c"
- $9 = HEAP32[$8>>2]|0; //@line 38 "../widgets/sessionmenu.c"
- $10 = $2; //@line 38 "../widgets/sessionmenu.c"
- $11 = (($10|0) / 14)&-1; //@line 38 "../widgets/sessionmenu.c"
- $12 = (_List_get_at($9,$11)|0); //@line 38 "../widgets/sessionmenu.c"
- _PatchCore_instantiate_module($6,$12); //@line 37 "../widgets/sessionmenu.c"
- $13 = $session_menu; //@line 39 "../widgets/sessionmenu.c"
- $14 = ((($13)) + 96|0); //@line 39 "../widgets/sessionmenu.c"
- $15 = HEAP32[$14>>2]|0; //@line 39 "../widgets/sessionmenu.c"
- _PatchCore_destroy_menu($15); //@line 39 "../widgets/sessionmenu.c"
- STACKTOP = sp;return; //@line 40 "../widgets/sessionmenu.c"
+ $3 = $width;
+ $4 = $0; //@line 20 "../uilib/menu.c"
+ $5 = $1; //@line 20 "../uilib/menu.c"
+ $6 = $2; //@line 20 "../uilib/menu.c"
+ $7 = $3; //@line 20 "../uilib/menu.c"
+ $8 = (_Frame_init($4,$5,$6,$7,4)|0); //@line 20 "../uilib/menu.c"
+ STACKTOP = sp;return ($8|0); //@line 20 "../uilib/menu.c"
+}
+function _Menu_add_entry($menu,$menu_entry) {
+ $menu = $menu|0;
+ $menu_entry = $menu_entry|0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
+ var $27 = 0, $28 = 0, $29 = 0, $3 = 0, $30 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, label = 0, sp = 0;
+ sp = STACKTOP;
+ STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
+ $0 = $menu;
+ $1 = $menu_entry;
+ $2 = $0; //@line 25 "../uilib/menu.c"
+ $3 = $1; //@line 25 "../uilib/menu.c"
+ _Window_insert_child($2,$3); //@line 25 "../uilib/menu.c"
+ $4 = $0; //@line 26 "../uilib/menu.c"
+ $5 = ((($4)) + 16|0); //@line 26 "../uilib/menu.c"
+ $6 = HEAP16[$5>>1]|0; //@line 26 "../uilib/menu.c"
+ $7 = $6&65535; //@line 26 "../uilib/menu.c"
+ $8 = (($7) - 4)|0; //@line 26 "../uilib/menu.c"
+ $9 = $8&65535; //@line 26 "../uilib/menu.c"
+ $10 = $1; //@line 26 "../uilib/menu.c"
+ $11 = ((($10)) + 16|0); //@line 26 "../uilib/menu.c"
+ HEAP16[$11>>1] = $9; //@line 26 "../uilib/menu.c"
+ $12 = $1; //@line 27 "../uilib/menu.c"
+ $13 = ((($12)) + 12|0); //@line 27 "../uilib/menu.c"
+ HEAP16[$13>>1] = 2; //@line 27 "../uilib/menu.c"
+ $14 = $0; //@line 28 "../uilib/menu.c"
+ $15 = ((($14)) + 40|0); //@line 28 "../uilib/menu.c"
+ $16 = HEAP32[$15>>2]|0; //@line 28 "../uilib/menu.c"
+ $17 = ((($16)) + 4|0); //@line 28 "../uilib/menu.c"
+ $18 = HEAP32[$17>>2]|0; //@line 28 "../uilib/menu.c"
+ $19 = (($18) - 1)|0; //@line 28 "../uilib/menu.c"
+ $20 = ($19*14)|0; //@line 28 "../uilib/menu.c"
+ $21 = (($20) + 2)|0; //@line 28 "../uilib/menu.c"
+ $22 = $21&65535; //@line 28 "../uilib/menu.c"
+ $23 = $1; //@line 28 "../uilib/menu.c"
+ $24 = ((($23)) + 14|0); //@line 28 "../uilib/menu.c"
+ HEAP16[$24>>1] = $22; //@line 28 "../uilib/menu.c"
+ $25 = $0; //@line 29 "../uilib/menu.c"
+ $26 = ((($25)) + 18|0); //@line 29 "../uilib/menu.c"
+ $27 = HEAP16[$26>>1]|0; //@line 29 "../uilib/menu.c"
+ $28 = $27&65535; //@line 29 "../uilib/menu.c"
+ $29 = (($28) + 14)|0; //@line 29 "../uilib/menu.c"
+ $30 = $29&65535; //@line 29 "../uilib/menu.c"
+ HEAP16[$26>>1] = $30; //@line 29 "../uilib/menu.c"
+ STACKTOP = sp;return; //@line 30 "../uilib/menu.c"
 }
 function _main($argc,$argv) {
  $argc = $argc|0;
@@ -18067,18 +18049,18 @@ function b4(p0) {
 }
 
 // EMSCRIPTEN_END_FUNCS
-var FUNCTION_TABLE_ii = [b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,_MasterOut_constructor,b0
-,b0,_Noise_constructor,b0,_PitchKnob_constructor,b0,_Sequence_constructor,b0,b0,_Sine_constructor,b0,_Square_constructor,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0
+var FUNCTION_TABLE_ii = [b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,_MasterOut_constructor
+,b0,b0,_Noise_constructor,b0,_PitchKnob_constructor,b0,_Sequence_constructor,b0,b0,_Sine_constructor,b0,_Square_constructor,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0
 ,b0,b0,b0,b0,b0];
 var FUNCTION_TABLE_iiii = [b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,_Output_initial_sample_pull_handler,_Input_sample_pull_handler,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1
-,_MasterOut_pull_sample_handler,b1,_Noise_pull_sample_handler,b1,_PitchKnob_pull_sample_handler,b1,b1,_Sequence_pull_sample_handler,b1,_Sine_pull_sample_handler,b1,_Square_pull_sample_handler,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1
+,b1,_MasterOut_pull_sample_handler,b1,_Noise_pull_sample_handler,b1,_PitchKnob_pull_sample_handler,b1,b1,_Sequence_pull_sample_handler,b1,_Sine_pull_sample_handler,b1,_Square_pull_sample_handler,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1
 ,b1,b1,b1,b1,b1];
 var FUNCTION_TABLE_viiii = [b2,b2,b2,b2,b2,b2,b2,b2,b2,b2,b2,b2,b2,_Patch_mouse_callback,b2,b2];
-var FUNCTION_TABLE_viii = [b3,b3,b3,b3,b3,b3,b3,b3,_Window_move_function,b3,b3,b3,_Patch_resize_callback,b3,_PatchCore_pull_sample,b3,_IO_mouseclick_handler,b3,b3,_Unit_move_function,b3,b3,b3,_Menu_mouseclick_handler,b3,_Slider_knob_move,b3,b3,b3
-,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,_PatchDesktop_mouseclick_handler,_PatchDesktop_mousemove_handler,b3,_SessionMenu_mouseclick_function,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3
+var FUNCTION_TABLE_viii = [b3,b3,b3,b3,b3,b3,b3,b3,_Window_move_function,b3,b3,b3,_Patch_resize_callback,b3,_PatchCore_pull_sample,b3,_IO_mouseclick_handler,b3,b3,_Unit_move_function,b3,b3,b3,b3,b3,_SessionMenu_mouseclick_function,_Slider_knob_move,b3,b3
+,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,_PatchDesktop_mouseclick_handler,_PatchDesktop_mousemove_handler,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3
 ,b3,b3,b3,b3,b3];
-var FUNCTION_TABLE_vi = [b4,_String_delete_function,_Object_default_delete_function,_List_delete,_AssociativeArray_delete_function,_Context_delete_function,_Window_delete_function,_Window_paint_handler,b4,_Desktop_paint_handler,_Module_delete_function,_PatchCore_delete_function,b4,b4,b4,_IO_paint_handler,b4,b4,b4,b4,_Frame_paint_handler,_Menu_delete_function,_Menu_paint_handler,b4,_MenuEntry_delete_function,b4,_Slider_delete_function,b4,_MasterOut_delete_function
-,b4,b4,b4,b4,b4,b4,_Sequence_delete_function,b4,b4,b4,b4,b4,_PatchDesktop_delete_function,b4,b4,_PatchDesktop_paint_handler,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4
+var FUNCTION_TABLE_vi = [b4,_String_delete_function,_Object_default_delete_function,_List_delete,_AssociativeArray_delete_function,_Context_delete_function,_Window_delete_function,_Window_paint_handler,b4,_Desktop_paint_handler,_Module_delete_function,_PatchCore_delete_function,b4,b4,b4,_IO_paint_handler,b4,b4,b4,b4,_Frame_paint_handler,_MenuEntry_delete_function,_MenuEntry_paint_handler,_MenuEntry_mouseover_handler,_MenuEntry_mouseout_handler,b4,b4,_Slider_delete_function,b4
+,_MasterOut_delete_function,b4,b4,b4,b4,b4,b4,_Sequence_delete_function,b4,b4,b4,b4,b4,_PatchDesktop_delete_function,b4,b4,_PatchDesktop_paint_handler,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4,b4
 ,b4,b4,b4,b4,b4];
 
   return { _free: _free, _main: _main, _doMouseCallback: _doMouseCallback, _memset: _memset, _malloc: _malloc, _i64Add: _i64Add, _memcpy: _memcpy, _doResizeCallback: _doResizeCallback, _doPullSample: _doPullSample, _bitshift64Lshr: _bitshift64Lshr, ___errno_location: ___errno_location, runPostSets: runPostSets, _emscripten_replace_memory: _emscripten_replace_memory, stackAlloc: stackAlloc, stackSave: stackSave, stackRestore: stackRestore, establishStackSpace: establishStackSpace, setThrew: setThrew, setTempRet0: setTempRet0, getTempRet0: getTempRet0, dynCall_ii: dynCall_ii, dynCall_iiii: dynCall_iiii, dynCall_viiii: dynCall_viiii, dynCall_viii: dynCall_viii, dynCall_vi: dynCall_vi };

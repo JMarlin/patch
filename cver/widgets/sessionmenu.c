@@ -16,25 +16,25 @@ SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
     }
 
     session_menu->patch_core = patch_core;
-    session_menu->menu.frame.window.mouseclick_function =
-        SessionMenu_mouseclick_function;
-
     session_menu->module_names = PatchCore_get_module_list(patch_core);
 
     //TODO: Need to add a sanity check in the case that the new menu entry
     //couldn't be properly instantiated
     for(i = 0; session_menu->module_names && (i < session_menu->module_names->count); i++)
         Menu_add_entry((Menu*)session_menu,
-                       MenuEntry_new((String*)List_get_at(session_menu->module_names, i), 0));
+                       MenuEntry_new((String*)List_get_at(session_menu->module_names, i), SessionMenu_mouseclick_function));
 
     return session_menu;
 }
 
-void SessionMenu_mouseclick_function(Window* session_menu_window, int x, int y) {
+void SessionMenu_mouseclick_function(Window* session_menu_entry_window, int x, int y) {
 
-    SessionMenu* session_menu = (SessionMenu*)session_menu_window;
+    if(!session_menu_entry_window->parent)
+        return;
 
-    PatchCore_instantiate_module(session_menu->patch_core, 
-                                 (String*)List_get_at(session_menu->module_names, y/14));
+    MenuEntry* menu_entry = (MenuEntry*)session_menu_entry_window;
+    SessionMenu* session_menu = (SessionMenu*)session_menu_entry_window->parent;
+
+    PatchCore_instantiate_module(session_menu->patch_core, menu_entry->text);
     PatchCore_destroy_menu(session_menu->patch_core);
 }
