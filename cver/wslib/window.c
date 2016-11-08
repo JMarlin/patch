@@ -361,7 +361,6 @@ void Window_invalidate(Window* window, int top, int left, int bottom, int right)
     if(!List_add(dirty_regions, (Object*)dirty_rect)) {
 
         Object_delete((Object*)dirty_regions);
-        Object_delete((Object*)dirty_rect);
         return;
     }
 
@@ -369,7 +368,6 @@ void Window_invalidate(Window* window, int top, int left, int bottom, int right)
 
     //Clean up the dirty rect list
     Object_delete((Object*)dirty_regions);
-    Object_delete((Object*)dirty_rect); 
 }
 
 //Another override-redirect function
@@ -774,6 +772,15 @@ void Window_process_mouse(Window* window, uint16_t mouse_x,
             //We reentered the parent from a child, so fire a mouseover on the parent 
             Window_mouseover(window);
         }
+
+        //If we didn't find a target in the search, then we ourselves are the target of any clicks
+        if(mouse_buttons && !window->last_button_state) 
+            Window_mousedown(window, mouse_x, mouse_y);
+
+        if(!mouse_buttons && window->last_button_state)
+            Window_mouseup(window, mouse_x, mouse_y);
+
+        Window_mousemove(window, mouse_x, mouse_y);
     } else {
 
         //Found a target, so forward the mouse event to that window and quit looking
@@ -783,15 +790,6 @@ void Window_process_mouse(Window* window, uint16_t mouse_x,
         if((child->flags & WIN_BODYDRAG) && (window->drag_child == child) && !!child->over_child)
             window->drag_child = (Window*)0;
     }
-
-    //If we didn't find a target in the search, then we ourselves are the target of any clicks
-    if(mouse_buttons && !window->last_button_state) 
-        Window_mousedown(window, mouse_x, mouse_y);
-
-    if(!mouse_buttons && window->last_button_state)
-        Window_mouseup(window, mouse_x, mouse_y);
-
-    Window_mousemove(window, mouse_x, mouse_y);
 
     //Update the stored mouse button state to match the current state 
     window->last_button_state = mouse_buttons;

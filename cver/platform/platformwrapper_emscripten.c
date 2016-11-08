@@ -1,18 +1,71 @@
 #include "platformwrapper.h"
 #include <emscripten.h>
 #include <stdlib.h>
+#include "../wslib/list.h"
 
 MouseCallback mouse_handler;
 ResizeCallback resize_handler;
 Context* internal_context;
+double left_sum, right_sum;
+List* ah_list;
+
+void EMSCRIPTEN_KEEPALIVE doPullSample() {
+
+    int i;
+    double l, r;
+    AudioHandler* ah;
+
+    EM_ASM(
+        window.fo_sample[0] = window.fo_sample[1] = 0;
+    );
+
+    for(i = 0; i < ah_list->count; i++) {
+
+        ah = (AudioHandler*)List_get_at(ah_list, i);
+        ah->function(ah->parent_object, &l, &r);
+
+        EM_ASM_({
+            window.fo_sample[0] += $0;
+            window.fo_sample[1] += $1;
+        }, l, r);
+    }
+}
 
 void PlatformWrapper_init() {
 
+    ah_list = List_new();
     internal_context = (Context*)0;
     mouse_handler.param_object = (Object*)0;
     mouse_handler.callback = (MouseCallback_handler)0;
     resize_handler.param_object = (Object*)0;
     resize_handler.callback = (ResizeCallback_handler)0;
+
+    //Set up the audio processing loop
+    EM_ASM(
+
+        window.fo_sample = [0, 0];
+
+        var audioCtx  = new (window.AudioContext || window.webkitAudioContext)(),
+            pcm_node  = audioCtx.createScriptProcessor(4096, 0, 2),
+            source    = audioCtx.createBufferSource();
+
+        pcm_node.onaudioprocess = function(e) {
+
+            var outbuf_l = e.outputBuffer.getChannelData(0),
+                outbuf_r = e.outputBuffer.getChannelData(1);
+    
+            for(var i = 0; i < 4096; i++) {
+                
+                Module.ccall('doPullSample');
+                outbuf_r[i] = window.fo_sample[1];
+                outbuf_l[i] = window.fo_sample[0];
+            }
+        };
+
+        source.connect(pcm_node);
+        pcm_node.connect(audioCtx.destination);
+        source.start();
+    );
 }
 
 void PlatformWrapper_hold_for_exit() {
@@ -22,7 +75,7 @@ void PlatformWrapper_hold_for_exit() {
 
 void PlatformWrapper_install_audio_handler(AudioHandler* audio_handler) {
 
-    //Todo
+    List_add(ah_list, (Object*)audio_handler);
 }
 
 int PlatformWrapper_is_mouse_shown() {

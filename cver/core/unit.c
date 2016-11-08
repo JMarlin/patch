@@ -16,12 +16,29 @@ Unit* Unit_new(PatchCore* patch_core) {
     return unit;
 }
 
+void Unit_move_function(Window* unit_window, int x, int y) {
+
+    Unit* unit = (Unit*)unit_window;
+
+    unit->old_move(unit_window, x, y);
+
+    //Cheap method to force elbow redraws
+    if(unit_window->parent) {
+
+        Window_invalidate(unit_window->parent, 0, 0,
+                          unit_window->parent->height - 1,
+                          unit_window->parent->width - 1);
+    }
+}
+
 int Unit_init(Unit* unit, PatchCore* patch_core) {
 
     if(!Frame_init((Frame*)unit, 0, 0, 100, 100))
         return 0;
 
     unit->patch_core = patch_core;
+    unit->old_move = unit->frame.window.move_function;
+    unit->frame.window.move_function = Unit_move_function;
 
     return 1;
 }

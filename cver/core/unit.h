@@ -11,6 +11,7 @@ struct Unit_struct;
 typedef struct Unit_struct {
     Frame frame;
     struct PatchCore_struct* patch_core;
+    WindowMoveHandler old_move;
 } Unit;
 
 Unit* Unit_new(struct PatchCore_struct* patch_core);

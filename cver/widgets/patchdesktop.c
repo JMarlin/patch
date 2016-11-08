@@ -52,7 +52,32 @@ void PatchDesktop_mouseclick_handler(Window* patch_desktop_window, int x, int y)
 
 void draw_elbow(Context* context, int x1, int y1, int x2, int y2, uint32_t color) {
 
-    //IMPLEMENT ME
+    int hlen = x2 - x1;
+    int temp, vlen;
+
+    if(hlen < 0) {
+
+        temp = x1;
+        x1 = x2;
+        x2 = temp;
+        temp = y1;
+        y1 = y2;
+        y2 = temp;
+        hlen = -hlen;
+    }
+
+    Context_horizontal_line(context, x1, y1, hlen/2, RGB(0, 0, 0));
+    Context_horizontal_line(context, x1 + (hlen/2), y2, hlen/2, RGB(0, 0, 0));
+
+    vlen = y2 - y1;
+
+    if(vlen < 0) {
+
+        y1 = y2;
+        vlen = -vlen;
+    }
+
+    Context_vertical_line(context, x1 + (hlen/2), y1, vlen, RGB(0, 0, 0));
 }
 
 void PatchDesktop_paint_handler(Window* patch_desktop_window) {

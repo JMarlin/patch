@@ -61,7 +61,7 @@ void Menu_add_entry(Menu* menu, MenuEntry* menu_entry) {
     List_add(menu->entries, (Object*)menu_entry);
     //menu_entry->parent = menu; //re-enable when menu entries derive from Window
     menu_entry->x = 2;
-    menu_entry->y = (menu->entries->count * 13) + 1;
+    menu_entry->y = (menu->entries->count * 14) + 1;
     menu->frame.window.height += 14;
 }
 

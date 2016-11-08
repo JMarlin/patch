@@ -66,6 +66,9 @@ int Desktop_init(Desktop* desktop, Context* context) {
     desktop->mouse_y = desktop->window.context->height / 2;
     desktop->mouse_shown = 1;
 
+    //Make sure the mouse always starts over the desktop
+    Window_mouseover((Window*)desktop);
+
     return 1;
 }
 
