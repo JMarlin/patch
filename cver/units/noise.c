@@ -11,9 +11,11 @@ Module* Noise_new() {
 double double_rand() {
 
     time_t t;
-    
-    srand((unsigned) time(&t));
-    return (((double)rand() / (double)RAND_MAX) - 0.5) * 2;
+    double r;
+
+    r = (PlatformWrapper_random() - 0.5) * 2;
+
+    return r;
 }
 
 int Noise_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {

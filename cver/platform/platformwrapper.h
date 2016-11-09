@@ -10,6 +10,7 @@ struct ResizeCallback_struct;
 #include "audiohandler.h"
 #include "../wslib/object.h"
 #include "../wslib/context.h"
+#include <time.h>
 
 typedef void (*MouseCallback_handler)(Object* param_object, uint16_t mouse_x, uint16_t mouse_y, uint8_t buttons);
 typedef void (*ResizeCallback_handler)(Object* param_object, int w, int h);
@@ -31,5 +32,6 @@ int PlatformWrapper_is_mouse_shown();
 Context* PlatformWrapper_get_context();
 void PlatformWrapper_install_mouse_callback(Object* param_object, MouseCallback_handler callback);
 void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallback_handler callback);
+double PlatformWrapper_random();
 
 #endif //PLATFORMWRAPPER_H

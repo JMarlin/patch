@@ -1,6 +1,7 @@
 #include "platformwrapper.h"
 #include <emscripten.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../wslib/list.h"
 
 MouseCallback mouse_handler;
@@ -235,4 +236,9 @@ void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallbac
 
     resize_handler.param_object = param_object;
     resize_handler.callback = callback;
+}
+
+double PlatformWrapper_random() {
+
+    return EM_ASM_DOUBLE({ return Math.random(); }, 0);
 }
