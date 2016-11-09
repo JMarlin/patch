@@ -98,7 +98,7 @@ void PatchDesktop_paint_handler(Window* patch_desktop_window) {
         //TODO: really should implement clipped bresenham
         draw_elbow(patch_desktop_window->context, Window_screen_x((Window*)patch_desktop->start_io) + 3,
                    Window_screen_y((Window*)patch_desktop->start_io) + 3, patch_desktop->wire_x, 
-                   patch_desktop->wire_y, RGB(0, 0, 0));
+                   patch_desktop->wire_y, RGB(200, 0, 0));
     }
 
     for(i = 0; i < patch_desktop->patch_core->inputs->count; i++) {
@@ -109,7 +109,7 @@ void PatchDesktop_paint_handler(Window* patch_desktop_window) {
 
             draw_elbow(patch_desktop_window->context, Window_screen_x((Window*)input) + 3,
                    Window_screen_y((Window*)input) + 3, Window_screen_x((Window*)input->connected_io), 
-                   Window_screen_y((Window*)input->connected_io), RGB(0, 0, 0));
+                   Window_screen_y((Window*)input->connected_io), RGB(0, 200, 0));
         }
     }
 }

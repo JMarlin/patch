@@ -63,7 +63,10 @@ int IO_init(IO* io, PatchCore* patch_core, Object* param_object, int x, int y, i
 
 void IO_paint_handler(Window* io_window) {
 
-    Context_fill_rect(io_window->context, 4, 4, 2, 2, RGB(100, 100, 100));
+    IO* io = (IO*)io_window;
+
+    Context_fill_rect(io_window->context, 2, 2, 2, 2,
+                      io->connected_io ? RGB(0, 200, 0) : RGB(100, 100, 100));
     Context_draw_rect(io_window->context, 0, 0, 6, 6, RGB(0, 0, 0));
     Context_draw_rect(io_window->context, 1, 1, 4, 4, RGB(0, 0, 0));
 }
