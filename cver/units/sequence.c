@@ -53,6 +53,15 @@ void Sequence_delete_function(Object* sequence_object) {
     Unit_delete(sequence_object);
 }
 
+void Sequence_paint_handler(Window* sequence_window) {
+
+    Frame_paint_handler(sequence_window);
+    Context_draw_text(sequence_window->context, "Sequence",
+                       (sequence_window->width / 2) - 32,
+                       (sequence_window->height / 2) - 6,
+                       WIN_BORDERCOLOR);     
+}
+
 Unit* Sequence_constructor(PatchCore* patch_core) {
 
     int i;
@@ -105,6 +114,7 @@ Unit* Sequence_constructor(PatchCore* patch_core) {
     sequence->output->pull_sample_function = Sequence_pull_sample_handler;
     sequence->current_step = 0;
     sequence->last_clock_sample = 0;
+    sequence->unit.frame.window.paint_function = Sequence_paint_handler;
 
     return (Unit*)sequence;
 }

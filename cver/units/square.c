@@ -25,6 +25,15 @@ int Square_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
     return 1;
 }
 
+void Square_paint_handler(Window* square_window) {
+
+    Frame_paint_handler(square_window);
+    Context_draw_text(square_window->context, "Square",
+                       (square_window->width / 2) - 24,
+                       (square_window->height / 2) - 6,
+                       WIN_BORDERCOLOR);     
+}
+
 Unit* Square_constructor(PatchCore* patch_core) {
 
     Square* square = (Square*)malloc(sizeof(Square));
@@ -50,6 +59,7 @@ Unit* Square_constructor(PatchCore* patch_core) {
    
     square->phase = 0;
     square->output->pull_sample_function = Square_pull_sample_handler;
+    square->unit.frame.window.paint_function = Square_paint_handler;
 
     return (Unit*)square;
 }

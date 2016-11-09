@@ -25,6 +25,15 @@ int Sine_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
     return 1;
 }
 
+void Sine_paint_handler(Window* sine_window) {
+
+    Frame_paint_handler(sine_window);
+    Context_draw_text(sine_window->context, "Sine",
+                       (sine_window->width / 2) - 16,
+                       (sine_window->height / 2) - 6,
+                       WIN_BORDERCOLOR);     
+}
+
 Unit* Sine_constructor(PatchCore* patch_core) {
 
     Sine* sine = (Sine*)malloc(sizeof(Sine));
@@ -50,6 +59,7 @@ Unit* Sine_constructor(PatchCore* patch_core) {
    
     sine->phase = 0;
     sine->output->pull_sample_function = Sine_pull_sample_handler;
+    sine->unit.frame.window.paint_function = Sine_paint_handler;
 
     return (Unit*)sine;
 }

@@ -38,6 +38,15 @@ void MasterOut_delete_function(Object* master_out_object) {
     Unit_delete(master_out_object);
 }
 
+void MasterOut_paint_handler(Window* master_out_window) {
+
+    Frame_paint_handler(master_out_window);
+    Context_draw_text(master_out_window->context, "Master Out",
+                       (master_out_window->width / 2) - 40,
+                       (master_out_window->height / 2) - 6,
+                       WIN_BORDERCOLOR);     
+}
+
 Unit* MasterOut_constructor(PatchCore* patch_core) {
 
     MasterOut* master_out = (MasterOut*)malloc(sizeof(MasterOut));
@@ -66,6 +75,7 @@ Unit* MasterOut_constructor(PatchCore* patch_core) {
     Window_resize((Window*)master_out, 200, 150);
 
     master_out->output->pull_sample_function = MasterOut_pull_sample_handler;
+    master_out->unit.frame.window.paint_function = MasterOut_paint_handler;
     PatchCore_add_source(patch_core, master_out->output);
 
     return (Unit*)master_out;

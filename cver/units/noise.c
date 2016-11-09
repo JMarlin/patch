@@ -28,6 +28,15 @@ int Noise_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
     return 1;
 }
 
+void Noise_paint_handler(Window* noise_window) {
+
+    Frame_paint_handler(noise_window);
+    Context_draw_text(noise_window->context, "Noise",
+                       (noise_window->width / 2) - 20,
+                       (noise_window->height / 2) - 6,
+                       WIN_BORDERCOLOR);     
+}
+
 Unit* Noise_constructor(PatchCore* patch_core) {
 
     Noise* noise = (Noise*)malloc(sizeof(Noise));
@@ -51,6 +60,7 @@ Unit* Noise_constructor(PatchCore* patch_core) {
     }    
    
     noise->output->pull_sample_function = Noise_pull_sample_handler;
+    noise->unit.frame.window.paint_function = Noise_paint_handler;
 
     return (Unit*)noise;
 }
