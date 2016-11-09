@@ -18,7 +18,7 @@ double double_rand() {
     return r;
 }
 
-int Noise_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
+int Noise_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
 
     //Not really used here, but whatever
     Noise* noise = (Noise*)io->param_object;
@@ -26,6 +26,7 @@ int Noise_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
     //Stereo noise
     *sample_l = double_rand();
     *sample_r = double_rand();
+    *sample_g = 1;
 
     return 1;
 }

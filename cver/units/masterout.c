@@ -16,14 +16,15 @@ double db2gain(double value) {
     return gain_value;
 }
 
-int MasterOut_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
+int MasterOut_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
 
     MasterOut* master_out = (MasterOut*)io->param_object;
 
-    int retval = IO_pull_sample(master_out->input, sample_l, sample_r);
+    int retval = IO_pull_sample(master_out->input, sample_l, sample_r, sample_g);
     
     *sample_l *= db2gain(Slider_get_value(master_out->slider));
     *sample_r *= db2gain(Slider_get_value(master_out->slider));
+    *sample_g = 1;
 
     return retval;
 }

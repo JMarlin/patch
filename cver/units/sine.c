@@ -7,20 +7,22 @@ Module* Sine_new() {
     return Module_new(Sine_constructor, "Sine");
 }
 
-int Sine_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
+int Sine_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
     
-    double in_sample_l, in_sample_r;
+    double in_sample_l, in_sample_r, in_sample_g;
     Sine* sine = (Sine*)io->param_object;
 
     *sample_l = *sample_r = sin(sine->phase);
     
-    if(!IO_pull_sample(sine->freq_in, &in_sample_l, &in_sample_r))
+    if(!IO_pull_sample(sine->freq_in, &in_sample_l, &in_sample_r, &in_sample_g))
         return 0;
 
     sine->phase = (sine->phase + (((2*M_PI) * in_sample_l)/SAMPLE_RATE));
 
     if(sine->phase > (2*M_PI))
         sine->phase -= (2*M_PI);
+
+    *sample_g = 1;
 
     return 1;
 }

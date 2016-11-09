@@ -7,20 +7,22 @@ Module* Square_new() {
     return Module_new(Square_constructor, "Square");
 }
 
-int Square_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
+int Square_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
     
-    double in_sample_l, in_sample_r;
+    double in_sample_l, in_sample_r, in_sample_g;
     Square* square = (Square*)io->param_object;
 
     *sample_l = *sample_r = square->phase > M_PI ? 1.0 : -1.0;
     
-    if(!IO_pull_sample(square->freq_in, &in_sample_l, &in_sample_r))
+    if(!IO_pull_sample(square->freq_in, &in_sample_l, &in_sample_r, &in_sample_g))
         return 0;
 
     square->phase = (square->phase + (((2*M_PI) * in_sample_l)/SAMPLE_RATE));
 
     if(square->phase > (2*M_PI))
         square->phase -= (2*M_PI);
+
+    *sample_g = 1;
 
     return 1;
 }

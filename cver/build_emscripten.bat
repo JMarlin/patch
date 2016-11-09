@@ -38,6 +38,9 @@ echo . & call  emcc -c -o pitchknob.bc ../units/pitchknob.c -g4
 echo . & call  emcc -c -o sequence.bc ../units/sequence.c -g4
 echo . & call  emcc -c -o sine.bc ../units/sine.c -g4
 echo . & call  emcc -c -o square.bc ../units/square.c -g4
+echo . & call  emcc -c -o vca.bc ../units/vca.c -g4
+echo . & call  emcc -c -o adsr.bc ../units/adsr.c -g4
+echo . & call  emcc -c -o split.bc ../units/split.c -g4
 
 rem build widgets
 echo . & call  emcc -c -o patchdesktop.bc ../widgets/patchdesktop.c -g4

@@ -6,7 +6,7 @@ struct IO_struct;
 #include "../wslib/window.h"
 #include "patchcore.h"
 
-typedef int (*IOSamplePullHandler)(struct IO_struct*, double*, double*);
+typedef int (*IOSamplePullHandler)(struct IO_struct*, double*, double*, double*);
 
 typedef struct IO_struct {
     Window window;
@@ -22,6 +22,6 @@ int IO_init(IO* io, struct PatchCore_struct* patch_core, Object* param_object, i
 void IO_paint_handler(Window* io_window);
 void IO_mouseclick_handler(Window* io_window, int x, int y);
 void IO_connect(IO* io, IO* connected_io);
-int IO_pull_sample(IO* io, double *l_sample, double *r_sample);
+int IO_pull_sample(IO* io, double *l_sample, double *r_sample, double *g_sample);
 
 #endif //IO_H

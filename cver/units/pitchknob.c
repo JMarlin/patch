@@ -6,12 +6,13 @@ Module* PitchKnob_new() {
     return Module_new(PitchKnob_constructor, "Pitch Knob");
 }
 
-int PitchKnob_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
+int PitchKnob_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
 
     PitchKnob* pitch_knob = (PitchKnob*)io->param_object;
 
     *sample_l = *sample_r =
         2*(pow(2, ((1 - Slider_get_value(pitch_knob->slider)) * 6))); 
+    *sample_g = 1;
 
     return 1;
 }

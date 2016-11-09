@@ -5,6 +5,9 @@
 #include "../units/sequence.h"
 #include "../units/sine.h"
 #include "../units/square.h"
+#include "../units/vca.h"
+#include "../units/adsr.h"
+#include "../units/split.h"
 #include <stdlib.h>
 
 PatchCore* PatchCore_new() {
@@ -65,6 +68,9 @@ void PatchCore_start(PatchCore* patch) {
     PatchCore_install_module(patch, PitchKnob_new());
     PatchCore_install_module(patch, Sequence_new());
     PatchCore_install_module(patch, Square_new());
+    PatchCore_install_module(patch, VCA_new());
+    PatchCore_install_module(patch, ADSR_new());
+    PatchCore_install_module(patch, Split_new());
 
     patch->desktop = PatchDesktop_new(patch);
     PlatformWrapper_install_resize_callback((Object*)patch->desktop, Patch_resize_callback);
@@ -135,7 +141,7 @@ void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sampl
 
     int i;
     IO* source;
-    double temp_l, temp_r;
+    double temp_l, temp_r, temp_g;
     PatchCore* patch = (PatchCore*)patch_object;
 
     *sample_r = 0;
@@ -145,7 +151,7 @@ void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sampl
 
         source = (IO*)List_get_at(patch->sources, i);
         
-        IO_pull_sample(source, &temp_l, &temp_r);
+        IO_pull_sample(source, &temp_l, &temp_r, &temp_g);
         *sample_r += temp_r;
         *sample_l += temp_l;
     }

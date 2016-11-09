@@ -5,21 +5,26 @@ Module* Sequence_new() {
     return Module_new(Sequence_constructor, "Sequence");
 }
 
-int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
+int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
 
     Sequence* sequence = (Sequence*)io->param_object;
+    int stepped = 0;
 
     int i;
     double current_clock_sample_l,
            current_clock_sample_r,
+           in_sample_g,
            step_sample_l[8],
            step_sample_r[8];
 
-    if(!IO_pull_sample(sequence->clock_in, &current_clock_sample_l, &current_clock_sample_r))
+    if(!IO_pull_sample(sequence->clock_in, &current_clock_sample_l, &current_clock_sample_r, &in_sample_g))
         return 0;
 
-    if(current_clock_sample_l > 0 && sequence->last_clock_sample <= 0)
+    if(current_clock_sample_l > 0 && sequence->last_clock_sample <= 0) {
+
+        stepped = 1;
         sequence->current_step++;
+    }
 
     sequence->last_clock_sample = current_clock_sample_l;
 
@@ -29,12 +34,13 @@ int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r) {
     for(i = 0; i < 8; i++) {
 
         if(!IO_pull_sample((IO*)List_get_at(sequence->step_list, i), 
-                           &step_sample_l[i], &step_sample_r[i]))
+                           &step_sample_l[i], &step_sample_r[i], &in_sample_g))
             return 0;
     }
 
     *sample_l = step_sample_l[sequence->current_step];
     *sample_r = step_sample_r[sequence->current_step];
+    *sample_g = stepped ? -1.0 : 1.0;
 
     return 1;
 }
