@@ -37,7 +37,8 @@ void PatchDesktop_mouseclick_handler(Window* patch_desktop_window, int x, int y)
 
     PatchDesktop* patch_desktop = (PatchDesktop*)patch_desktop_window;
 
-    patch_desktop->start_io = (IO*)0;
+    if(patch_desktop->start_io)
+        PatchDesktop_end_connection(patch_desktop);
 
     if(patch_desktop->menu) {
 
@@ -107,9 +108,9 @@ void PatchDesktop_paint_handler(Window* patch_desktop_window) {
 
         if(input->connected_io) {
 
-            draw_elbow(patch_desktop_window->context, Window_screen_x((Window*)input) + 3,
-                   Window_screen_y((Window*)input) + 3, Window_screen_x((Window*)input->connected_io), 
-                   Window_screen_y((Window*)input->connected_io), RGB(0, 200, 0));
+            draw_elbow(patch_desktop_window->context, Window_screen_x((Window*)input) + 2,
+                   Window_screen_y((Window*)input) + 2, Window_screen_x((Window*)input->connected_io) + 2, 
+                   Window_screen_y((Window*)input->connected_io) + 2, RGB(0, 200, 0));
         }
     }
 }
@@ -125,6 +126,8 @@ void PatchDesktop_connect_action(PatchDesktop* patch_desktop, IO* io) {
 void PatchDesktop_begin_connection(PatchDesktop* patch_desktop, IO* io) {
 
     patch_desktop->start_io = io;
+
+    Window_invalidate((Window*)io, 0, 0, io->window.height - 1, io->window.width - 1);
 }
 
 void PatchDesktop_finish_connection(PatchDesktop* patch_desktop, IO* io) {
@@ -137,6 +140,10 @@ void PatchDesktop_finish_connection(PatchDesktop* patch_desktop, IO* io) {
 
         IO_connect(patch_desktop->start_io, io);
         IO_connect(io, patch_desktop->start_io);
+        Window_invalidate((Window*)patch_desktop->start_io, 0, 0,
+                          patch_desktop->start_io->window.height - 1,
+                          patch_desktop->start_io->window.width - 1);
+        Window_invalidate((Window*)io, 0, 0, io->window.height - 1, io->window.width - 1);
         patch_desktop->start_io = (IO*)0;
         Window_invalidate((Window*)patch_desktop, 0, 0, patch_desktop->desktop.window.width - 1,
                           patch_desktop->desktop.window.height - 1);
@@ -146,6 +153,8 @@ void PatchDesktop_finish_connection(PatchDesktop* patch_desktop, IO* io) {
 void PatchDesktop_end_connection(PatchDesktop* patch_desktop) {
 
     patch_desktop->start_io = (IO*)0;
+    Window_invalidate((Window*)patch_desktop, 0, 0, patch_desktop->desktop.window.width - 1,
+                      patch_desktop->desktop.window.height - 1);
 }
 
 void PatchDesktop_mousemove_handler(Window* patch_desktop_window, int x, int y) {

@@ -78,6 +78,9 @@ void IO_mouseclick_handler(Window* io_window, int x, int y) {
     if(io->connected_io) {
 
         io->connected_io->connected_io = (IO*)0;
+        Window_invalidate((Window*)io->connected_io, 0, 0,
+                          io->connected_io->window.height - 1,
+                          io->connected_io->window.width - 1);
         io->connected_io = (IO*)0;
     }
 
