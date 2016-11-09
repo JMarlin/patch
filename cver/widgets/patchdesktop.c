@@ -66,8 +66,8 @@ void draw_elbow(Context* context, int x1, int y1, int x2, int y2, uint32_t color
         hlen = -hlen;
     }
 
-    Context_horizontal_line(context, x1, y1, hlen/2, RGB(0, 0, 0));
-    Context_horizontal_line(context, x1 + (hlen/2), y2, hlen/2, RGB(0, 0, 0));
+    Context_horizontal_line(context, x1, y1, hlen/2, color);
+    Context_horizontal_line(context, x1 + (hlen/2), y2, hlen/2, color);
 
     vlen = y2 - y1;
 
@@ -77,7 +77,7 @@ void draw_elbow(Context* context, int x1, int y1, int x2, int y2, uint32_t color
         vlen = -vlen;
     }
 
-    Context_vertical_line(context, x1 + (hlen/2), y1, vlen, RGB(0, 0, 0));
+    Context_vertical_line(context, x1 + (hlen/2), y1, vlen, color);
 }
 
 void PatchDesktop_paint_handler(Window* patch_desktop_window) {
