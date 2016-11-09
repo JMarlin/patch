@@ -1,5 +1,6 @@
 #include <inttypes.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "window.h"
 #include "styleutils.h"
 
@@ -11,6 +12,37 @@ uint8_t pseudo_rand_8() {
 
     static uint16_t seed = 0;
     return (uint8_t)(seed = (12657 * seed + 12345) % 256);
+}
+
+void print_window(Window* window) {
+
+    printf("\n-----------------\nNEW WINDOW\n-----------------\n");
+    printf("Object deleter #: %p\n", (void*)window->object.delete_function);
+    printf("Parent pointer: 0x%08X\n", (int)window->parent);
+    printf("Window ID: %i\n", window->id);
+    printf("Window position: (%i, %i)\n", window->x, window->y);
+    printf("Window dimensions: %i x %i\n", window->width, window->height);
+    printf("Window flags: 0x%04X\n", window->flags);
+    printf("Context pointer: 0x%08X\n", (int)window->context);
+    printf("Drag child pointer: 0x%08X\n", (int)window->drag_child);
+    printf("Active child pointer: 0x%08X\n", (int)window->active_child);
+    printf("Over child pointer: 0x%08X\n", (int)window->over_child);
+    printf("Child list pointer: 0x%08X\n", (int)window->children);
+    printf("Drag offsets: (%i, %i)\n", window->drag_off_x, window->drag_off_y);
+    printf("Last button state: 0x%02X\n", window->last_button_state);
+    printf("Click cycle: %i\n", window->click_cycle);
+    printf("Paint function #: %p\n", (void*)window->paint_function);
+    printf("Mousedown function #: %p\n", (void*)window->mousedown_function);
+    printf("Mouseup function #: %p\n", (void*)window->mouseup_function);
+    printf("Mouseover function #: %p\n", (void*)window->mouseover_function);
+    printf("Mouseout function #: %p\n", (void*)window->mouseout_function);
+    printf("Mousemove function #: %p\n", (void*)window->mousemove_function);
+    printf("Mouseclick function #: %p\n", (void*)window->mouseclick_function);
+    printf("Move function #: %p\n", (void*)window->move_function);
+    if(window->title)
+        printf("Window title: %s\n", window->title);
+    else
+        printf("Window title:\n");
 }
 
 //Window constructor
@@ -814,8 +846,6 @@ void Window_update_context(Window* window, Context* context) {
 //Quick wrapper for shoving a new entry into the child list
 void Window_insert_child(Window* window, Window* child) {
 
-    Window* old_active = window->active_child;
-
     child->parent = window;
     List_add(window->children, (Object*)child);   
     Window_update_context(child, window->context);
@@ -828,7 +858,6 @@ Window* Window_create_window(Window* window, int16_t x, int16_t y,
 
     //Attempt to create the window instance
     Window* new_window;
-    Window* old_active;
     if(!(new_window = Window_new(x, y, width, height, flags, window->context)))
         return new_window;
 
@@ -970,12 +999,14 @@ void Window_show(Window* window) {
 void Window_delete_function(Object* window_object) {
 
     int i;
-    Window* window = (Window*)window_object;
+    Window *window = (Window*)window_object;
 
     if(!window_object)
         return;
 
     Window_hide(window);
+
+    Object_delete((Object*)window->children);
 
     if(window->parent) {
 
@@ -986,9 +1017,29 @@ void Window_delete_function(Object* window_object) {
 
         if(i < window->parent->children->count)
             List_remove_at(window->parent->children, i);
+
+        if(window->parent->active_child == window) {
+
+            if(window->parent->children->count) {
+
+                window->parent->active_child =
+                    (Window*)List_get_at(window->parent->children,
+                                         window->parent->children->count - 1);
+
+                Window_update_title(window->parent->active_child);
+            } else {
+
+                window->parent->active_child = (Window*)0;
+            }
+        }
+
+        if(window->parent->over_child == window)
+            window->parent->over_child = (Window*)0;
+        
+        if(window->parent->drag_child == window)
+            window->parent->drag_child = (Window*)0;
     }
 
-    Object_delete((Object*)window->children);
     Object_delete((Object*)window->context);
     free(window);
 }

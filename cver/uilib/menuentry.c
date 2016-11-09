@@ -56,7 +56,7 @@ void MenuEntry_paint_handler(Window* menu_entry_window) {
     //Current code assumes that the font is 12px high
     Context_fill_rect(menu_entry_window->context, 0, 0, menu_entry_window->width,
                       menu_entry_window->height,
-                      menu_entry->mouse_over ? RGB(0, 0, 0) : RGB(255, 255, 255));
+                      menu_entry->mouse_over ? RGB(0, 0, 0) : RGB(155, 165, 185));
     Context_draw_text(menu_entry_window->context, menu_entry->text->buf,
                       1, 1, menu_entry->mouse_over ? RGB(255, 255, 255) : RGB(0, 0, 0));
 }

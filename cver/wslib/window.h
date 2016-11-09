@@ -99,5 +99,6 @@ void Window_set_title(Window* window, char* new_title);
 void Window_append_title(Window* window, char* additional_chars);                      
 void Window_delete_function(Object* window_object);
 void Window_resize(Window* window, int w, int h);
+void print_window(Window* window);
 
 #endif //WINDOW_H
