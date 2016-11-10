@@ -24,11 +24,12 @@ AssociativeArray* AssociativeArray_new() {
 
 void AssociativeArray_delete_function(Object* associative_array_object) {
 
+    AssociativeArray* associative_array;
+
     if(!associative_array_object)
         return;
 
-    AssociativeArray* associative_array = 
-        (AssociativeArray*)associative_array_object;
+    associative_array = (AssociativeArray*)associative_array_object;
 
     Object_delete((Object*)associative_array->keys);
     Object_delete((Object*)associative_array->values);

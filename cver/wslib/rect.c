@@ -29,22 +29,23 @@ Rect* Rect_new(int top, int left, int bottom, int right) {
 List* Rect_split(Rect* subject_rect, Rect* cutting_rect) {
 
     //Allocate the list of result rectangles
+    Rect subject_copy;
     List* output_rects;
+    
+    //We need a rectangle to hold new rectangles before
+    //they get pushed into the output list
+    Rect* temp_rect;
+    
     if(!(output_rects = List_new()))
         return output_rects;
 
     //We're going to modify the subject rect as we go,
     //so we'll clone it so as to not upset the object 
     //we were passed
-    Rect subject_copy;
     subject_copy.top = subject_rect->top;
     subject_copy.left = subject_rect->left;
     subject_copy.bottom = subject_rect->bottom;
     subject_copy.right = subject_rect->right;
-
-    //We need a rectangle to hold new rectangles before
-    //they get pushed into the output list
-    Rect* temp_rect;
 
     //Begin splitting
     //1 -Split by left edge if that edge is between the subject's left and right edges 

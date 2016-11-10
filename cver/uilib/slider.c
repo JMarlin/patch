@@ -60,6 +60,7 @@ double Slider_get_value(Slider* slider) {
 
 void Slider_set_value(Slider* slider, double new_value) {
 
+    double new_y;
     double height = (double)slider->window.height;
 
     if(new_value > slider->max)
@@ -68,7 +69,7 @@ void Slider_set_value(Slider* slider, double new_value) {
     if(new_value < slider->min)
        new_value = slider->min;
 
-    double new_y = 
+    new_y = 
         (((-(height - 10)) / (slider->max - slider->min)) * (new_value - slider->min)) + (height - 10);
 
     Window_move((Window*)slider->knob, 0, (int)new_y);

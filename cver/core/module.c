@@ -21,10 +21,12 @@ Module* Module_new(ModuleConstructor constructor, char* name) {
 
 void Module_delete_function(Object* module_object) {
 
+    Module* module;
+
     if(!module_object)
         return;
 
-    Module* module = (Module*)module_object;
+    module = (Module*)module_object;
 
     Object_delete((Object*)module->name);
     Object_default_delete_function(module_object);

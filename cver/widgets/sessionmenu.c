@@ -29,11 +29,14 @@ SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
 
 void SessionMenu_mouseclick_function(Window* session_menu_entry_window, int x, int y) {
 
+    MenuEntry* menu_entry;
+    SessionMenu* session_menu;
+
     if(!session_menu_entry_window->parent)
         return;
 
-    MenuEntry* menu_entry = (MenuEntry*)session_menu_entry_window;
-    SessionMenu* session_menu = (SessionMenu*)session_menu_entry_window->parent;
+    menu_entry = (MenuEntry*)session_menu_entry_window;
+    session_menu = (SessionMenu*)session_menu_entry_window->parent;
 
     PatchCore_instantiate_module(session_menu->patch_core, menu_entry->text);
     PatchCore_destroy_menu(session_menu->patch_core);

@@ -39,10 +39,12 @@ int String_compare(String* string_a, String* string_b) {
 
 void String_delete_function(Object* string_object) {
 
+    String* string;
+
     if(!string_object)
         return;
 
-    String* string = (String*)string_object;
+    string = (String*)string_object;
 
     if(string->buf)
         free(string->buf);

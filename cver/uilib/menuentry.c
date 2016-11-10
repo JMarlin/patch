@@ -63,10 +63,12 @@ void MenuEntry_paint_handler(Window* menu_entry_window) {
 
 void MenuEntry_delete_function(Object* menu_entry_object) {
 
+    MenuEntry* menu_entry;
+
     if(!menu_entry_object)
         return;
 
-    MenuEntry* menu_entry = (MenuEntry*)menu_entry_object;
+    menu_entry = (MenuEntry*)menu_entry_object;
 
     Object_delete((Object*)menu_entry->text);
     Window_delete_function(menu_entry_object);
