@@ -23,9 +23,10 @@ class WrapWindow : public BDirectWindow {
 	    bool is_connected;
 	    bool connection_is_disabled;
 	    BLocker* locker;
+	    BApplication* app;
 	    thread_id draw_thread_id;
 	    
-	    WrapWindow(BRect frame) : BDirectWindow(frame, "Patch", B_TITLED_WINDOW, 0) {
+	    WrapWindow(BRect frame, BApplication* in_app) : BDirectWindow(frame, "Patch", B_TITLED_WINDOW, 0) {
 	    
 	        BView* view;	    
 	        is_connected = false;
@@ -33,6 +34,7 @@ class WrapWindow : public BDirectWindow {
 	        locker = new BLocker();
 	        clip_list = NULL;
 	        clip_count = 0;
+	        app = in_app;
 	        
 	        view = new BView(Bounds(), "clear_view", B_FOLLOW_ALL_SIDES, 0); //B_WILL_DRAW);
 	        view->SetViewColor(B_TRANSPARENT_32_BIT);
@@ -57,6 +59,18 @@ class WrapWindow : public BDirectWindow {
 	    	wait_for_thread(draw_thread_id, &result);
 	    	free(clip_list);
 	    	delete locker;
+	    }
+	    
+	    bool QuitRequested() {
+
+	        is_connected = false;
+	        locker->Lock();	        
+	        kill_thread(draw_thread_id);
+	        locker->Unlock();
+	        app->Lock();
+	        app->Quit();
+	        app->Unlock();
+	        return true;
 	    }
 	    
 	    void Draw() {
@@ -173,11 +187,10 @@ int main(int argc, char* argv[]) {
     b_rect.bottom = 350;
     
     app = new BApplication("application/japp");
-    win = new WrapWindow(b_rect);
+    win = new WrapWindow(b_rect, app);
     
     app->Run();
     
-    delete win;
     delete app;
     
     return 0;
