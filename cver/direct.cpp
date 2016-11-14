@@ -25,6 +25,7 @@ class WrapWindow : public BDirectWindow {
 	    BLocker* locker;
 	    BApplication* app;
 	    thread_id draw_thread_id;
+	    uint8* user_buf;
 	    
 	    WrapWindow(BRect frame, BApplication* in_app) : BDirectWindow(frame, "Patch", B_TITLED_WINDOW, 0) {
 	    
@@ -34,8 +35,9 @@ class WrapWindow : public BDirectWindow {
 	        locker = new BLocker();
 	        clip_list = NULL;
 	        clip_count = 0;
+	        user_buf = NULL;
 	        app = in_app;
-	        
+	        	        
 	        view = new BView(Bounds(), "clear_view", B_FOLLOW_ALL_SIDES, 0); //B_WILL_DRAW);
 	        view->SetViewColor(B_TRANSPARENT_32_BIT);
 	        AddChild(view);
@@ -58,6 +60,7 @@ class WrapWindow : public BDirectWindow {
 	    	Sync();
 	    	wait_for_thread(draw_thread_id, &result);
 	    	free(clip_list);
+	    	free(user_buf);
 	    	delete locker;
 	    }
 	    
@@ -90,17 +93,25 @@ class WrapWindow : public BDirectWindow {
 	    		case B_DIRECT_START:
 	    		    is_connected = true;
 	    		    
-	    		case B_DIRECT_MODIFY:
+	    		case B_DIRECT_MODIFY:	    		
 	    		    if(clip_list) {
 	    		    	
 	    		        free(clip_list);
 	    		        clip_list = NULL;
 	    		    }
 	    		    
+	    		    if(user_buf) {
+	    		    	
+	    		    	free(user_buf);
+	    		    	user_buf = NULL;
+	    		    }
+	    		    
 	    		    clip_count = info->clip_list_count;
 	    		    clip_list = (clipping_rect*)malloc(clip_count * sizeof(clipping_rect));
+	    		    user_buf = (uint8*)malloc((info->window_bounds.bottom - info->window_bounds.top + 1) *
+	    		                              (info->window_bounds.right - info->window_bounds.left + 1) * 4);
 	    		    
-	    		    if(clip_list) {
+	    		    if(clip_list && user_buf) {
 	    		    	
 	    		    	memcpy(clip_list, info->clip_list, clip_count * sizeof(clipping_rect));
 	    		    	bits = (uint8*)info->bits;
@@ -158,6 +169,8 @@ int32 DrawingThread(void* data) {
 	        	
 		        	while(y < height) {
 	        		
+	        		    //HERE: Switch memset to blank to memcpy from user buf
+	        		    //memcpy(clip_list, info->clip_list, clip_count * sizeof(clipping_rect));
 	    	    		memset(p, 0x00, width * 4);
 	        			y++;
 	        			p += adder;
