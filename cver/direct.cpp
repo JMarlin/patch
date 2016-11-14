@@ -1,81 +1,184 @@
-#include <iostream>
-#include <Application.h>
-#include <Screen.h>
+#include <Window.h>
+#include <View.h>
 #include <DirectWindow.h>
+#include <Application.h>
+#include <Locker.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <iostream>
 
-class JApplication : public BApplication {
-    
-    public:
-    
-        JApplication() : BApplication("application/japp") {
-        
-            cout << "JApplication started\n";
-        }
-        
-        ~JApplication() {
-        
-            cout << "JApplication shutdown\n";
-        }
-        
-        void MessageReceived(BMessage* message) {
-        
-            switch( message->what ) {
-            
-                default:
-                   cout << message->what << "\n";
-                   BApplication::MessageReceived(message);
-                   break;
-            }
-        }
+int32 DrawingThread(void* data);
+
+class WrapWindow : public BDirectWindow {
+	
+	public:
+	    
+	    uint8* bits;
+	    int32 row_bytes;
+	    color_space pixel_format;
+	    clipping_rect win_bounds;
+	    uint32 clip_count;
+	    clipping_rect* clip_list;
+	    bool is_dirty;
+	    bool is_connected;
+	    bool connection_is_disabled;
+	    BLocker* locker;
+	    thread_id draw_thread_id;
+	    
+	    WrapWindow(BRect frame) : BDirectWindow(frame, "Patch", B_TITLED_WINDOW, 0) {
+	    
+	        BView* view;	    
+	        is_connected = false;
+	        connection_is_disabled = false;
+	        locker = new BLocker();
+	        clip_list = NULL;
+	        clip_count = 0;
+	        
+	        view = new BView(Bounds(), "clear_view", B_FOLLOW_ALL_SIDES, 0); //B_WILL_DRAW);
+	        view->SetViewColor(B_TRANSPARENT_32_BIT);
+	        AddChild(view);
+	        
+	        if(!SupportsWindowMode())
+	            SetFullScreen(true);
+	            
+	        is_dirty = true;
+	        draw_thread_id = spawn_thread(DrawingThread, "drawing_thread", B_NORMAL_PRIORITY, (void*)this);
+	        resume_thread(draw_thread_id);
+	        Show();
+	    }
+	    
+	    ~WrapWindow() {
+	    	
+	    	int32 result;
+	    	
+	    	connection_is_disabled = true;
+	    	Hide();
+	    	Sync();
+	    	wait_for_thread(draw_thread_id, &result);
+	    	free(clip_list);
+	    	delete locker;
+	    }
+	    
+	    void Draw() {
+	    
+	        is_dirty = true;
+	    }
+	    
+	    void DirectConnected(direct_buffer_info* info) {
+	    	
+	    	if(!is_connected && connection_is_disabled)
+	    	    return;
+	    	    
+	    	locker->Lock();
+	    	
+	    	switch(info->buffer_state & B_DIRECT_MODE_MASK) {
+	    		
+	    		case B_DIRECT_START:
+	    		    is_connected = true;
+	    		    
+	    		case B_DIRECT_MODIFY:
+	    		    if(clip_list) {
+	    		    	
+	    		        free(clip_list);
+	    		        clip_list = NULL;
+	    		    }
+	    		    
+	    		    clip_count = info->clip_list_count;
+	    		    clip_list = (clipping_rect*)malloc(clip_count * sizeof(clipping_rect));
+	    		    
+	    		    if(clip_list) {
+	    		    	
+	    		    	memcpy(clip_list, info->clip_list, clip_count * sizeof(clipping_rect));
+	    		    	bits = (uint8*)info->bits;
+	    		    	row_bytes = info->bytes_per_row;
+	    		    	pixel_format = info->pixel_format;
+	    		    	win_bounds = info->window_bounds;
+	    		    	is_dirty = true;
+	    		    }
+	    		    break;
+	    		    
+	    		case B_DIRECT_STOP:
+	    		    is_connected = false;
+	    		    break;
+	    		    
+	    		default:
+	    		    break;
+	    	}
+	    	
+	    	locker->Unlock();
+	    }	    
 };
 
-class JWindow : public BDirectWindow {
-
-    public:
-    
-        JWindow(BRect frame, const char* title, window_look look,
-                window_feel feel, uint32 flags,
-                uint32 workspaces = B_CURRENT_WORKSPACE) :
-                    BDirectWindow(frame, title, look, feel, flags, workspaces) {}
-    
-        void DirectConnected(direct_buffer_info* info) {
-        
-            cout << "Connection made\n";
-        }
-    
-        void MessageReceived(BMessage* message) {
-        
-            switch( message->what ) {
-            
-                default:
-                   cout << message->what << "\n";
-                   BWindow::MessageReceived(message);
-                   break;
-            }
-        }
-};
+int32 DrawingThread(void* data) {
+	
+	WrapWindow* win;
+	
+	win = (WrapWindow*)data;
+	
+	while(!win->connection_is_disabled) {
+	
+	    //cout << "Draw loop begin (" << (win->pixel_format == B_CMAP8 ? true : false) << ")\n";
+	
+	    win->locker->Lock();
+	    
+	    if(win->is_connected) {
+  	        if((win->pixel_format == B_CMAP8 | true) && win->is_dirty) {
+	    	    
+	            int32 y;
+	  	        int32 width;
+		        int32 height;
+	    	    int32 adder;
+	            uint8* p;
+	        	clipping_rect* clip;
+		        int32 i;
+	        
+		        adder = win->row_bytes;
+	        
+		        for(i = 0; i < win->clip_count; i++) {
+	        	
+		        	clip = &(win->clip_list[i]);
+	    	    	width = (clip->right - clip->left) + 1;
+	        		height = (clip->bottom - clip->top) + 1;
+	        		p = win->bits + (clip->top * win->row_bytes) + (clip->left * 4);
+		        	y = 0;
+	        	
+		        	while(y < height) {
+	        		
+	    	    		memset(p, 0x00, width * 4);
+	        			y++;
+	        			p += adder;
+	        		}
+	        	}
+	    	}
+	    
+	    	win->is_dirty = false;
+		}
+	
+		win->locker->Unlock();
+		snooze(16000);
+	}
+	
+	return B_OK;
+}
 
 int main(int argc, char* argv[]) {
 
-    JApplication* j_app;
     BRect b_rect;
-    JWindow* j_win;
+    BApplication* app;
+    WrapWindow* win;
     
     b_rect.left = 50;
     b_rect.top = 50;
     b_rect.right = 350;
     b_rect.bottom = 350;
     
-    j_app = new JApplication();
-    j_win = new JWindow(b_rect, "JApplication", 
-                        B_TITLED_WINDOW_LOOK, B_NORMAL_WINDOW_FEEL, 0, B_CURRENT_WORKSPACE);
-                        
-    j_win->Show();                    
+    app = new BApplication("application/japp");
+    win = new WrapWindow(b_rect);
     
-    j_app->Run();
+    app->Run();
     
-    delete j_app;
-    delete j_win;
-
+    delete win;
+    delete app;
+    
     return 0;
 }
