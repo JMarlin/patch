@@ -4,21 +4,29 @@ void Slider_knob_move(Window* knob_window, int x, int y) {
 
     Frame* knob = (Frame*)knob_window;
     Slider* slider = (Slider*)knob->window.parent;
+    int height;
 
     if(!slider)
         return;
 
+    height = (slider->orientation ? 
+             slider->window.width : slider->window.height) - 10;
+
+    if(slider->orientation)
+        y = x;
+
     if(y < 0)
         y = 0;
 
-    if(y > (slider->window.height - 10))
-        y = slider->window.height - 10;
+    if(y > height)
+        y = height;
 
     if(slider->knob_old_move)
-        slider->knob_old_move(knob_window, 0, y);
+        slider->knob_old_move(knob_window, slider->orientation ? y : 0, 
+                              slider->orientation ? 0 : y);
 }
 
-Slider* Slider_new(int x, int y, int width, int height, double min, double max) {
+Slider* Slider_new(int x, int y, int width, int height, float min, float max) {
 
     Slider* slider;
 
@@ -31,7 +39,14 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
         return (Slider*)0;
     }
 
-    if(!(slider->knob = Frame_new(0, 0, width, 10))) {
+    if(slider->window.width > slider->window.height)
+        slider->orientation = 1;
+    else
+        slider->orientation = 0;
+
+
+    if(!(slider->knob = Frame_new(0, 0, slider->orientation ? 10 : width,
+                                  slider->orientation ? height : 10))) {
 
         Object_delete((Object*)slider);
         return (Slider*)0;
@@ -49,19 +64,21 @@ Slider* Slider_new(int x, int y, int width, int height, double min, double max) 
     return slider;
 }
 
-double Slider_get_value(Slider* slider) {
+float Slider_get_value(Slider* slider) {
 
-    double y = (double)slider->knob->window.y;
-    double x = (double)slider->knob->window.x;
-    double height = (double)slider->window.height;
+    float y = (float)(slider->orientation ?
+                        slider->knob->window.x : slider->knob->window.y);
+    float height = (float)(slider->orientation ? 
+                             slider->window.width : slider->window.height);
 
-    return (((y - 10)*(slider->min - slider->max))/(height - 20)) + slider->max;
+    return (((y*(slider->min - slider->max))/(height - 10)) + slider->max);
 }
 
-void Slider_set_value(Slider* slider, double new_value) {
+void Slider_set_value(Slider* slider, float new_value) {
 
-    double new_y;
-    double height = (double)slider->window.height;
+    float new_y;
+    float height = (float)(slider->orientation ? 
+                             slider->window.width : slider->window.height);
 
     if(new_value > slider->max)
         new_value = slider->max;
@@ -72,7 +89,8 @@ void Slider_set_value(Slider* slider, double new_value) {
     new_y = 
         (((-(height - 10)) / (slider->max - slider->min)) * (new_value - slider->min)) + (height - 10);
 
-    Window_move((Window*)slider->knob, 0, (int)new_y);
+    Window_move((Window*)slider->knob, slider->orientation ? (int)new_y : 0,
+                slider->orientation ? 0 : (int)new_y);
 }
 
 void Slider_delete_function(Object* slider_object) {

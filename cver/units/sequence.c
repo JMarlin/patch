@@ -5,13 +5,13 @@ Module* Sequence_new() {
     return Module_new(Sequence_constructor, "Sequence");
 }
 
-int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
+int Sequence_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
 
     Sequence* sequence = (Sequence*)io->param_object;
     int stepped = 0;
 
     int i;
-    double current_clock_sample_l,
+    float current_clock_sample_l,
            current_clock_sample_r,
            in_sample_g,
            step_sample_l[8],
@@ -42,6 +42,9 @@ int Sequence_pull_sample_handler(IO* io, double* sample_l, double* sample_r, dou
     *sample_r = step_sample_r[sequence->current_step];
     *sample_g = stepped ? -1.0 : 1.0;
 
+    if(stepped)
+        Window_invalidate((Window*)sequence, 30, 17, 40, 186);
+
     return 1;
 }
 
@@ -50,7 +53,7 @@ void Sequence_delete_function(Object* sequence_object) {
     Sequence* sequence = (Sequence*)sequence_object;
 
     //Clear the list so that the elements don't get freed on list
-    //deletion and then double-freed on window deletion
+    //deletion and then float-freed on window deletion
     while(sequence->step_list && sequence->step_list->count)
         List_remove_at(sequence->step_list, 0);
 
@@ -61,7 +64,19 @@ void Sequence_delete_function(Object* sequence_object) {
 
 void Sequence_paint_handler(Window* sequence_window) {
 
+    int i;
+    Sequence* sequence = (Sequence*)sequence_window;
+
     Frame_paint_handler(sequence_window);
+
+    for(i = 0; i < 8; i++) {
+
+        if(i == sequence->current_step)
+            Context_fill_rect(sequence_window->context, 20*(i+1) - 3, 30, 10, 10, RGB(255, 90, 90));
+        else
+            Context_fill_rect(sequence_window->context, 20*(i+1) - 3, 30, 10, 10, RGB(100, 50, 50));
+    }
+
     Context_draw_text(sequence_window->context, "Sequence",
                        (sequence_window->width / 2) - 32,
                        (sequence_window->height / 2) - 6,

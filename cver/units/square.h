@@ -12,7 +12,7 @@ typedef struct Square_struct {
     Unit unit;
     IO* output;
     IO* freq_in;
-    double phase;
+    float phase;
 } Square;
 
 Module* Square_new();

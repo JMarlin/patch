@@ -14,7 +14,7 @@ typedef struct Sequence_struct {
     IO* output;
     IO* clock_in;
     List* step_list;
-    double last_clock_sample;
+    float last_clock_sample;
     int current_step;
 } Sequence;
 

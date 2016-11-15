@@ -13,9 +13,9 @@ typedef struct Split_struct {
     IO* output_one;
     IO* output_two;
     IO* input;
-    double last_sample_l;
-    double last_sample_r;
-    double last_sample_g;
+    float last_sample_l;
+    float last_sample_r;
+    float last_sample_g;
     int pulls;
 } Split;
 

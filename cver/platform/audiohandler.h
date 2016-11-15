@@ -3,7 +3,7 @@
 
 #include "../wslib/object.h"
 
-typedef void (*AudioHandlerFunction)(Object*, double*, double*);
+typedef void (*AudioHandlerFunction)(Object*, float*, float*);
 
 typedef struct AudioHandler_struct {
     Object object;

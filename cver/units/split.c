@@ -5,7 +5,7 @@ Module* Split_new() {
     return Module_new(Split_constructor, "Split");
 }
 
-int Split_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
+int Split_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
     
     Split* split = (Split*)io->param_object;
     

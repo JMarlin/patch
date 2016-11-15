@@ -8,24 +8,24 @@ Module* Noise_new() {
     return Module_new(Noise_constructor, "Noise");
 }
 
-double double_rand() {
+float float_rand() {
 
     time_t t;
-    double r;
+    float r;
 
     r = (PlatformWrapper_random() - 0.5) * 2;
 
     return r;
 }
 
-int Noise_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
+int Noise_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
 
     //Not really used here, but whatever
     Noise* noise = (Noise*)io->param_object;
 
     //Stereo noise
-    *sample_l = double_rand();
-    *sample_r = double_rand();
+    *sample_l = float_rand();
+    *sample_r = float_rand();
     *sample_g = 1;
 
     return 1;

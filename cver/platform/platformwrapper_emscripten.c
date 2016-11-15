@@ -7,13 +7,13 @@
 MouseCallback mouse_handler;
 ResizeCallback resize_handler;
 Context* internal_context;
-double left_sum, right_sum;
+float left_sum, right_sum;
 List* ah_list;
 
 void EMSCRIPTEN_KEEPALIVE doPullSample() {
 
     int i;
-    double l, r;
+    float l, r;
     AudioHandler* ah;
 
     EM_ASM(
@@ -61,6 +61,9 @@ void PlatformWrapper_init() {
                 outbuf_r[i] = window.fo_sample[1];
                 outbuf_l[i] = window.fo_sample[0];
             }
+
+            if(window.dbg_on)
+                    debugger;
         };
 
         source.connect(pcm_node);
@@ -238,7 +241,7 @@ void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallbac
     resize_handler.callback = callback;
 }
 
-double PlatformWrapper_random() {
+float PlatformWrapper_random() {
 
     return EM_ASM_DOUBLE({ return Math.random(); }, 0);
 }

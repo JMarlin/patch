@@ -5,9 +5,9 @@ Module* VCA_new() {
     return Module_new(VCA_constructor, "VCA");
 }
 
-int VCA_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
+int VCA_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
     
-    double in_sample_l, in_sample_r, in_sample_g, gain;
+    float in_sample_l, in_sample_r, in_sample_g, gain;
     VCA* vca = (VCA*)io->param_object;
     
     if(!IO_pull_sample(vca->level_in, &in_sample_l, &in_sample_r, &in_sample_g))

@@ -28,7 +28,7 @@ List* PatchCore_get_module_list(PatchCore* patch);
 void PatchCore_connect_action(PatchCore* patch, struct IO_struct* io);
 void PatchCore_destroy_menu(PatchCore* patch);
 void PatchCore_instantiate_module(PatchCore* patch, String* module_name);
-void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sample_r);
+void PatchCore_pull_sample(Object* patch_object, float* sample_l, float* sample_r);
 void PatchCore_delete_function(Object* patch_object);
 
 #endif //PATCHCORE_H

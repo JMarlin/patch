@@ -7,9 +7,9 @@ Module* Square_new() {
     return Module_new(Square_constructor, "Square");
 }
 
-int Square_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
+int Square_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
     
-    double in_sample_l, in_sample_r, in_sample_g;
+    float in_sample_l, in_sample_r, in_sample_g;
     Square* square = (Square*)io->param_object;
     
     if(!IO_pull_sample(square->freq_in, &in_sample_l, &in_sample_r, &in_sample_g))

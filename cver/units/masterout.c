@@ -6,24 +6,35 @@ Module* MasterOut_new() {
     return Module_new(MasterOut_constructor, "Master Out");
 }
 
-double db2gain(double value) {
+float db2gain(float value) {
 
-    double max_db = 10;
-    double min_db = -80;
-    double db_value = ((max_db - min_db) * value) + min_db;
-    double gain_value = (pow(10,(db_value/20)) - pow(10,(min_db/20))) / (1 - pow(10, (min_db/20)));
+    float max_db = 10;
+    float min_db = -80;
+    float db_value = ((max_db - min_db) * value) + min_db;
+    float gain_value = (powf(10,(db_value/20)) - powf(10,(min_db/20))) / (1 - powf(10, (min_db/20)));
 
     return gain_value;
 }
 
-int MasterOut_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
-
+int MasterOut_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
+ 
+    float l_gain, r_gain;
     MasterOut* master_out = (MasterOut*)io->param_object;
 
     int retval = IO_pull_sample(master_out->input, sample_l, sample_r, sample_g);
-    
-    *sample_l *= db2gain(Slider_get_value(master_out->slider));
-    *sample_r *= db2gain(Slider_get_value(master_out->slider));
+        
+    //Gain
+    *sample_l *= db2gain(Slider_get_value(master_out->gain_slider));
+    *sample_r *= db2gain(Slider_get_value(master_out->gain_slider));
+
+    //Pan
+    r_gain = (1.0 - Slider_get_value(master_out->pan_slider))/2.0;
+    l_gain = (1.0 + Slider_get_value(master_out->pan_slider))/2.0;
+    (*sample_l) = (*sample_l) * l_gain;
+    (*sample_r) = (*sample_r) * r_gain;
+
+    //printf("%f/%f\n", l_gain, r_gain);
+
     *sample_g = 1;
 
     return retval;
@@ -62,17 +73,20 @@ Unit* MasterOut_constructor(PatchCore* patch_core) {
     }
 
     Object_init((Object*)master_out, MasterOut_delete_function);
-    master_out->slider = Slider_new(10, 10, 30, 130, 0, 1);
+    master_out->gain_slider = Slider_new(10, 10, 30, 130, 0, 1);
+    master_out->pan_slider = Slider_new(50, 110, 140, 30, -1, 1);
     master_out->input = Unit_create_input((Unit*)master_out, 5, 75);
     master_out->output = IO_new(patch_core, (Object*)master_out, 0, 0, 1);
 
-    if(!(master_out->slider && master_out->input && master_out->output)) {
+    if(!(master_out->gain_slider && master_out->input
+       && master_out->output && master_out->pan_slider)) {
 
         Object_delete((Object*)master_out);
         return (Unit*)0;
     }    
 
-    Window_insert_child((Window*)master_out, (Window*)master_out->slider);
+    Window_insert_child((Window*)master_out, (Window*)master_out->pan_slider);
+    Window_insert_child((Window*)master_out, (Window*)master_out->gain_slider);
     Window_resize((Window*)master_out, 200, 150);
 
     master_out->output->pull_sample_function = MasterOut_pull_sample_handler;

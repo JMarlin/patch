@@ -11,7 +11,8 @@ struct MasterOut_struct;
 
 typedef struct MasterOut_struct {
     Unit unit;
-    Slider* slider;
+    Slider* gain_slider;
+    Slider* pan_slider;
     IO* input;
     IO* output;
 } MasterOut;

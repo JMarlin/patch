@@ -3,7 +3,7 @@
 //NOTE: IOs need to automatically disconnect from anything they might be
 //      connected to upon deletion so that we don't get invalid pulls
 
-int Output_initial_sample_pull_handler(IO* io, double *l_sample, double *r_sample, double *g_sample) {
+int Output_initial_sample_pull_handler(IO* io, float *l_sample, float *r_sample, float *g_sample) {
 
     *l_sample = *r_sample = 0.0;
     *g_sample = -1.0;
@@ -11,7 +11,7 @@ int Output_initial_sample_pull_handler(IO* io, double *l_sample, double *r_sampl
     return 1;
 }
 
-int Input_sample_pull_handler(IO* io, double *l_sample, double *r_sample, double *g_sample) {
+int Input_sample_pull_handler(IO* io, float *l_sample, float *r_sample, float *g_sample) {
 
     if(io->connected_io)
         return IO_pull_sample(io->connected_io, l_sample, r_sample, g_sample);
@@ -93,7 +93,7 @@ void IO_connect(IO* io, IO* connected_io) {
     io->connected_io = connected_io;
 }
 
-int IO_pull_sample(IO* io, double *l_sample, double *r_sample, double *g_sample) {
+int IO_pull_sample(IO* io, float *l_sample, float *r_sample, float *g_sample) {
 
     return io->pull_sample_function(io, l_sample, r_sample, g_sample);
 }

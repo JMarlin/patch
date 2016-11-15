@@ -6,10 +6,10 @@ Module* ADSR_new() {
     return Module_new(ADSR_constructor, "ADSR");
 }
 
-int ADSR_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double* sample_g) {
+int ADSR_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
     
-    double current_gain;
-    double in_sample_l, in_sample_r, gate_sample, a_sample, d_sample, s_sample, r_sample;
+    float current_gain;
+    float in_sample_l, in_sample_r, gate_sample, a_sample, d_sample, s_sample, r_sample;
     
     ADSR* adsr = (ADSR*)io->param_object;
 
@@ -31,11 +31,11 @@ int ADSR_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double*
 
         if(adsr->time <= a_sample) {
 
-            current_gain = (pow(adsr->time/a_sample, 2) * 2) - 1;
+            current_gain = (powf(adsr->time/a_sample, 2) * 2) - 1;
             adsr->time += 1000.0/SAMPLE_RATE;
         } else if(adsr->time <= (a_sample + d_sample))  {
 
-            current_gain = (((pow((((2*(a_sample+(d_sample/2))) - adsr->time) - a_sample)/d_sample, 2) * ((1 - s_sample) / 2)) + (1 - ((1 - s_sample) / 2))) * 2) - 1;
+            current_gain = (((powf((((2*(a_sample+(d_sample/2))) - adsr->time) - a_sample)/d_sample, 2) * ((1 - s_sample) / 2)) + (1 - ((1 - s_sample) / 2))) * 2) - 1;
             adsr->time += 1000.0/SAMPLE_RATE;
         } else {
 
@@ -54,7 +54,7 @@ int ADSR_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double*
 
         if(adsr->time <= r_sample) {
         
-            current_gain = (((pow(((2 * (r_sample / 2)) - adsr->time) / r_sample, 2) * (1 - ((1 - s_sample) / 2))) * 2) - 1);
+            current_gain = (((powf(((2 * (r_sample / 2)) - adsr->time) / r_sample, 2) * (1 - ((1 - s_sample) / 2))) * 2) - 1);
             adsr->time += 1000.0/SAMPLE_RATE;
         } else {
         

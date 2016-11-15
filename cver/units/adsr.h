@@ -17,8 +17,8 @@ typedef struct ADSR_struct {
     Slider* d_slider;
     Slider* s_slider;
     Slider* r_slider;
-    double last_gate;
-    double time;
+    float last_gate;
+    float time;
 } ADSR;
 
 Module* ADSR_new();

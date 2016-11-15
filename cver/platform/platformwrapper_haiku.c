@@ -6,13 +6,13 @@
 MouseCallback mouse_handler;
 ResizeCallback resize_handler;
 Context* internal_context;
-double left_sum, right_sum;
+float left_sum, right_sum;
 List* ah_list;
 
 void doPullSample() {
 
     int i;
-    double l, r;
+    float l, r;
     AudioHandler* ah;
 
     //Clear sample accumulators
@@ -117,11 +117,11 @@ void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallbac
     resize_handler.callback = callback;
 }
 
-double PlatformWrapper_random() {
+float PlatformWrapper_random() {
 
     time_t t;
     time(&t);
     srand((unsigned)t);
 
-    return (double)rand()/(double)RAND_MAX;
+    return (float)rand()/(float)RAND_MAX;
 }

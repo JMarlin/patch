@@ -137,11 +137,11 @@ void PatchCore_instantiate_module(PatchCore* patch, String* module_name) {
     Window_move(window, PatchCore_next_spawn_x(patch), PatchCore_next_spawn_y(patch));
 }
 
-void PatchCore_pull_sample(Object* patch_object, double* sample_l, double* sample_r) {
+void PatchCore_pull_sample(Object* patch_object, float* sample_l, float* sample_r) {
 
     int i;
     IO* source;
-    double temp_l, temp_r, temp_g;
+    float temp_l, temp_r, temp_g;
     PatchCore* patch = (PatchCore*)patch_object;
 
     *sample_r = 0;
