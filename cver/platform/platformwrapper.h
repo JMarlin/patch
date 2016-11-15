@@ -1,7 +1,7 @@
 #ifndef PLATFORMWRAPPER_H
 #define PLATFORMWRAPPER_H
 
-#define SAMPLE_RATE 44100
+#define SAMPLE_RATE 44100.0
 
 struct MouseCallback_struct;
 struct ResizeCallback_struct;

@@ -12,11 +12,16 @@ int Sine_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double*
     double in_sample_l, in_sample_r, in_sample_g;
     Sine* sine = (Sine*)io->param_object;
 
-    *sample_l = *sample_r = sin(sine->phase);
-    
     if(!IO_pull_sample(sine->freq_in, &in_sample_l, &in_sample_r, &in_sample_g))
         return 0;
 
+    if(in_sample_l == 0) {
+
+        *sample_l = *sample_r = 0;
+        return 1;
+    }
+
+    *sample_l = *sample_r = sin(sine->phase);
     sine->phase = (sine->phase + (((2*M_PI) * in_sample_l)/SAMPLE_RATE));
 
     if(sine->phase > (2*M_PI))

@@ -32,14 +32,15 @@ int ADSR_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double*
         if(adsr->time <= a_sample) {
 
             current_gain = (pow(adsr->time/a_sample, 2) * 2) - 1;
-            adsr->time += 1000/SAMPLE_RATE;
+            adsr->time += 1000.0/SAMPLE_RATE;
         } else if(adsr->time <= (a_sample + d_sample))  {
 
             current_gain = (((pow((((2*(a_sample+(d_sample/2))) - adsr->time) - a_sample)/d_sample, 2) * ((1 - s_sample) / 2)) + (1 - ((1 - s_sample) / 2))) * 2) - 1;
-            adsr->time += 1000/SAMPLE_RATE;
+            adsr->time += 1000.0/SAMPLE_RATE;
         } else {
 
             current_gain = s_sample;
+
             //Don't increase time because it doesn't matter anymore
         }
              
@@ -53,8 +54,8 @@ int ADSR_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double*
 
         if(adsr->time <= r_sample) {
         
-            current_gain = ((pow(((2 * (r_sample / 2)) - adsr->time) / r_sample, 2) * (1 - ((1 - s_sample) / 2))) * 2) - 1;
-            adsr->time += 1000/SAMPLE_RATE;
+            current_gain = (((pow(((2 * (r_sample / 2)) - adsr->time) / r_sample, 2) * (1 - ((1 - s_sample) / 2))) * 2) - 1);
+            adsr->time += 1000.0/SAMPLE_RATE;
         } else {
         
             current_gain = -1.0;
@@ -65,7 +66,7 @@ int ADSR_pull_sample_handler(IO* io, double* sample_l, double* sample_r, double*
     adsr->last_gate = gate_sample;
     *sample_g = 1;
     *sample_l = *sample_r = current_gain;
-
+ 
     return 1;
 }
 
@@ -93,10 +94,10 @@ Unit* ADSR_constructor(PatchCore* patch_core) {
         return (Unit*)0;
     }
 
-    adsr->a_slider = Slider_new(10, 10, 30, 130, 0, 1000);
-    adsr->d_slider = Slider_new(50, 10, 30, 130, 0, 1000);
-    adsr->s_slider = Slider_new(90, 10, 30, 130, 0, 1);
-    adsr->r_slider = Slider_new(130, 10, 30, 130, 0, 1000);
+    adsr->a_slider = Slider_new(10, 10, 30, 130, 0.01, 1000);
+    adsr->d_slider = Slider_new(50, 10, 30, 130, 0.01, 1000);
+    adsr->s_slider = Slider_new(90, 10, 30, 130, -1, 1);
+    adsr->r_slider = Slider_new(130, 10, 30, 130, 0.01, 1000);
     adsr->output = Unit_create_output((Unit*)adsr, 195, 75);
     adsr->input = Unit_create_input((Unit*)adsr, 5, 75);
     Window_resize((Window*)adsr, 200, 150);

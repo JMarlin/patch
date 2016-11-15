@@ -11,12 +11,17 @@ int Square_pull_sample_handler(IO* io, double* sample_l, double* sample_r, doubl
     
     double in_sample_l, in_sample_r, in_sample_g;
     Square* square = (Square*)io->param_object;
-
-    *sample_l = *sample_r = square->phase > M_PI ? 1.0 : -1.0;
     
     if(!IO_pull_sample(square->freq_in, &in_sample_l, &in_sample_r, &in_sample_g))
         return 0;
 
+    if(in_sample_l == 0) {
+
+        *sample_l = *sample_r = 0;
+        return 1;
+    }
+
+    *sample_l = *sample_r = square->phase > M_PI ? 1.0 : -1.0;
     square->phase = (square->phase + (((2*M_PI) * in_sample_l)/SAMPLE_RATE));
 
     if(square->phase > (2*M_PI))

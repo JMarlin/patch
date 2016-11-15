@@ -55,7 +55,7 @@ double Slider_get_value(Slider* slider) {
     double x = (double)slider->knob->window.x;
     double height = (double)slider->window.height;
 
-    return (((y - height + 10) * (slider->max - slider->min)) / (-(height - 10))) - slider->min;
+    return (((y - 10)*(slider->min - slider->max))/(height - 20)) + slider->max;
 }
 
 void Slider_set_value(Slider* slider, double new_value) {
