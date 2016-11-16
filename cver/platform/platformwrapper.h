@@ -16,6 +16,18 @@ struct ResizeCallback_struct;
 #include "../wslib/context.h"
 #include <time.h>
 
+#ifndef PLATFORM_HAIKU
+#define RGB(r, g, b) ((0x0) | (b & 0xFF) | ((g & 0xFF) << 8) | ((r & 0xFF) << 16))
+#define BVAL(x) (x & 0xFF)
+#define GVAL(x) ((x & 0xFF00) >> 8)
+#define RVAL(x) ((x & 0xFF0000) >> 16)
+#else
+#define RGB(r, g, b) ((0xFF << 24) | ((b & 0xFF) << 16) | ((g & 0xFF) << 8) | (r & 0xFF))
+#define BVAL(x) ((x & 0xFF0000) >> 16)
+#define GVAL(x) ((x & 0xFF00) >> 8)
+#define RVAL(x) (x & 0xFF)
+#endif
+
 typedef void (*MouseCallback_handler)(Object* param_object, uint16_t mouse_x, uint16_t mouse_y, uint8_t buttons);
 typedef void (*ResizeCallback_handler)(Object* param_object, int w, int h);
 
@@ -33,7 +45,7 @@ void PlatformWrapper_init();
 void PlatformWrapper_hold_for_exit();
 void PlatformWrapper_install_audio_handler(AudioHandler* audio_handler);
 int PlatformWrapper_is_mouse_shown();
-Context* PlatformWrapper_get_context();
+struct Context_struct* PlatformWrapper_get_context();
 void PlatformWrapper_install_mouse_callback(Object* param_object, MouseCallback_handler callback);
 void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallback_handler callback);
 float PlatformWrapper_random();

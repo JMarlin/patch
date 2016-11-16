@@ -4,6 +4,7 @@
 #include <Bitmap.h>
 #include <Locker.h>
 #include <Point.h>
+#include <SoundPlayer.h>
 #include <stdlib.h>
 #include <memory.h>
 #include <iostream.h>
@@ -29,6 +30,8 @@ class WrapWindow : public BWindow {
         Object* resize_obj;      
         BPoint mouse_point;  
         uint32 mouse_buttons;
+        List* ah_list;
+        BSoundPlayer* ah_player;
     
         WrapWindow(BRect frame, BApplication* in_app);
         void FrameResized(float width, float height);
@@ -77,6 +80,32 @@ public:
     }  
 };
 
+void doPullSamples(void* ah_list_void, void* buffer, size_t size, const media_raw_audio_format &format) {
+
+    int i, j;
+    float l, r;
+    AudioHandler* ah;
+    float* fbuf = (float*)buffer;
+    
+    if(format.format != media_raw_audio_format::B_AUDIO_FLOAT)
+        return;
+
+    for(j = 0; j < size/4; j += 2) {
+
+        fbuf[j] = 0;
+        fbuf[j+1] = 0;
+
+        for(i = 0; i < global_win->ah_list->count; i++) {
+
+            ah = (AudioHandler*)List_get_at(global_win->ah_list, i);
+            ah->function(ah->parent_object, &l, &r);
+
+            fbuf[j] += l;
+            fbuf[j+1] += r;
+        }
+    }
+}
+
 void PlatformWrapper_init() {
 
     thread_id haiku_thread_id = spawn_thread(haiku_thread, "haiku_thread", B_NORMAL_PRIORITY, NULL);
@@ -90,7 +119,7 @@ void PlatformWrapper_hold_for_exit() {
 
 void PlatformWrapper_install_audio_handler(AudioHandler* audio_handler) {
 
-    return;
+    List_add(global_win->ah_list, (Object*)audio_handler);
 }
 
 int PlatformWrapper_is_mouse_shown() {
@@ -132,10 +161,14 @@ float PlatformWrapper_random() {
     
 WrapWindow::WrapWindow(BRect frame, BApplication* in_app) : BWindow(frame, "Patch", B_TITLED_WINDOW, 0) {
         
+    media_raw_audio_format req_format = {44100.0, 2, media_raw_audio_format::B_AUDIO_FLOAT, B_MEDIA_LITTLE_ENDIAN, 4096};    
+        
     mouse_handler = (MouseCallback_handler)0;
     resize_handler = (ResizeCallback_handler)0;
     mouse_obj = (Object*)0;
     resize_obj = (Object*)0;    
+    
+    ah_list = List_new();
                 
     draw_view = new WrapView(this, Bounds());
     AddChild(draw_view);
@@ -157,6 +190,10 @@ WrapWindow::WrapWindow(BRect frame, BApplication* in_app) : BWindow(frame, "Patc
             
     draw_thread_id = spawn_thread(DrawingThread, "drawing_thread", B_NORMAL_PRIORITY, (void*)this);
     resume_thread(draw_thread_id);
+    
+    ah_player = new BSoundPlayer(&req_format, "ah_player", doPullSamples, NULL, ah_list);
+    ah_player->Start();
+    ah_player->SetHasData(true);
     
     global_win = this;
 }
@@ -180,6 +217,9 @@ void WrapWindow::FrameResized(float width, float height) {
 WrapWindow::~WrapWindow() {
             
     kill_thread(draw_thread_id);
+    ah_player->Stop();
+    Object_delete((Object*)context);
+    Object_delete((Object*)ah_list);
 }
         
 bool WrapWindow::QuitRequested() {
