@@ -10,6 +10,10 @@ struct PatchCore_struct;
 #include "../widgets/patchdesktop.h"
 #include "module.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct PatchCore_struct {
     Object object;
     struct PatchDesktop_struct* desktop;
@@ -30,5 +34,9 @@ void PatchCore_destroy_menu(PatchCore* patch);
 void PatchCore_instantiate_module(PatchCore* patch, String* module_name);
 void PatchCore_pull_sample(Object* patch_object, float* sample_l, float* sample_r);
 void PatchCore_delete_function(Object* patch_object);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PATCHCORE_H

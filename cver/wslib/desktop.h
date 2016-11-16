@@ -1,6 +1,10 @@
 #ifndef DESKTOP_H
 #define DESKTOP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "list.h"
 #include "context.h"
 #include "window.h"
@@ -26,5 +30,9 @@ int Desktop_init(Desktop* desktop, Context* context);
 void Desktop_paint_handler(Window* desktop_window);
 void Desktop_process_mouse(Desktop* desktop, uint16_t mouse_x,
                            uint16_t mouse_y, uint8_t mouse_buttons);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //DESKTOP_H

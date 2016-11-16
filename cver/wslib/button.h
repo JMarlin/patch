@@ -1,6 +1,10 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "window.h"
 
 #define BUT_DEPRESSED 0x1
@@ -22,5 +26,9 @@ void Button_mouseout_handler(Window* button_window);
 void Button_mouseover_handler(Window* button_window);
 void Button_paint(Window* button_window);
 void Button_delete_handler(void* button_object);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //BUTTON_H

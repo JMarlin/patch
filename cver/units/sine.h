@@ -1,6 +1,10 @@
 #ifndef SINE_H
 #define SINE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct Sine_struct;
 
 #include "../core/module.h"
@@ -17,5 +21,9 @@ typedef struct Sine_struct {
 
 Module* Sine_new();
 Unit* Sine_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //SINE_H

@@ -1,6 +1,10 @@
 #ifndef PITCHKNOB_H
 #define PITCHKNOB_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct PitchKnob_struct;
 
 #include "../core/module.h"
@@ -17,5 +21,9 @@ typedef struct PitchKnob_struct {
 
 Module* PitchKnob_new();
 Unit* PitchKnob_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PITCHKNOB_H

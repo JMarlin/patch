@@ -1,6 +1,10 @@
 #ifndef PLATFORMWRAPPER_H
 #define PLATFORMWRAPPER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SAMPLE_RATE 48000.0 //44100.0
 
 struct MouseCallback_struct;
@@ -33,5 +37,9 @@ Context* PlatformWrapper_get_context();
 void PlatformWrapper_install_mouse_callback(Object* param_object, MouseCallback_handler callback);
 void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallback_handler callback);
 float PlatformWrapper_random();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PLATFORMWRAPPER_H

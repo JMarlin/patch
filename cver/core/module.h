@@ -1,6 +1,10 @@
 #ifndef MODULE_H
 #define MODULE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct Module_struct;
 
 #include "../wslib/window.h"
@@ -18,5 +22,9 @@ typedef struct Module_struct {
 
 Module* Module_new(ModuleConstructor constructor, char* name);
 void Module_delete_function(Object* module_object);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //MODULE_H

@@ -1,6 +1,10 @@
 #ifndef VCA_H
 #define VCA_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct VCA_struct;
 
 #include "../core/module.h"
@@ -18,5 +22,9 @@ typedef struct VCA_struct {
 
 Module* VCA_new();
 Unit* VCA_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //VCA_H

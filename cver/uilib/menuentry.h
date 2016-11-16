@@ -1,6 +1,10 @@
 #ifndef MENUENTRY_H
 #define MENUENTRY_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct MenuEntry_struct;
 
 #include "menu.h"
@@ -19,5 +23,9 @@ void MenuEntry_paint_handler(Window* menu_entry_window) ;
 void MenuEntry_mouseover_handler(Window* menu_entry_window);
 void MenuEntry_mouseout_handler(Window* menu_entry_window);
 void MenuEntry_mouseclick_handler(MenuEntry* menu_entry, int x, int y);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //MENUENTRY_H

@@ -1,6 +1,10 @@
 #ifndef SEQUENCE_H
 #define SEQUENCE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct Sequence_struct;
 
 #include "../core/module.h"
@@ -20,5 +24,9 @@ typedef struct Sequence_struct {
 
 Module* Sequence_new();
 Unit* Sequence_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //SEQUENCE_H

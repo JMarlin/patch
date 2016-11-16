@@ -1,6 +1,10 @@
 #ifndef PATCHDESKTOP_H
 #define PATCHDESKTOP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct PatchDesktop_struct;
 
 #include "../wslib/desktop.h"
@@ -27,5 +31,9 @@ void PatchDesktop_finish_connection(PatchDesktop* patch_desktop, struct IO_struc
 void PatchDesktop_end_connection(PatchDesktop* patch_desktop);
 void PatchDesktop_mousemove_handler(Window* patch_desktop_window, int x, int y);
 void PatchDesktop_delete_function(Object* patch_desktop_object);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PATCHDESKTOP_H

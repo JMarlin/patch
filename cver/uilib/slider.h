@@ -1,6 +1,10 @@
 #ifndef SLIDER_H
 #define SLIDER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct Slider_struct;
 
 #include "frame.h"
@@ -19,5 +23,9 @@ Slider* Slider_new(int x, int y, int width, int height, float min, float max);
 float Slider_get_value(Slider* slider);
 void Slider_set_value(Slider* slider, float new_value);
 void Slider_delete_function(Object* slider_object);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //SLIDER_H

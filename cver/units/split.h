@@ -1,6 +1,10 @@
 #ifndef SPLIT_H
 #define SPLIT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct Split_struct;
 
 #include "../core/module.h"
@@ -21,5 +25,9 @@ typedef struct Split_struct {
 
 Module* Split_new();
 Unit* Split_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //SPLIT_H

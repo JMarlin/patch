@@ -1,6 +1,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "context.h"
 #include <inttypes.h>
 #include "object.h"
@@ -100,5 +104,9 @@ void Window_append_title(Window* window, char* additional_chars);
 void Window_delete_function(Object* window_object);
 void Window_resize(Window* window, int w, int h);
 void print_window(Window* window);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //WINDOW_H

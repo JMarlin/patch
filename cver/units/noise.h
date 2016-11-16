@@ -1,6 +1,10 @@
 #ifndef NOISE_H
 #define NOISE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct Noise_struct;
 
 #include "../core/module.h"
@@ -15,5 +19,9 @@ typedef struct Noise_struct {
 
 Module* Noise_new();
 Unit* Noise_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //NOISE_H

@@ -1,6 +1,10 @@
 #ifndef MASTEROUT_H
 #define MASTEROUT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct MasterOut_struct;
 
 #include "../core/module.h"
@@ -19,5 +23,9 @@ typedef struct MasterOut_struct {
 
 Module* MasterOut_new();
 Unit* MasterOut_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //MASTEROUT_H

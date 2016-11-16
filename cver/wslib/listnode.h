@@ -1,6 +1,10 @@
 #ifndef LISTNODE_H
 #define LISTNODE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "object.h"
 
 //================| ListNode Class Declaration |================//
@@ -15,5 +19,9 @@ typedef struct ListNode_struct {
 
 //Methods
 ListNode* ListNode_new(Object* payload); 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //LISTNODE_H

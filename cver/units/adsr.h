@@ -1,6 +1,10 @@
 #ifndef ADSR_H
 #define ADSR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct ADSR_struct;
 
 #include "../core/module.h"
@@ -23,5 +27,9 @@ typedef struct ADSR_struct {
 
 Module* ADSR_new();
 Unit* ADSR_constructor(PatchCore* patch_core);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ADSR_H
