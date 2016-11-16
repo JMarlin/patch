@@ -8,8 +8,8 @@
 #include <memory.h>
 #include <iostream.h>
 #include <time.h>
-#include "wslib/context.h"
-#include "platform/platformwrapper.h"
+#include "../wslib/context.h"
+#include "../platform/platformwrapper.h"
 
 int32 DrawingThread(void* data);
 int32 haiku_thread(void* data);
