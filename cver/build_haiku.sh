@@ -46,6 +46,7 @@ echo . & gcc -c -o patchdesktop.o ../widgets/patchdesktop.c -g
 echo . & gcc -c -o sessionmenu.o ../widgets/sessionmenu.c -g
 
 # build main and link all
-echo . & gcc -c -o main.o ../main.c -g 
-echo . & gcc -o ../patch_haiku ./*.o -g -lm
+# echo . & gcc -c -o main.o ../main.c -g 
+echo . & g++ -c -o direct.o ../direct.cpp -g
+echo . & gcc -o ../patch_haiku ./*.o -g -lm -lbe
 cd ..
