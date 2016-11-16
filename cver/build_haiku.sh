@@ -22,7 +22,7 @@ echo . & gcc -c -o unit.o ../core/unit.c -g
 
 # build platform (will need to be smart about which platform to build and link in the future)
 echo . & gcc -c -o audiohandler.o ../platform/audiohandler.c -g 
-echo . & gcc -c -o platformwrapper_haiku.o ../platform/platformwrapper_haiku.c -g
+echo . & g++ -c -o platformwrapper_haiku.o ../platform/platformwrapper_haiku.cpp -g
 
 # build uilib
 echo . & gcc -c -o frame.o ../uilib/frame.c -g
@@ -46,7 +46,6 @@ echo . & gcc -c -o patchdesktop.o ../widgets/patchdesktop.c -g
 echo . & gcc -c -o sessionmenu.o ../widgets/sessionmenu.c -g
 
 # build main and link all
-# echo . & gcc -c -o main.o ../main.c -g 
-echo . & g++ -c -o direct.o ../direct.cpp -g
-echo . & gcc -o ../patch_haiku ./*.o -g -lm -lbe
+echo . & gcc -c -o main.o ../main.c -g 
+echo . & g++ -o ../patch_haiku ./*.o -g -lm -lbe
 cd ..

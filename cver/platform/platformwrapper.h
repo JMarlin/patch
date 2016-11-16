@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#define SAMPLE_RATE 48000.0 //44100.0
+#define SAMPLE_RATE 44100.0
 
 struct MouseCallback_struct;
 struct ResizeCallback_struct;

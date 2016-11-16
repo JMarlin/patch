@@ -10,10 +10,17 @@ extern "C" {
 #include "rect.h"
 #include "object.h"
 
+#define RGB(r, g, b) ((0x0) | (b & 0xFF) | ((g & 0xFF) << 8) | ((r & 0xFF) << 16))
+#define BVAL(x) (x & 0xFF)
+#define GVAL(x) ((x & 0xFF00) >> 8)
+#define RVAL(x) ((x & 0xFF0000) >> 16)
+
+/* NEED TO MAKE UNIVERSAL
 #define RGB(r, g, b) ((0xFF << 24) | ((b & 0xFF) << 16) | ((g & 0xFF) << 8) | (r & 0xFF))
 #define BVAL(x) ((x & 0xFF0000) >> 16)
 #define GVAL(x) ((x & 0xFF00) >> 8)
 #define RVAL(x) (x & 0xFF)
+*/
 
 //================| Context Class Declaration |================//
 
