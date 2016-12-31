@@ -141,6 +141,7 @@ Context* PlatformWrapper_get_context() {
     }, width, height, return_buffer);
 
     internal_context = Context_new(width, height, return_buffer);
+    printf("Context = %x\n", (unsigned int)internal_context);
 
     return internal_context;
 }
