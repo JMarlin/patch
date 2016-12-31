@@ -9,6 +9,7 @@
 #include "../units/adsr.h"
 #include "../units/split.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 PatchCore* PatchCore_new() {
 
