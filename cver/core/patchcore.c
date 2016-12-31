@@ -62,15 +62,25 @@ void Patch_resize_callback(Object* desktop_object, int w, int h) {
 void PatchCore_start(PatchCore* patch) {
 
     //TODO: This will be replaced by the loading of default modules from a list
+    printf("Installing MasterOut...");
     PatchCore_install_module(patch, MasterOut_new());
+    printf("Done\nInstalling Noise...");
     PatchCore_install_module(patch, Noise_new());
+    printf("Done\nInstalling Sine...");
     PatchCore_install_module(patch, Sine_new());
+    printf("Done\nInstalling PitchKnob...");
     PatchCore_install_module(patch, PitchKnob_new());
+    printf("Done\nInstalling Sequence...");
     PatchCore_install_module(patch, Sequence_new());
+    printf("Done\nInstalling Square...");
     PatchCore_install_module(patch, Square_new());
+    printf("Done\nInstalling VCA...");
     PatchCore_install_module(patch, VCA_new());
+    printf("Done\nInstalling ADSR...");
     PatchCore_install_module(patch, ADSR_new());
+    printf("Done\nInstalling Split...");
     PatchCore_install_module(patch, Split_new());
+    printf("Done\n");
 
     patch->desktop = PatchDesktop_new(patch);
     PlatformWrapper_install_resize_callback((Object*)patch->desktop, Patch_resize_callback);
