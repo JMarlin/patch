@@ -83,13 +83,17 @@ void PatchCore_start(PatchCore* patch) {
     PatchCore_install_module(patch, Split_new());
     printf("Done\n");
 
+    printf("Creating PatchDesktop...");
     patch->desktop = PatchDesktop_new(patch);
     PlatformWrapper_install_resize_callback((Object*)patch->desktop, Patch_resize_callback);
     PlatformWrapper_install_mouse_callback((Object*)patch->desktop, Patch_mouse_callback);
-
+    
+    printf("Done\nPerforming initial paint...");
     Window_paint((Window*)patch->desktop, (List*)0, 1);
 
+    printf("Done\nInstalling audio handler...");
     PlatformWrapper_install_audio_handler(AudioHandler_new(PatchCore_pull_sample, (Object*)patch));
+    printf("Done\n");
 }
 
 
