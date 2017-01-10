@@ -51,7 +51,7 @@ int IO_init(IO* io, PatchCore* patch_core, Object* param_object, int x, int y, i
     io->latched_l_sample = 0.0;
     io->latched_r_sample = 0.0;
     io->latched_g_sample = 0.0;
-    io->pull_sample_function = (IOSamplePullHandler*)0;
+    io->pull_sample_function = (IOSamplePullHandler)0;
 
     return 1;
 }
