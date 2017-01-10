@@ -17,10 +17,10 @@ struct ResizeCallback_struct;
 #include <time.h>
 
 #ifndef PLATFORM_HAIKU
-#define RGB(r, g, b) ((0x0) | (b & 0xFF) | ((g & 0xFF) << 8) | ((r & 0xFF) << 16))
-#define BVAL(x) (x & 0xFF)
+#define RGB(r, g, b) ((0xFF000000) | (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16))
+#define RVAL(x) (x & 0xFF)
 #define GVAL(x) ((x & 0xFF00) >> 8)
-#define RVAL(x) ((x & 0xFF0000) >> 16)
+#define BVAL(x) ((x & 0xFF0000) >> 16)
 #else
 #define RGB(r, g, b) ((0xFF << 24) | ((b & 0xFF) << 16) | ((g & 0xFF) << 8) | (r & 0xFF))
 #define BVAL(x) ((x & 0xFF0000) >> 16)
