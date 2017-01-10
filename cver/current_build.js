@@ -7691,22 +7691,21 @@ function _Rect_intersect($rect_a,$rect_b) {
 }
 function _Scope_paint_handler($scope_window) {
  $scope_window = $scope_window|0;
- var $0 = 0, $1 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, label = 0, sp = 0;
+ var $0 = 0, $1 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, label = 0, sp = 0;
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
- $1 = $scope_window;
- $2 = $1; //@line 20 "../units/scope.c"
- _Frame_paint_handler($2); //@line 20 "../units/scope.c"
- $3 = $1; //@line 21 "../units/scope.c"
- $4 = ((($3)) + 24|0); //@line 21 "../units/scope.c"
- $5 = HEAP32[$4>>2]|0; //@line 21 "../units/scope.c"
- _Context_fill_rect($5,13,13,346,246,-1); //@line 21 "../units/scope.c"
- $6 = $1; //@line 22 "../units/scope.c"
- $7 = ((($6)) + 24|0); //@line 22 "../units/scope.c"
- $8 = HEAP32[$7>>2]|0; //@line 22 "../units/scope.c"
- _Context_fill_rect($8,12,12,348,248,-16777216); //@line 22 "../units/scope.c"
- $9 = $0; //@line 23 "../units/scope.c"
- STACKTOP = sp;return ($9|0); //@line 23 "../units/scope.c"
+ $0 = $scope_window;
+ $1 = $0; //@line 20 "../units/scope.c"
+ _Frame_paint_handler($1); //@line 20 "../units/scope.c"
+ $2 = $0; //@line 21 "../units/scope.c"
+ $3 = ((($2)) + 24|0); //@line 21 "../units/scope.c"
+ $4 = HEAP32[$3>>2]|0; //@line 21 "../units/scope.c"
+ _Context_fill_rect($4,13,13,346,246,-1); //@line 21 "../units/scope.c"
+ $5 = $0; //@line 22 "../units/scope.c"
+ $6 = ((($5)) + 24|0); //@line 22 "../units/scope.c"
+ $7 = HEAP32[$6>>2]|0; //@line 22 "../units/scope.c"
+ _Context_draw_rect($7,12,12,348,248,-16777216); //@line 22 "../units/scope.c"
+ STACKTOP = sp;return; //@line 23 "../units/scope.c"
 }
 function _Scope_new() {
  var $0 = 0, label = 0, sp = 0;
@@ -19129,12 +19128,12 @@ var FUNCTION_TABLE_iiii = [b0,b0,___stdout_write,___stdio_seek,b0,b0,b0,b0,b0,b0
 ,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0,b0
 ,b0,b0,b0,b0,___stdio_write];
 var FUNCTION_TABLE_vi = [b1,b1,b1,b1,b1,b1,_ADSR_paint_handler,_AssociativeArray_delete_function,_Context_delete_function,_Desktop_paint_handler,_Frame_paint_handler,_IO_paint_handler,b1,_List_delete,b1,_MasterOut_delete_function,b1,_MasterOut_paint_handler,_MenuEntry_delete_function,_MenuEntry_paint_handler,_MenuEntry_mouseover_handler,_MenuEntry_mouseout_handler,_Module_delete_function,b1,b1,_Noise_paint_handler,_String_delete_function,_Object_default_delete_function,_PatchCore_delete_function
-,b1,b1,b1,_PatchDesktop_delete_function,b1,b1,_PatchDesktop_paint_handler,b1,b1,b1,b1,b1,_Sequence_delete_function,b1,_Sequence_paint_handler,b1,b1,b1,_Sine_paint_handler,b1,_Slider_delete_function,b1,b1,_Split_paint_handler,b1,b1,_Square_paint_handler,b1,b1,b1
+,b1,b1,b1,_PatchDesktop_delete_function,b1,b1,_PatchDesktop_paint_handler,b1,b1,b1,_Scope_paint_handler,b1,_Sequence_delete_function,b1,_Sequence_paint_handler,b1,b1,b1,_Sine_paint_handler,b1,_Slider_delete_function,b1,b1,_Split_paint_handler,b1,b1,_Square_paint_handler,b1,b1,b1
 ,_VCA_paint_handler,_Window_delete_function,_Window_paint_handler,b1,b1,_cleanup_282,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1
 ,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1
 ,b1,b1,b1,b1,b1,b1,b1,b1,b1];
 var FUNCTION_TABLE_ii = [b2,___stdio_close,b2,b2,_ADSR_constructor,b2,b2,b2,b2,b2,b2,b2,b2,b2,_MasterOut_constructor,b2,b2,b2,b2,b2,b2,b2,b2,_Noise_constructor,b2,b2,b2,b2,b2
-,b2,b2,b2,b2,b2,b2,b2,_PitchKnob_constructor,b2,_Scope_constructor,_Scope_paint_handler,_Sequence_constructor,b2,b2,b2,b2,_Sine_constructor,b2,b2,b2,b2,_Split_constructor,b2,b2,_Square_constructor,b2,b2,b2,_VCA_constructor,b2
+,b2,b2,b2,b2,b2,b2,b2,_PitchKnob_constructor,b2,_Scope_constructor,b2,_Sequence_constructor,b2,b2,b2,b2,_Sine_constructor,b2,b2,b2,b2,_Split_constructor,b2,b2,_Square_constructor,b2,b2,b2,_VCA_constructor,b2
 ,b2,b2,b2,b2,b2];
 var FUNCTION_TABLE_viii = [b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,_IO_mouseclick_handler,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3,b3
 ,_Patch_resize_callback,b3,_PatchCore_pull_sample,b3,_PatchDesktop_mouseclick_handler,_PatchDesktop_mousemove_handler,b3,b3,b3,b3,b3,b3,b3,b3,b3,_SessionMenu_mouseclick_function,b3,b3,b3,_Slider_knob_move,b3,b3,b3,b3,b3,b3,b3,_Unit_move_function,b3,b3
