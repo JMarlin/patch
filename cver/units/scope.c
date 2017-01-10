@@ -15,9 +15,9 @@ typedef struct Scope_struct {
 } Scope;
 */
 
-void* Scope_paint_handler(Window* scope_window) {
+void Scope_paint_handler(Window* scope_window) {
 
-    Frame_paint_handler((Frame*)scope_window);
+    Frame_paint_handler(scope_window);
     Context_fill_rect(scope_window->context, 13, 13, 346, 246, RGB(255, 255, 255));
     Context_fill_rect(scope_window->context, 12, 12, 348, 248, RGB(0, 0, 0));                  
 }
