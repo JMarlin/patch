@@ -20,6 +20,7 @@ typedef struct PatchCore_struct {
     AssociativeArray* modules;
     List* sources;
     List* inputs;
+    List* outputs;
 } PatchCore;
 
 PatchCore* PatchCore_new();

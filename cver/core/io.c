@@ -3,22 +3,15 @@
 //NOTE: IOs need to automatically disconnect from anything they might be
 //      connected to upon deletion so that we don't get invalid pulls
 
-int Output_initial_sample_pull_handler(IO* io, float *l_sample, float *r_sample, float *g_sample) {
+void IO_update_latches(IO* io) {
 
-    *l_sample = *r_sample = 0.0;
-    *g_sample = -1.0;
+    if(io->is_output || !io->connected_io)
+        return;
 
-    return 1;
-}
-
-int Input_sample_pull_handler(IO* io, float *l_sample, float *r_sample, float *g_sample) {
-
-    if(io->connected_io)
-        return IO_pull_sample(io->connected_io, l_sample, r_sample, g_sample);
-    else
-        *l_sample = *r_sample = 0.0;
-    
-    return 1;
+    IO_pull_sample(io->connected_io,
+                   &io->latched_l_sample,
+                   &io->latched_r_sample,
+                   &io->latched_g_sample);
 }
 
 IO* IO_new(PatchCore* patch_core, Object* param_object, int x, int y, int is_output) {
@@ -34,7 +27,9 @@ IO* IO_new(PatchCore* patch_core, Object* param_object, int x, int y, int is_out
         return (IO*)0;
     }
 
-    if(!is_output)
+    if(is_output)
+        List_add(patch_core->outputs, (Object*)io);
+    else
         List_add(patch_core->inputs, (Object*)io);
 
     return io;
@@ -53,11 +48,10 @@ int IO_init(IO* io, PatchCore* patch_core, Object* param_object, int x, int y, i
     io->param_object= param_object;
     io->connected_io = (IO*)0;
     io->is_output = is_output;
-
-    if(is_output)
-        io->pull_sample_function = Output_initial_sample_pull_handler;
-    else
-        io->pull_sample_function = Input_sample_pull_handler;
+    io->latched_l_sample = 0.0;
+    io->latched_r_sample = 0.0;
+    io->latched_g_sample = 0.0;
+    io->pull_sample_function = (IOSamplePullHandler*)0;
 
     return 1;
 }
@@ -93,7 +87,24 @@ void IO_connect(IO* io, IO* connected_io) {
     io->connected_io = connected_io;
 }
 
+int IO_render_sample(IO* io) {
+
+    int retval;
+
+    if(!io->is_output || !io->pull_sample_function)
+        return 0;
+
+    return io->pull_sample_function(io,
+                                    &io->latched_l_sample,
+                                    &io->latched_r_sample,
+                                    &io->latched_g_sample);
+}
+
 int IO_pull_sample(IO* io, float *l_sample, float *r_sample, float *g_sample) {
 
-    return io->pull_sample_function(io, l_sample, r_sample, g_sample);
+    *l_sample = io->latched_l_sample;
+    *r_sample = io->latched_r_sample;
+    *g_sample = io->latched_g_sample;
+
+    return 1;
 }

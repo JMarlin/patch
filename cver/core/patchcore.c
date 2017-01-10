@@ -22,6 +22,7 @@ PatchCore* PatchCore_new() {
     patch->sources = List_new();
     patch->desktop = (PatchDesktop*)0;
     patch->inputs = List_new();
+    patch->outputs = List_new();
 
     if(!(patch->modules && patch->sources && patch->inputs)) {
 
@@ -162,6 +163,15 @@ void PatchCore_pull_sample(Object* patch_object, float* sample_l, float* sample_
     *sample_r = 0;
     *sample_l = 0;
 
+    //Render all outputs
+    for(i = 0; i < patch->outputs->count; i++)
+        IO_render_sample((IO*)List_get_at(patch->outputs, i));
+
+    //Latch all of the new output values into all inputs
+    for(i = 0; i < patch->inputs->count; i++)
+        IO_update_latches((IO*)List_get_at(patch->inputs, i));
+
+    //Sum the value of all outputs registered as 'sources'
     for(i = 0; i < patch->sources->count; i++) {
 
         source = (IO*)List_get_at(patch->sources, i);
@@ -174,12 +184,31 @@ void PatchCore_pull_sample(Object* patch_object, float* sample_l, float* sample_
 
 void PatchCore_delete_function(Object* patch_object) {
     
-    Module* module;
     PatchCore* patch = (PatchCore*)patch_object;
 
     Object_delete((Object*)patch->modules);
+
+    //Empty sources list before deleting
+    //(These are a subset of window-owned outputs,
+    //they will automatically be deleted when the
+    //desktop is deleted)
+    while(patch->sources->count)
+        List_remove_at(patch->sources, 0);
+
     Object_delete((Object*)patch->sources);
-    Object_delete((Object*)patch->desktop);
+
+    //Do the same for the outputs collection
+    while(patch->outputs->count)
+        List_remove_at(patch->outputs, 0);
+    
+    Object_delete((Object*)patch->outputs);
+    
+    //And for the input collection
+    while(patch->inputs->count)
+        List_remove_at(patch->inputs, 0);
+    
     Object_delete((Object*)patch->inputs);
+
+    Object_delete((Object*)patch->desktop);
     Object_default_delete_function(patch_object);
 }
