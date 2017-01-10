@@ -15,6 +15,13 @@ typedef struct Scope_struct {
 } Scope;
 */
 
+void* Scope_paint_handler(Window* scope_window) {
+
+    Frame_paint_handler((Frame*)scope_window);
+    Context_fill_rect(scope_window->context, 13, 13, 346, 246, RGB(255, 255, 255));
+    Context_fill_rect(scope_window->context, 12, 12, 348, 248, RGB(0, 0, 0));                  
+}
+
 Module* Scope_new() {
 
     return Module_new(Scope_constructor, "Scope");
@@ -22,5 +29,17 @@ Module* Scope_new() {
 
 Unit* Scope_constructor(PatchCore* patch_core) {
 
-    return Unit_new(patch_core);
+    Scope* scope;
+
+    scope = (Scope*)malloc(sizeof(Scope));
+
+    if(!scope)
+        return (Unit*)0;
+
+    Unit_init((Unit*)scope, patch_core);
+    Window_resize((Window*)scope, 400, 300);
+
+    scope->unit.frame.window.paint_function = Scope_paint_handler;
+
+    return (Unit*)scope;
 }
