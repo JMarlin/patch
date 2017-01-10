@@ -8,6 +8,7 @@
 #include "../units/vca.h"
 #include "../units/adsr.h"
 #include "../units/split.h"
+#include "../units/scope.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -82,6 +83,8 @@ void PatchCore_start(PatchCore* patch) {
     PatchCore_install_module(patch, ADSR_new());
     printf("Done\nInstalling Split...");
     PatchCore_install_module(patch, Split_new());
+    printf("Done\nInstalling Scope...");
+    PatchCore_install_module(patch, Scope_new());
     printf("Done\n");
 
     printf("Creating PatchDesktop...");

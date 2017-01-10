@@ -42,6 +42,7 @@ echo . & gcc -c -o square.o ../units/square.c $C_OPTS
 echo . & gcc -c -o vca.o ../units/vca.c $C_OPTS
 echo . & gcc -c -o adsr.o ../units/adsr.c $C_OPTS
 echo . & gcc -c -o split.o ../units/split.c $C_OPTS
+echo . & gcc -c -o scope.o ../units/scope.c $C_OPTS
 
 # build widgets
 echo . & gcc -c -o patchdesktop.o ../widgets/patchdesktop.c $C_OPTS
