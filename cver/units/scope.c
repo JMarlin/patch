@@ -1,5 +1,6 @@
 #include "scope.h"
 
+/*
 typedef struct Scope_struct {
     Unit unit;
     Button* start_button;
@@ -12,6 +13,7 @@ typedef struct Scope_struct {
     int capture_pointer;
     float* sample_buf;
 } Scope;
+*/
 
 Module* Scope_new() {
 
