@@ -47,6 +47,7 @@ typedef struct Scope_struct {
     Button* scroll_left_button;
     Button* scroll_right_button;
     IO* input;
+    IO* output;
     int capture_pointer;
     float* sample_buf;
 } Scope;
