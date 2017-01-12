@@ -18,8 +18,10 @@ typedef struct Scope_struct {
 
 void Scope_paint_handler(Window* scope_window) {
 
-    int i;
+    int i, tfloor, tceil;
     int intval;
+    float interpolated, tval, slope;
+    float scale_value = 4096/374;
     Scope* scope = (Scope*)scope_window;
 
     Frame_paint_handler(scope_window);
@@ -31,7 +33,38 @@ void Scope_paint_handler(Window* scope_window) {
 
     for(i = 0; i < 374; i++) {
     
-        intval = (int)(scope->sample_buf[i] * 100);
+        tval = ((float)i) * scale_value;
+
+        //If the scaled index is an integer, we can just get the sample at that index
+        if(tval == (float)((int)(tval))) {
+
+            intval = (int)(scope->sample_buf[i] * 100);
+        } else {
+
+            //Otherwise, we have to interpolate
+            tfloor = (int)tval;
+            tceil = tfloor + 1;
+            
+            //If we're out of samples, just use the end sample
+            if(tfloor > 4094) {
+            
+                intval = (int)(scope->sample_buf[4095] * 100);
+            } else {
+          
+                //Otherwise, get the linear value between the samples
+                //If the two samples have the same value, just use that value
+                if(scope->sample_buf[tfloor] == scope->sample_buf[tceil]) {
+                
+                    intval = (int)(scope->sample_buf[tfloor] * 100);
+                } else {
+
+                    //Otherwise, calculate the value
+                    slope = (scope->sample_buf[tceil] - scope->sample_buf[tfloor]); //dX = 1.0 samples
+                    tval -= (float)tfloor; //Translate range to zero
+                    intval = (int)(slope * tval * 100); //y = mx+b, b = 0 thanks to our translation, then x 100 for render
+                }
+            }
+        }
 
         if(intval > 0)
             Context_draw_rect(scope_window->context, 13 + i, 113 - intval, 
@@ -60,19 +93,25 @@ int Scope_render_sample_handler(IO* io, float* l_sample, float* r_sample, float*
 
     Scope* scope = (Scope*)io->param_object;
 
-    if(!scope->input->connected_io || scope->capture_pointer < 0 || scope->capture_pointer > 373)
+    if(!scope->input->connected_io || scope->capture_pointer < 0 || scope->capture_pointer > 4095)
         return 1;
 
     IO_pull_sample(scope->input->connected_io, l_sample, r_sample, g_sample);
     scope->sample_buf[scope->capture_pointer++] = *l_sample;
 
-    if(scope->capture_pointer == 374)
+    if(scope->capture_pointer == 4096)
         Window_invalidate((Window*)scope, 13, 13, 249, 387);
 
     return 1;
 }
 
 //NOTE: The below needs a lot of proper error handling to be added
+//TO ADD: -Optional trigger input which will fire a capture with the same mechanism as the button,
+//         but on the transition of the input signal. Also need controls to select 1-shot or
+//         continuous capture from trigger as well as to select the trigger source (l/r/g)
+//        -Control to adjust sample capture/buffer length
+//        -Zoom and pan controls for view area
+//        -Capture and display of all three signals and/or a way to switch which is being viewed
 Unit* Scope_constructor(PatchCore* patch_core) {
 
     Scope* scope;
@@ -87,7 +126,8 @@ Unit* Scope_constructor(PatchCore* patch_core) {
 
     //Allocate the sample buffers
     //NEED TO ERROR HANDLE
-    scope->sample_buf = (float*)malloc(sizeof(float) * 374);
+    //This will be controlled by a 'capture length' control
+    scope->sample_buf = (float*)malloc(sizeof(float) * 4096);
     scope->capture_pointer = -1;
 
     //Create a basic button to trigger sample capture
