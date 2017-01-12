@@ -9,13 +9,15 @@ Module* Sine_new() {
 
 int Sine_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
     
-    float in_sample_l, in_sample_r, in_sample_g;
+    float in_sample_l, in_sample_r, in_sample_g, freq_val;
     Sine* sine = (Sine*)io->param_object;
 
     if(!IO_pull_sample(sine->freq_in, &in_sample_l, &in_sample_r, &in_sample_g))
         return 0;
 
-    if(in_sample_l == 0) {
+    freq_val = 2*(powf(2, ((1 - in_sample_l) * 6)));
+
+    if(freq_val == 0) {
 
         *sample_l = *sample_r = 0;
         return 1;
@@ -23,7 +25,7 @@ int Sine_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sa
 
     *sample_l = sinf(sine->phase);
     *sample_r = sinf(sine->phase);
-    sine->phase = (sine->phase + (((2*M_PI) * in_sample_l)/SAMPLE_RATE));
+    sine->phase = (sine->phase + (((2*M_PI) * freq_val)/SAMPLE_RATE));
 
     if(sine->phase > (2*M_PI))
         sine->phase -= (2*M_PI);

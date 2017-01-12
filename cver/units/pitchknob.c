@@ -10,8 +10,7 @@ int PitchKnob_pull_sample_handler(IO* io, float* sample_l, float* sample_r, floa
 
     PitchKnob* pitch_knob = (PitchKnob*)io->param_object;
 
-    *sample_l = *sample_r =
-        2*(powf(2, ((1 - Slider_get_value(pitch_knob->slider)) * 6))); 
+    *sample_l = *sample_r = Slider_get_value(pitch_knob->slider); 
     *sample_g = 1;
 
     return 1;

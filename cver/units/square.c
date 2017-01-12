@@ -9,20 +9,22 @@ Module* Square_new() {
 
 int Square_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
     
-    float in_sample_l, in_sample_r, in_sample_g;
+    float in_sample_l, in_sample_r, in_sample_g, freq_val;
     Square* square = (Square*)io->param_object;
     
     if(!IO_pull_sample(square->freq_in, &in_sample_l, &in_sample_r, &in_sample_g))
         return 0;
 
-    if(in_sample_l == 0) {
+    freq_val = 2*(powf(2, ((1 - in_sample_l) * 6)));
+
+    if(freq_val == 0) {
 
         *sample_l = *sample_r = 0;
         return 1;
     }
 
     *sample_l = *sample_r = square->phase > M_PI ? 1.0 : -1.0;
-    square->phase = (square->phase + (((2*M_PI) * in_sample_l)/SAMPLE_RATE));
+    square->phase = (square->phase + (((2*M_PI) * freq_val)/SAMPLE_RATE));
 
     if(square->phase > (2*M_PI))
         square->phase -= (2*M_PI);
