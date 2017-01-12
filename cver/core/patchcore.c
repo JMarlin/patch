@@ -1,5 +1,6 @@
 #include "patchcore.h"
 #include "../units/masterout.h"
+#include "../units/masteroutthru.h"
 #include "../units/noise.h"
 #include "../units/pitchknob.h"
 #include "../units/sequence.h"
@@ -67,6 +68,8 @@ void PatchCore_start(PatchCore* patch) {
     //TODO: This will be replaced by the loading of default modules from a list
     printf("Installing MasterOut...");
     PatchCore_install_module(patch, MasterOut_new());
+    printf("Installing MasterOutThru...");
+    PatchCore_install_module(patch, MasterOutThru_new());
     printf("Done\nInstalling Noise...");
     PatchCore_install_module(patch, Noise_new());
     printf("Done\nInstalling Sine...");

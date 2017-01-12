@@ -34,6 +34,7 @@ echo . & gcc -c -o slider.o ../uilib/slider.c $C_OPTS
 
 # build units
 echo . & gcc -c -o masterout.o ../units/masterout.c $C_OPTS
+echo . & gcc -c -o masteroutthru.o ../units/masteroutthru.c $C_OPTS
 echo . & gcc -c -o noise.o ../units/noise.c $C_OPTS
 echo . & gcc -c -o pitchknob.o ../units/pitchknob.c $C_OPTS
 echo . & gcc -c -o sequence.o ../units/sequence.c $C_OPTS

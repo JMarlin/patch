@@ -33,6 +33,7 @@ echo . & call  emcc -c -o slider.bc ../uilib/slider.c -g4
 
 rem build units
 echo . & call  emcc -c -o masterout.bc ../units/masterout.c -g4
+echo . & call  emcc -c -o masteroutthru.bc ../units/masteroutthru.c -g4
 echo . & call  emcc -c -o noise.bc ../units/noise.c -g4
 echo . & call  emcc -c -o pitchknob.bc ../units/pitchknob.c -g4
 echo . & call  emcc -c -o sequence.bc ../units/sequence.c -g4
