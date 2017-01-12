@@ -21,47 +21,45 @@ void Scope_paint_handler(Window* scope_window) {
     int i, tfloor, tceil;
     int intval;
     float interpolated, tval, slope;
-    float scale_value = 4096/374;
+    float scale_value;
     Scope* scope = (Scope*)scope_window;
-
+    
+    scale_value = ((float)scope->buf_size) / 374.0;
     Frame_paint_handler(scope_window);
     Context_fill_rect(scope_window->context, 13, 13, 374, 236, RGB(255, 255, 255));
     Context_draw_rect(scope_window->context, 12, 12, 376, 238, RGB(0, 0, 0));                  
     
-    if(scope->capture_pointer != 374)
+    if(scope->capture_pointer != scope->buf_size)
         return;
 
     for(i = 0; i < 374; i++) {
     
         tval = ((float)i) * scale_value;
+        tfloor = (int)tval;
 
         //If the scaled index is an integer, we can just get the sample at that index
-        if(tval == (float)((int)(tval))) {
+        if((tval - (float)tfloor) == 0) {
 
-            intval = (int)(scope->sample_buf[i] * 100);
+            intval = (int)(scope->sample_buf[tfloor] * 100);
         } else {
 
-            //Otherwise, we have to interpolate
-            tfloor = (int)tval;
-            tceil = tfloor + 1;
-            
             //If we're out of samples, just use the end sample
-            if(tfloor > 4094) {
+            if(tfloor > (scope->buf_size - 2)) {
             
-                intval = (int)(scope->sample_buf[4095] * 100);
+                intval = (int)(scope->sample_buf[scope->buf_size - 1] * 100);
             } else {
           
                 //Otherwise, get the linear value between the samples
                 //If the two samples have the same value, just use that value
-                if(scope->sample_buf[tfloor] == scope->sample_buf[tceil]) {
+                if(scope->sample_buf[tfloor] == scope->sample_buf[tfloor + 1]) {
                 
                     intval = (int)(scope->sample_buf[tfloor] * 100);
                 } else {
 
                     //Otherwise, calculate the value
-                    slope = (scope->sample_buf[tceil] - scope->sample_buf[tfloor]); //dX = 1.0 samples
+                    slope = (scope->sample_buf[tfloor + 1] - scope->sample_buf[tfloor]); //dX = 1.0 samples
                     tval -= (float)tfloor; //Translate range to zero
-                    intval = (int)(slope * tval * 100); //y = mx+b, b = 0 thanks to our translation, then x 100 for render
+                    intval = (int)(((slope * tval) + scope->sample_buf[tfloor]) * 100.0); //y = mx+b, b = 0 thanks to our translation, then x 100 for render
                 }
             }
         }
@@ -93,13 +91,13 @@ int Scope_render_sample_handler(IO* io, float* l_sample, float* r_sample, float*
 
     Scope* scope = (Scope*)io->param_object;
 
-    if(!scope->input->connected_io || scope->capture_pointer < 0 || scope->capture_pointer > 4095)
+    if(!scope->input->connected_io || scope->capture_pointer < 0 || scope->capture_pointer > (scope->buf_size - 1))
         return 1;
 
     IO_pull_sample(scope->input->connected_io, l_sample, r_sample, g_sample);
     scope->sample_buf[scope->capture_pointer++] = *l_sample;
 
-    if(scope->capture_pointer == 4096)
+    if(scope->capture_pointer == scope->buf_size)
         Window_invalidate((Window*)scope, 13, 13, 249, 387);
 
     return 1;
@@ -127,7 +125,8 @@ Unit* Scope_constructor(PatchCore* patch_core) {
     //Allocate the sample buffers
     //NEED TO ERROR HANDLE
     //This will be controlled by a 'capture length' control
-    scope->sample_buf = (float*)malloc(sizeof(float) * 4096);
+    scope->buf_size = 44100; //To later by dynamically controlled by capture length control
+    scope->sample_buf = (float*)malloc(sizeof(float) * scope->buf_size);
     scope->capture_pointer = -1;
 
     //Create a basic button to trigger sample capture
