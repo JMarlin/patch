@@ -19,7 +19,7 @@ typedef struct MasterOutThru_struct {
     Slider* pan_slider;
     IO* input;
     IO* output;
-} MasterOut;
+} MasterOutThru;
 
 Module* MasterOutThru_new();
 Unit* MasterOutThru_constructor(PatchCore* patch_core);

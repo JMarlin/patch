@@ -6,7 +6,7 @@ Module* MasterOutThru_new() {
     return Module_new(MasterOutThru_constructor, "Master Out Thru");
 }
 
-float db2gain(float value) {
+float db2gaint(float value) {
 
     float max_db = 10;
     float min_db = -80;
@@ -24,8 +24,8 @@ int MasterOutThru_pull_sample_handler(IO* io, float* sample_l, float* sample_r, 
     int retval = IO_pull_sample(master_out->input, sample_l, sample_r, sample_g);
         
     //Gain
-    *sample_l *= db2gain(Slider_get_value(master_out->gain_slider));
-    *sample_r *= db2gain(Slider_get_value(master_out->gain_slider));
+    *sample_l *= db2gaint(Slider_get_value(master_out->gain_slider));
+    *sample_r *= db2gaint(Slider_get_value(master_out->gain_slider));
 
     //Pan
     r_gain = (1.0 - Slider_get_value(master_out->pan_slider))/2.0;
@@ -42,7 +42,7 @@ int MasterOutThru_pull_sample_handler(IO* io, float* sample_l, float* sample_r, 
 
 void MasterOutThru_delete_function(Object* master_out_object) {
 
-    MasterOutThru* master_out = (MasterOut*)master_out_object;
+    MasterOutThru* master_out = (MasterOutThru*)master_out_object;
 
     //Need to do this since, because the output IO never gets installed 
     //as a child of the window, it won't be deleted by the window deleter
