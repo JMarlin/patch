@@ -4473,10 +4473,7 @@ function _Frame_paint_handler($frame_window) {
 }
 function _IO_update_latches($io) {
  $io = $io|0;
- var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $18 = 0, $19 = 0, $2 = 0, $20 = 0.0, $21 = 0.0, $22 = 0, $23 = 0, $24 = 0, $25 = 0, $26 = 0;
- var $27 = 0.0, $28 = 0.0, $29 = 0, $3 = 0, $30 = 0, $31 = 0, $32 = 0, $33 = 0, $34 = 0.0, $35 = 0.0, $36 = 0, $37 = 0, $38 = 0, $39 = 0, $4 = 0, $40 = 0, $41 = 0.0, $42 = 0.0, $43 = 0, $44 = 0;
- var $45 = 0, $46 = 0, $47 = 0, $48 = 0.0, $49 = 0.0, $5 = 0, $50 = 0, $51 = 0, $52 = 0, $53 = 0, $54 = 0, $55 = 0.0, $56 = 0.0, $57 = 0, $58 = 0, $59 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0;
- var label = 0, sp = 0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0, $12 = 0, $13 = 0, $14 = 0, $15 = 0, $16 = 0, $17 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, label = 0, sp = 0;
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
  $0 = $io;
@@ -4485,14 +4482,14 @@ function _IO_update_latches($io) {
  $3 = HEAP32[$2>>2]|0; //@line 8 "../core/io.c"
  $4 = ($3|0)!=(0); //@line 8 "../core/io.c"
  if ($4) {
-  STACKTOP = sp;return; //@line 35 "../core/io.c"
+  STACKTOP = sp;return; //@line 15 "../core/io.c"
  }
  $5 = $0; //@line 8 "../core/io.c"
  $6 = ((($5)) + 92|0); //@line 8 "../core/io.c"
  $7 = HEAP32[$6>>2]|0; //@line 8 "../core/io.c"
  $8 = ($7|0)!=(0|0); //@line 8 "../core/io.c"
  if (!($8)) {
-  STACKTOP = sp;return; //@line 35 "../core/io.c"
+  STACKTOP = sp;return; //@line 15 "../core/io.c"
  }
  $9 = $0; //@line 11 "../core/io.c"
  $10 = ((($9)) + 92|0); //@line 11 "../core/io.c"
@@ -4504,97 +4501,107 @@ function _IO_update_latches($io) {
  $16 = $0; //@line 14 "../core/io.c"
  $17 = ((($16)) + 116|0); //@line 14 "../core/io.c"
  (_IO_pull_sample($11,$13,$15,$17)|0); //@line 11 "../core/io.c"
- $18 = $0; //@line 17 "../core/io.c"
- $19 = ((($18)) + 108|0); //@line 17 "../core/io.c"
- $20 = +HEAPF32[$19>>2]; //@line 17 "../core/io.c"
- $21 = $20; //@line 17 "../core/io.c"
- $22 = $21 > 1.0; //@line 17 "../core/io.c"
- if ($22) {
-  $23 = $0; //@line 18 "../core/io.c"
-  $24 = ((($23)) + 108|0); //@line 18 "../core/io.c"
-  HEAPF32[$24>>2] = 1.0; //@line 18 "../core/io.c"
- }
- $25 = $0; //@line 20 "../core/io.c"
- $26 = ((($25)) + 112|0); //@line 20 "../core/io.c"
- $27 = +HEAPF32[$26>>2]; //@line 20 "../core/io.c"
- $28 = $27; //@line 20 "../core/io.c"
- $29 = $28 > 1.0; //@line 20 "../core/io.c"
- if ($29) {
-  $30 = $0; //@line 21 "../core/io.c"
-  $31 = ((($30)) + 112|0); //@line 21 "../core/io.c"
-  HEAPF32[$31>>2] = 1.0; //@line 21 "../core/io.c"
- }
- $32 = $0; //@line 23 "../core/io.c"
- $33 = ((($32)) + 116|0); //@line 23 "../core/io.c"
- $34 = +HEAPF32[$33>>2]; //@line 23 "../core/io.c"
- $35 = $34; //@line 23 "../core/io.c"
- $36 = $35 > 1.0; //@line 23 "../core/io.c"
- if ($36) {
-  $37 = $0; //@line 24 "../core/io.c"
-  $38 = ((($37)) + 116|0); //@line 24 "../core/io.c"
-  HEAPF32[$38>>2] = 1.0; //@line 24 "../core/io.c"
- }
- $39 = $0; //@line 26 "../core/io.c"
- $40 = ((($39)) + 108|0); //@line 26 "../core/io.c"
- $41 = +HEAPF32[$40>>2]; //@line 26 "../core/io.c"
- $42 = $41; //@line 26 "../core/io.c"
- $43 = $42 < -1.0; //@line 26 "../core/io.c"
- if ($43) {
-  $44 = $0; //@line 27 "../core/io.c"
-  $45 = ((($44)) + 108|0); //@line 27 "../core/io.c"
-  HEAPF32[$45>>2] = -1.0; //@line 27 "../core/io.c"
- }
- $46 = $0; //@line 29 "../core/io.c"
- $47 = ((($46)) + 112|0); //@line 29 "../core/io.c"
- $48 = +HEAPF32[$47>>2]; //@line 29 "../core/io.c"
- $49 = $48; //@line 29 "../core/io.c"
- $50 = $49 < -1.0; //@line 29 "../core/io.c"
- if ($50) {
-  $51 = $0; //@line 30 "../core/io.c"
-  $52 = ((($51)) + 112|0); //@line 30 "../core/io.c"
-  HEAPF32[$52>>2] = -1.0; //@line 30 "../core/io.c"
- }
- $53 = $0; //@line 32 "../core/io.c"
- $54 = ((($53)) + 116|0); //@line 32 "../core/io.c"
- $55 = +HEAPF32[$54>>2]; //@line 32 "../core/io.c"
- $56 = $55; //@line 32 "../core/io.c"
- $57 = $56 < -1.0; //@line 32 "../core/io.c"
- if (!($57)) {
-  STACKTOP = sp;return; //@line 35 "../core/io.c"
- }
- $58 = $0; //@line 33 "../core/io.c"
- $59 = ((($58)) + 116|0); //@line 33 "../core/io.c"
- HEAPF32[$59>>2] = -1.0; //@line 33 "../core/io.c"
- STACKTOP = sp;return; //@line 35 "../core/io.c"
+ STACKTOP = sp;return; //@line 15 "../core/io.c"
 }
 function _IO_pull_sample($io,$l_sample,$r_sample,$g_sample) {
  $io = $io|0;
  $l_sample = $l_sample|0;
  $r_sample = $r_sample|0;
  $g_sample = $g_sample|0;
- var $0 = 0, $1 = 0, $10 = 0.0, $11 = 0, $12 = 0, $13 = 0, $14 = 0.0, $15 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0.0, $7 = 0, $8 = 0, $9 = 0, label = 0, sp = 0;
+ var $0 = 0, $1 = 0, $10 = 0, $11 = 0.0, $12 = 0.0, $13 = 0, $14 = 0, $15 = 0, $16 = 0.0, $17 = 0.0, $18 = 0.0, $19 = 0.0, $2 = 0, $20 = 0, $21 = 0, $22 = 0, $23 = 0.0, $24 = 0.0, $25 = 0, $26 = 0;
+ var $27 = 0, $28 = 0.0, $29 = 0.0, $3 = 0, $30 = 0, $31 = 0, $32 = 0, $33 = 0.0, $34 = 0.0, $35 = 0.0, $36 = 0.0, $37 = 0, $38 = 0, $39 = 0, $4 = 0, $40 = 0.0, $41 = 0.0, $42 = 0, $43 = 0, $44 = 0;
+ var $45 = 0.0, $46 = 0.0, $47 = 0, $48 = 0, $49 = 0, $5 = 0, $50 = 0.0, $51 = 0.0, $52 = 0.0, $53 = 0.0, $54 = 0, $6 = 0.0, $7 = 0.0, $8 = 0, $9 = 0, label = 0, sp = 0;
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
  $0 = $io;
  $1 = $l_sample;
  $2 = $r_sample;
  $3 = $g_sample;
- $4 = $0; //@line 125 "../core/io.c"
- $5 = ((($4)) + 108|0); //@line 125 "../core/io.c"
- $6 = +HEAPF32[$5>>2]; //@line 125 "../core/io.c"
- $7 = $1; //@line 125 "../core/io.c"
- HEAPF32[$7>>2] = $6; //@line 125 "../core/io.c"
- $8 = $0; //@line 126 "../core/io.c"
- $9 = ((($8)) + 112|0); //@line 126 "../core/io.c"
- $10 = +HEAPF32[$9>>2]; //@line 126 "../core/io.c"
- $11 = $2; //@line 126 "../core/io.c"
- HEAPF32[$11>>2] = $10; //@line 126 "../core/io.c"
- $12 = $0; //@line 127 "../core/io.c"
- $13 = ((($12)) + 116|0); //@line 127 "../core/io.c"
- $14 = +HEAPF32[$13>>2]; //@line 127 "../core/io.c"
- $15 = $3; //@line 127 "../core/io.c"
- HEAPF32[$15>>2] = $14; //@line 127 "../core/io.c"
- STACKTOP = sp;return 1; //@line 129 "../core/io.c"
+ $4 = $0; //@line 105 "../core/io.c"
+ $5 = ((($4)) + 108|0); //@line 105 "../core/io.c"
+ $6 = +HEAPF32[$5>>2]; //@line 105 "../core/io.c"
+ $7 = $6; //@line 105 "../core/io.c"
+ $8 = $7 > 1.0; //@line 105 "../core/io.c"
+ if ($8) {
+  $19 = 1.0;
+ } else {
+  $9 = $0; //@line 105 "../core/io.c"
+  $10 = ((($9)) + 108|0); //@line 105 "../core/io.c"
+  $11 = +HEAPF32[$10>>2]; //@line 105 "../core/io.c"
+  $12 = $11; //@line 105 "../core/io.c"
+  $13 = $12 < -1.0; //@line 105 "../core/io.c"
+  if ($13) {
+   $19 = -1.0;
+  } else {
+   $14 = $0; //@line 105 "../core/io.c"
+   $15 = ((($14)) + 108|0); //@line 105 "../core/io.c"
+   $16 = +HEAPF32[$15>>2]; //@line 105 "../core/io.c"
+   $17 = $16; //@line 105 "../core/io.c"
+   $19 = $17;
+  }
+ }
+ $18 = $19; //@line 105 "../core/io.c"
+ $20 = $1; //@line 105 "../core/io.c"
+ HEAPF32[$20>>2] = $18; //@line 105 "../core/io.c"
+ $21 = $0; //@line 106 "../core/io.c"
+ $22 = ((($21)) + 112|0); //@line 106 "../core/io.c"
+ $23 = +HEAPF32[$22>>2]; //@line 106 "../core/io.c"
+ $24 = $23; //@line 106 "../core/io.c"
+ $25 = $24 > 1.0; //@line 106 "../core/io.c"
+ if ($25) {
+  $36 = 1.0;
+ } else {
+  $26 = $0; //@line 106 "../core/io.c"
+  $27 = ((($26)) + 112|0); //@line 106 "../core/io.c"
+  $28 = +HEAPF32[$27>>2]; //@line 106 "../core/io.c"
+  $29 = $28; //@line 106 "../core/io.c"
+  $30 = $29 < -1.0; //@line 106 "../core/io.c"
+  if ($30) {
+   $36 = -1.0;
+  } else {
+   $31 = $0; //@line 106 "../core/io.c"
+   $32 = ((($31)) + 112|0); //@line 106 "../core/io.c"
+   $33 = +HEAPF32[$32>>2]; //@line 106 "../core/io.c"
+   $34 = $33; //@line 106 "../core/io.c"
+   $36 = $34;
+  }
+ }
+ $35 = $36; //@line 106 "../core/io.c"
+ $37 = $2; //@line 106 "../core/io.c"
+ HEAPF32[$37>>2] = $35; //@line 106 "../core/io.c"
+ $38 = $0; //@line 107 "../core/io.c"
+ $39 = ((($38)) + 116|0); //@line 107 "../core/io.c"
+ $40 = +HEAPF32[$39>>2]; //@line 107 "../core/io.c"
+ $41 = $40; //@line 107 "../core/io.c"
+ $42 = $41 > 1.0; //@line 107 "../core/io.c"
+ if ($42) {
+  $53 = 1.0;
+  $52 = $53; //@line 107 "../core/io.c"
+  $54 = $3; //@line 107 "../core/io.c"
+  HEAPF32[$54>>2] = $52; //@line 107 "../core/io.c"
+  STACKTOP = sp;return 1; //@line 109 "../core/io.c"
+ }
+ $43 = $0; //@line 107 "../core/io.c"
+ $44 = ((($43)) + 116|0); //@line 107 "../core/io.c"
+ $45 = +HEAPF32[$44>>2]; //@line 107 "../core/io.c"
+ $46 = $45; //@line 107 "../core/io.c"
+ $47 = $46 < -1.0; //@line 107 "../core/io.c"
+ if ($47) {
+  $53 = -1.0;
+  $52 = $53; //@line 107 "../core/io.c"
+  $54 = $3; //@line 107 "../core/io.c"
+  HEAPF32[$54>>2] = $52; //@line 107 "../core/io.c"
+  STACKTOP = sp;return 1; //@line 109 "../core/io.c"
+ }
+ $48 = $0; //@line 107 "../core/io.c"
+ $49 = ((($48)) + 116|0); //@line 107 "../core/io.c"
+ $50 = +HEAPF32[$49>>2]; //@line 107 "../core/io.c"
+ $51 = $50; //@line 107 "../core/io.c"
+ $53 = $51;
+ $52 = $53; //@line 107 "../core/io.c"
+ $54 = $3; //@line 107 "../core/io.c"
+ HEAPF32[$54>>2] = $52; //@line 107 "../core/io.c"
+ STACKTOP = sp;return 1; //@line 109 "../core/io.c"
 }
 function _IO_new($patch_core,$param_object,$x,$y,$is_output) {
  $patch_core = $patch_core|0;
@@ -4611,48 +4618,48 @@ function _IO_new($patch_core,$param_object,$x,$y,$is_output) {
  $3 = $x;
  $4 = $y;
  $5 = $is_output;
- $6 = (_malloc(120)|0); //@line 39 "../core/io.c"
- $io = $6; //@line 39 "../core/io.c"
- $7 = $io; //@line 41 "../core/io.c"
- $8 = ($7|0)!=(0|0); //@line 41 "../core/io.c"
- $9 = $io; //@line 44 "../core/io.c"
+ $6 = (_malloc(120)|0); //@line 19 "../core/io.c"
+ $io = $6; //@line 19 "../core/io.c"
+ $7 = $io; //@line 21 "../core/io.c"
+ $8 = ($7|0)!=(0|0); //@line 21 "../core/io.c"
+ $9 = $io; //@line 24 "../core/io.c"
  if (!($8)) {
-  $0 = $9; //@line 42 "../core/io.c"
-  $28 = $0; //@line 56 "../core/io.c"
-  STACKTOP = sp;return ($28|0); //@line 56 "../core/io.c"
+  $0 = $9; //@line 22 "../core/io.c"
+  $28 = $0; //@line 36 "../core/io.c"
+  STACKTOP = sp;return ($28|0); //@line 36 "../core/io.c"
  }
- $10 = $1; //@line 44 "../core/io.c"
- $11 = $2; //@line 44 "../core/io.c"
- $12 = $3; //@line 44 "../core/io.c"
- $13 = $4; //@line 44 "../core/io.c"
- $14 = $5; //@line 44 "../core/io.c"
- $15 = (_IO_init($9,$10,$11,$12,$13,$14)|0); //@line 44 "../core/io.c"
- $16 = ($15|0)!=(0); //@line 44 "../core/io.c"
+ $10 = $1; //@line 24 "../core/io.c"
+ $11 = $2; //@line 24 "../core/io.c"
+ $12 = $3; //@line 24 "../core/io.c"
+ $13 = $4; //@line 24 "../core/io.c"
+ $14 = $5; //@line 24 "../core/io.c"
+ $15 = (_IO_init($9,$10,$11,$12,$13,$14)|0); //@line 24 "../core/io.c"
+ $16 = ($15|0)!=(0); //@line 24 "../core/io.c"
  if (!($16)) {
-  $17 = $io; //@line 46 "../core/io.c"
-  _Object_delete($17); //@line 46 "../core/io.c"
-  $0 = 0; //@line 47 "../core/io.c"
-  $28 = $0; //@line 56 "../core/io.c"
-  STACKTOP = sp;return ($28|0); //@line 56 "../core/io.c"
+  $17 = $io; //@line 26 "../core/io.c"
+  _Object_delete($17); //@line 26 "../core/io.c"
+  $0 = 0; //@line 27 "../core/io.c"
+  $28 = $0; //@line 36 "../core/io.c"
+  STACKTOP = sp;return ($28|0); //@line 36 "../core/io.c"
  }
- $18 = $5; //@line 50 "../core/io.c"
- $19 = ($18|0)!=(0); //@line 50 "../core/io.c"
- $20 = $1; //@line 51 "../core/io.c"
+ $18 = $5; //@line 30 "../core/io.c"
+ $19 = ($18|0)!=(0); //@line 30 "../core/io.c"
+ $20 = $1; //@line 31 "../core/io.c"
  if ($19) {
-  $21 = ((($20)) + 20|0); //@line 51 "../core/io.c"
-  $22 = HEAP32[$21>>2]|0; //@line 51 "../core/io.c"
-  $23 = $io; //@line 51 "../core/io.c"
-  (_List_add($22,$23)|0); //@line 51 "../core/io.c"
+  $21 = ((($20)) + 20|0); //@line 31 "../core/io.c"
+  $22 = HEAP32[$21>>2]|0; //@line 31 "../core/io.c"
+  $23 = $io; //@line 31 "../core/io.c"
+  (_List_add($22,$23)|0); //@line 31 "../core/io.c"
  } else {
-  $24 = ((($20)) + 16|0); //@line 53 "../core/io.c"
-  $25 = HEAP32[$24>>2]|0; //@line 53 "../core/io.c"
-  $26 = $io; //@line 53 "../core/io.c"
-  (_List_add($25,$26)|0); //@line 53 "../core/io.c"
+  $24 = ((($20)) + 16|0); //@line 33 "../core/io.c"
+  $25 = HEAP32[$24>>2]|0; //@line 33 "../core/io.c"
+  $26 = $io; //@line 33 "../core/io.c"
+  (_List_add($25,$26)|0); //@line 33 "../core/io.c"
  }
- $27 = $io; //@line 55 "../core/io.c"
- $0 = $27; //@line 55 "../core/io.c"
- $28 = $0; //@line 56 "../core/io.c"
- STACKTOP = sp;return ($28|0); //@line 56 "../core/io.c"
+ $27 = $io; //@line 35 "../core/io.c"
+ $0 = $27; //@line 35 "../core/io.c"
+ $28 = $0; //@line 36 "../core/io.c"
+ STACKTOP = sp;return ($28|0); //@line 36 "../core/io.c"
 }
 function _IO_init($io,$patch_core,$param_object,$x,$y,$is_output) {
  $io = $io|0;
@@ -4672,56 +4679,56 @@ function _IO_init($io,$patch_core,$param_object,$x,$y,$is_output) {
  $4 = $x;
  $5 = $y;
  $6 = $is_output;
- $7 = $1; //@line 60 "../core/io.c"
- $8 = $4; //@line 60 "../core/io.c"
- $9 = (($8) - 3)|0; //@line 60 "../core/io.c"
- $10 = $9&65535; //@line 60 "../core/io.c"
- $11 = $5; //@line 60 "../core/io.c"
- $12 = (($11) - 3)|0; //@line 60 "../core/io.c"
- $13 = $12&65535; //@line 60 "../core/io.c"
- $14 = (_Window_init($7,$10,$13,6,6,3,0)|0); //@line 60 "../core/io.c"
- $15 = ($14|0)!=(0); //@line 60 "../core/io.c"
+ $7 = $1; //@line 40 "../core/io.c"
+ $8 = $4; //@line 40 "../core/io.c"
+ $9 = (($8) - 3)|0; //@line 40 "../core/io.c"
+ $10 = $9&65535; //@line 40 "../core/io.c"
+ $11 = $5; //@line 40 "../core/io.c"
+ $12 = (($11) - 3)|0; //@line 40 "../core/io.c"
+ $13 = $12&65535; //@line 40 "../core/io.c"
+ $14 = (_Window_init($7,$10,$13,6,6,3,0)|0); //@line 40 "../core/io.c"
+ $15 = ($14|0)!=(0); //@line 40 "../core/io.c"
  if ($15) {
-  $16 = $1; //@line 65 "../core/io.c"
-  $17 = ((($16)) + 52|0); //@line 65 "../core/io.c"
-  HEAP32[$17>>2] = 16; //@line 65 "../core/io.c"
-  $18 = $1; //@line 66 "../core/io.c"
-  $19 = ((($18)) + 76|0); //@line 66 "../core/io.c"
-  HEAP32[$19>>2] = 17; //@line 66 "../core/io.c"
-  $20 = $2; //@line 67 "../core/io.c"
-  $21 = $1; //@line 67 "../core/io.c"
-  $22 = ((($21)) + 88|0); //@line 67 "../core/io.c"
-  HEAP32[$22>>2] = $20; //@line 67 "../core/io.c"
-  $23 = $3; //@line 68 "../core/io.c"
-  $24 = $1; //@line 68 "../core/io.c"
-  $25 = ((($24)) + 96|0); //@line 68 "../core/io.c"
-  HEAP32[$25>>2] = $23; //@line 68 "../core/io.c"
-  $26 = $1; //@line 69 "../core/io.c"
-  $27 = ((($26)) + 92|0); //@line 69 "../core/io.c"
-  HEAP32[$27>>2] = 0; //@line 69 "../core/io.c"
-  $28 = $6; //@line 70 "../core/io.c"
-  $29 = $1; //@line 70 "../core/io.c"
-  $30 = ((($29)) + 100|0); //@line 70 "../core/io.c"
-  HEAP32[$30>>2] = $28; //@line 70 "../core/io.c"
-  $31 = $1; //@line 71 "../core/io.c"
-  $32 = ((($31)) + 108|0); //@line 71 "../core/io.c"
-  HEAPF32[$32>>2] = 0.0; //@line 71 "../core/io.c"
-  $33 = $1; //@line 72 "../core/io.c"
-  $34 = ((($33)) + 112|0); //@line 72 "../core/io.c"
-  HEAPF32[$34>>2] = 0.0; //@line 72 "../core/io.c"
-  $35 = $1; //@line 73 "../core/io.c"
-  $36 = ((($35)) + 116|0); //@line 73 "../core/io.c"
-  HEAPF32[$36>>2] = 0.0; //@line 73 "../core/io.c"
-  $37 = $1; //@line 74 "../core/io.c"
-  $38 = ((($37)) + 104|0); //@line 74 "../core/io.c"
-  HEAP32[$38>>2] = 0; //@line 74 "../core/io.c"
-  $0 = 1; //@line 76 "../core/io.c"
-  $39 = $0; //@line 77 "../core/io.c"
-  STACKTOP = sp;return ($39|0); //@line 77 "../core/io.c"
+  $16 = $1; //@line 45 "../core/io.c"
+  $17 = ((($16)) + 52|0); //@line 45 "../core/io.c"
+  HEAP32[$17>>2] = 16; //@line 45 "../core/io.c"
+  $18 = $1; //@line 46 "../core/io.c"
+  $19 = ((($18)) + 76|0); //@line 46 "../core/io.c"
+  HEAP32[$19>>2] = 17; //@line 46 "../core/io.c"
+  $20 = $2; //@line 47 "../core/io.c"
+  $21 = $1; //@line 47 "../core/io.c"
+  $22 = ((($21)) + 88|0); //@line 47 "../core/io.c"
+  HEAP32[$22>>2] = $20; //@line 47 "../core/io.c"
+  $23 = $3; //@line 48 "../core/io.c"
+  $24 = $1; //@line 48 "../core/io.c"
+  $25 = ((($24)) + 96|0); //@line 48 "../core/io.c"
+  HEAP32[$25>>2] = $23; //@line 48 "../core/io.c"
+  $26 = $1; //@line 49 "../core/io.c"
+  $27 = ((($26)) + 92|0); //@line 49 "../core/io.c"
+  HEAP32[$27>>2] = 0; //@line 49 "../core/io.c"
+  $28 = $6; //@line 50 "../core/io.c"
+  $29 = $1; //@line 50 "../core/io.c"
+  $30 = ((($29)) + 100|0); //@line 50 "../core/io.c"
+  HEAP32[$30>>2] = $28; //@line 50 "../core/io.c"
+  $31 = $1; //@line 51 "../core/io.c"
+  $32 = ((($31)) + 108|0); //@line 51 "../core/io.c"
+  HEAPF32[$32>>2] = 0.0; //@line 51 "../core/io.c"
+  $33 = $1; //@line 52 "../core/io.c"
+  $34 = ((($33)) + 112|0); //@line 52 "../core/io.c"
+  HEAPF32[$34>>2] = 0.0; //@line 52 "../core/io.c"
+  $35 = $1; //@line 53 "../core/io.c"
+  $36 = ((($35)) + 116|0); //@line 53 "../core/io.c"
+  HEAPF32[$36>>2] = 0.0; //@line 53 "../core/io.c"
+  $37 = $1; //@line 54 "../core/io.c"
+  $38 = ((($37)) + 104|0); //@line 54 "../core/io.c"
+  HEAP32[$38>>2] = 0; //@line 54 "../core/io.c"
+  $0 = 1; //@line 56 "../core/io.c"
+  $39 = $0; //@line 57 "../core/io.c"
+  STACKTOP = sp;return ($39|0); //@line 57 "../core/io.c"
  } else {
-  $0 = 0; //@line 62 "../core/io.c"
-  $39 = $0; //@line 77 "../core/io.c"
-  STACKTOP = sp;return ($39|0); //@line 77 "../core/io.c"
+  $0 = 0; //@line 42 "../core/io.c"
+  $39 = $0; //@line 57 "../core/io.c"
+  STACKTOP = sp;return ($39|0); //@line 57 "../core/io.c"
  }
  return (0)|0;
 }
@@ -4731,26 +4738,26 @@ function _IO_paint_handler($io_window) {
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
  $0 = $io_window;
- $1 = $0; //@line 81 "../core/io.c"
- $io = $1; //@line 81 "../core/io.c"
- $2 = $0; //@line 83 "../core/io.c"
- $3 = ((($2)) + 24|0); //@line 83 "../core/io.c"
- $4 = HEAP32[$3>>2]|0; //@line 83 "../core/io.c"
- $5 = $io; //@line 84 "../core/io.c"
- $6 = ((($5)) + 92|0); //@line 84 "../core/io.c"
- $7 = HEAP32[$6>>2]|0; //@line 84 "../core/io.c"
- $8 = ($7|0)!=(0|0); //@line 84 "../core/io.c"
- $9 = $8 ? -16726016 : -10197916; //@line 84 "../core/io.c"
- _Context_fill_rect($4,2,2,2,2,$9); //@line 83 "../core/io.c"
- $10 = $0; //@line 85 "../core/io.c"
- $11 = ((($10)) + 24|0); //@line 85 "../core/io.c"
- $12 = HEAP32[$11>>2]|0; //@line 85 "../core/io.c"
- _Context_draw_rect($12,0,0,6,6,-16777216); //@line 85 "../core/io.c"
- $13 = $0; //@line 86 "../core/io.c"
- $14 = ((($13)) + 24|0); //@line 86 "../core/io.c"
- $15 = HEAP32[$14>>2]|0; //@line 86 "../core/io.c"
- _Context_draw_rect($15,1,1,4,4,-16777216); //@line 86 "../core/io.c"
- STACKTOP = sp;return; //@line 87 "../core/io.c"
+ $1 = $0; //@line 61 "../core/io.c"
+ $io = $1; //@line 61 "../core/io.c"
+ $2 = $0; //@line 63 "../core/io.c"
+ $3 = ((($2)) + 24|0); //@line 63 "../core/io.c"
+ $4 = HEAP32[$3>>2]|0; //@line 63 "../core/io.c"
+ $5 = $io; //@line 64 "../core/io.c"
+ $6 = ((($5)) + 92|0); //@line 64 "../core/io.c"
+ $7 = HEAP32[$6>>2]|0; //@line 64 "../core/io.c"
+ $8 = ($7|0)!=(0|0); //@line 64 "../core/io.c"
+ $9 = $8 ? -16726016 : -10197916; //@line 64 "../core/io.c"
+ _Context_fill_rect($4,2,2,2,2,$9); //@line 63 "../core/io.c"
+ $10 = $0; //@line 65 "../core/io.c"
+ $11 = ((($10)) + 24|0); //@line 65 "../core/io.c"
+ $12 = HEAP32[$11>>2]|0; //@line 65 "../core/io.c"
+ _Context_draw_rect($12,0,0,6,6,-16777216); //@line 65 "../core/io.c"
+ $13 = $0; //@line 66 "../core/io.c"
+ $14 = ((($13)) + 24|0); //@line 66 "../core/io.c"
+ $15 = HEAP32[$14>>2]|0; //@line 66 "../core/io.c"
+ _Context_draw_rect($15,1,1,4,4,-16777216); //@line 66 "../core/io.c"
+ STACKTOP = sp;return; //@line 67 "../core/io.c"
 }
 function _IO_mouseclick_handler($io_window,$x,$y) {
  $io_window = $io_window|0;
@@ -4763,52 +4770,52 @@ function _IO_mouseclick_handler($io_window,$x,$y) {
  $0 = $io_window;
  $1 = $x;
  $2 = $y;
- $3 = $0; //@line 91 "../core/io.c"
- $io = $3; //@line 91 "../core/io.c"
- $4 = $io; //@line 93 "../core/io.c"
- $5 = ((($4)) + 92|0); //@line 93 "../core/io.c"
- $6 = HEAP32[$5>>2]|0; //@line 93 "../core/io.c"
- $7 = ($6|0)!=(0|0); //@line 93 "../core/io.c"
+ $3 = $0; //@line 71 "../core/io.c"
+ $io = $3; //@line 71 "../core/io.c"
+ $4 = $io; //@line 73 "../core/io.c"
+ $5 = ((($4)) + 92|0); //@line 73 "../core/io.c"
+ $6 = HEAP32[$5>>2]|0; //@line 73 "../core/io.c"
+ $7 = ($6|0)!=(0|0); //@line 73 "../core/io.c"
  if (!($7)) {
-  $31 = $io; //@line 102 "../core/io.c"
-  $32 = ((($31)) + 88|0); //@line 102 "../core/io.c"
-  $33 = HEAP32[$32>>2]|0; //@line 102 "../core/io.c"
-  $34 = $io; //@line 102 "../core/io.c"
-  _PatchCore_connect_action($33,$34); //@line 102 "../core/io.c"
-  STACKTOP = sp;return; //@line 103 "../core/io.c"
+  $31 = $io; //@line 82 "../core/io.c"
+  $32 = ((($31)) + 88|0); //@line 82 "../core/io.c"
+  $33 = HEAP32[$32>>2]|0; //@line 82 "../core/io.c"
+  $34 = $io; //@line 82 "../core/io.c"
+  _PatchCore_connect_action($33,$34); //@line 82 "../core/io.c"
+  STACKTOP = sp;return; //@line 83 "../core/io.c"
  }
- $8 = $io; //@line 95 "../core/io.c"
- $9 = ((($8)) + 92|0); //@line 95 "../core/io.c"
- $10 = HEAP32[$9>>2]|0; //@line 95 "../core/io.c"
- $11 = ((($10)) + 92|0); //@line 95 "../core/io.c"
- HEAP32[$11>>2] = 0; //@line 95 "../core/io.c"
- $12 = $io; //@line 96 "../core/io.c"
- $13 = ((($12)) + 92|0); //@line 96 "../core/io.c"
- $14 = HEAP32[$13>>2]|0; //@line 96 "../core/io.c"
- $15 = $io; //@line 97 "../core/io.c"
- $16 = ((($15)) + 92|0); //@line 97 "../core/io.c"
- $17 = HEAP32[$16>>2]|0; //@line 97 "../core/io.c"
- $18 = ((($17)) + 18|0); //@line 97 "../core/io.c"
- $19 = HEAP16[$18>>1]|0; //@line 97 "../core/io.c"
- $20 = $19&65535; //@line 97 "../core/io.c"
- $21 = (($20) - 1)|0; //@line 97 "../core/io.c"
- $22 = $io; //@line 98 "../core/io.c"
- $23 = ((($22)) + 92|0); //@line 98 "../core/io.c"
- $24 = HEAP32[$23>>2]|0; //@line 98 "../core/io.c"
- $25 = ((($24)) + 16|0); //@line 98 "../core/io.c"
- $26 = HEAP16[$25>>1]|0; //@line 98 "../core/io.c"
- $27 = $26&65535; //@line 98 "../core/io.c"
- $28 = (($27) - 1)|0; //@line 98 "../core/io.c"
- _Window_invalidate($14,0,0,$21,$28); //@line 96 "../core/io.c"
- $29 = $io; //@line 99 "../core/io.c"
- $30 = ((($29)) + 92|0); //@line 99 "../core/io.c"
- HEAP32[$30>>2] = 0; //@line 99 "../core/io.c"
- $31 = $io; //@line 102 "../core/io.c"
- $32 = ((($31)) + 88|0); //@line 102 "../core/io.c"
- $33 = HEAP32[$32>>2]|0; //@line 102 "../core/io.c"
- $34 = $io; //@line 102 "../core/io.c"
- _PatchCore_connect_action($33,$34); //@line 102 "../core/io.c"
- STACKTOP = sp;return; //@line 103 "../core/io.c"
+ $8 = $io; //@line 75 "../core/io.c"
+ $9 = ((($8)) + 92|0); //@line 75 "../core/io.c"
+ $10 = HEAP32[$9>>2]|0; //@line 75 "../core/io.c"
+ $11 = ((($10)) + 92|0); //@line 75 "../core/io.c"
+ HEAP32[$11>>2] = 0; //@line 75 "../core/io.c"
+ $12 = $io; //@line 76 "../core/io.c"
+ $13 = ((($12)) + 92|0); //@line 76 "../core/io.c"
+ $14 = HEAP32[$13>>2]|0; //@line 76 "../core/io.c"
+ $15 = $io; //@line 77 "../core/io.c"
+ $16 = ((($15)) + 92|0); //@line 77 "../core/io.c"
+ $17 = HEAP32[$16>>2]|0; //@line 77 "../core/io.c"
+ $18 = ((($17)) + 18|0); //@line 77 "../core/io.c"
+ $19 = HEAP16[$18>>1]|0; //@line 77 "../core/io.c"
+ $20 = $19&65535; //@line 77 "../core/io.c"
+ $21 = (($20) - 1)|0; //@line 77 "../core/io.c"
+ $22 = $io; //@line 78 "../core/io.c"
+ $23 = ((($22)) + 92|0); //@line 78 "../core/io.c"
+ $24 = HEAP32[$23>>2]|0; //@line 78 "../core/io.c"
+ $25 = ((($24)) + 16|0); //@line 78 "../core/io.c"
+ $26 = HEAP16[$25>>1]|0; //@line 78 "../core/io.c"
+ $27 = $26&65535; //@line 78 "../core/io.c"
+ $28 = (($27) - 1)|0; //@line 78 "../core/io.c"
+ _Window_invalidate($14,0,0,$21,$28); //@line 76 "../core/io.c"
+ $29 = $io; //@line 79 "../core/io.c"
+ $30 = ((($29)) + 92|0); //@line 79 "../core/io.c"
+ HEAP32[$30>>2] = 0; //@line 79 "../core/io.c"
+ $31 = $io; //@line 82 "../core/io.c"
+ $32 = ((($31)) + 88|0); //@line 82 "../core/io.c"
+ $33 = HEAP32[$32>>2]|0; //@line 82 "../core/io.c"
+ $34 = $io; //@line 82 "../core/io.c"
+ _PatchCore_connect_action($33,$34); //@line 82 "../core/io.c"
+ STACKTOP = sp;return; //@line 83 "../core/io.c"
 }
 function _IO_connect($io,$connected_io) {
  $io = $io|0;
@@ -4818,11 +4825,11 @@ function _IO_connect($io,$connected_io) {
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
  $0 = $io;
  $1 = $connected_io;
- $2 = $1; //@line 107 "../core/io.c"
- $3 = $0; //@line 107 "../core/io.c"
- $4 = ((($3)) + 92|0); //@line 107 "../core/io.c"
- HEAP32[$4>>2] = $2; //@line 107 "../core/io.c"
- STACKTOP = sp;return; //@line 108 "../core/io.c"
+ $2 = $1; //@line 87 "../core/io.c"
+ $3 = $0; //@line 87 "../core/io.c"
+ $4 = ((($3)) + 92|0); //@line 87 "../core/io.c"
+ HEAP32[$4>>2] = $2; //@line 87 "../core/io.c"
+ STACKTOP = sp;return; //@line 88 "../core/io.c"
 }
 function _IO_render_sample($io) {
  $io = $io|0;
@@ -4831,35 +4838,35 @@ function _IO_render_sample($io) {
  sp = STACKTOP;
  STACKTOP = STACKTOP + 16|0; if ((STACKTOP|0) >= (STACK_MAX|0)) abort();
  $1 = $io;
- $2 = $1; //@line 114 "../core/io.c"
- $3 = ((($2)) + 100|0); //@line 114 "../core/io.c"
- $4 = HEAP32[$3>>2]|0; //@line 114 "../core/io.c"
- $5 = ($4|0)!=(0); //@line 114 "../core/io.c"
+ $2 = $1; //@line 94 "../core/io.c"
+ $3 = ((($2)) + 100|0); //@line 94 "../core/io.c"
+ $4 = HEAP32[$3>>2]|0; //@line 94 "../core/io.c"
+ $5 = ($4|0)!=(0); //@line 94 "../core/io.c"
  if ($5) {
-  $6 = $1; //@line 114 "../core/io.c"
-  $7 = ((($6)) + 104|0); //@line 114 "../core/io.c"
-  $8 = HEAP32[$7>>2]|0; //@line 114 "../core/io.c"
-  $9 = ($8|0)!=(0|0); //@line 114 "../core/io.c"
+  $6 = $1; //@line 94 "../core/io.c"
+  $7 = ((($6)) + 104|0); //@line 94 "../core/io.c"
+  $8 = HEAP32[$7>>2]|0; //@line 94 "../core/io.c"
+  $9 = ($8|0)!=(0|0); //@line 94 "../core/io.c"
   if ($9) {
-   $10 = $1; //@line 117 "../core/io.c"
-   $11 = ((($10)) + 104|0); //@line 117 "../core/io.c"
-   $12 = HEAP32[$11>>2]|0; //@line 117 "../core/io.c"
-   $13 = $1; //@line 117 "../core/io.c"
-   $14 = $1; //@line 118 "../core/io.c"
-   $15 = ((($14)) + 108|0); //@line 118 "../core/io.c"
-   $16 = $1; //@line 119 "../core/io.c"
-   $17 = ((($16)) + 112|0); //@line 119 "../core/io.c"
-   $18 = $1; //@line 120 "../core/io.c"
-   $19 = ((($18)) + 116|0); //@line 120 "../core/io.c"
-   $20 = (FUNCTION_TABLE_iiiii[$12 & 127]($13,$15,$17,$19)|0); //@line 117 "../core/io.c"
-   $0 = $20; //@line 117 "../core/io.c"
-   $21 = $0; //@line 121 "../core/io.c"
-   STACKTOP = sp;return ($21|0); //@line 121 "../core/io.c"
+   $10 = $1; //@line 97 "../core/io.c"
+   $11 = ((($10)) + 104|0); //@line 97 "../core/io.c"
+   $12 = HEAP32[$11>>2]|0; //@line 97 "../core/io.c"
+   $13 = $1; //@line 97 "../core/io.c"
+   $14 = $1; //@line 98 "../core/io.c"
+   $15 = ((($14)) + 108|0); //@line 98 "../core/io.c"
+   $16 = $1; //@line 99 "../core/io.c"
+   $17 = ((($16)) + 112|0); //@line 99 "../core/io.c"
+   $18 = $1; //@line 100 "../core/io.c"
+   $19 = ((($18)) + 116|0); //@line 100 "../core/io.c"
+   $20 = (FUNCTION_TABLE_iiiii[$12 & 127]($13,$15,$17,$19)|0); //@line 97 "../core/io.c"
+   $0 = $20; //@line 97 "../core/io.c"
+   $21 = $0; //@line 101 "../core/io.c"
+   STACKTOP = sp;return ($21|0); //@line 101 "../core/io.c"
   }
  }
- $0 = 0; //@line 115 "../core/io.c"
- $21 = $0; //@line 121 "../core/io.c"
- STACKTOP = sp;return ($21|0); //@line 121 "../core/io.c"
+ $0 = 0; //@line 95 "../core/io.c"
+ $21 = $0; //@line 101 "../core/io.c"
+ STACKTOP = sp;return ($21|0); //@line 101 "../core/io.c"
 }
 function _List_new() {
  var $0 = 0, $1 = 0, $2 = 0, $3 = 0, $4 = 0, $5 = 0, $6 = 0, $7 = 0, $8 = 0, $9 = 0, $list = 0, label = 0, sp = 0;

@@ -43,6 +43,7 @@ echo . & call  emcc -c -o vca.bc ../units/vca.c -g4
 echo . & call  emcc -c -o adsr.bc ../units/adsr.c -g4
 echo . & call  emcc -c -o split.bc ../units/split.c -g4
 echo . & call  emcc -c -o scope.bc ../units/scope.c -g4
+echo . & call  emcc -c -o capture.bc ../units/capture.c -g4
 
 rem build widgets
 echo . & call  emcc -c -o patchdesktop.bc ../widgets/patchdesktop.c -g4

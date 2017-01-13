@@ -10,6 +10,7 @@
 #include "../units/adsr.h"
 #include "../units/split.h"
 #include "../units/scope.h"
+#include "../units/capture.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -33,6 +34,14 @@ PatchCore* PatchCore_new() {
     }
 
     return patch;
+}
+
+void PatchCore_save_buffers_as_wav(PatchCore* patch, float* l_buf, float* r_buf, int buf_size) {
+
+//TODO, will convert buffers to 16/44.1 WAV format (that bit is platform-
+//      independent) and then thunk down to a generic PlatformWrapper
+//      save file method (should support the provision of MIMEType for web
+//      use)
 }
 
 int PatchCore_install_module(PatchCore* patch, Module* module) {
@@ -88,6 +97,8 @@ void PatchCore_start(PatchCore* patch) {
     PatchCore_install_module(patch, Split_new());
     printf("Done\nInstalling Scope...");
     PatchCore_install_module(patch, Scope_new());
+    printf("Done\nInstalling Capture...");
+    PatchCore_install_module(patch, Capture_new());
     printf("Done\n");
 
     printf("Creating PatchDesktop...");

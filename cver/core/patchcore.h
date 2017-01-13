@@ -24,6 +24,7 @@ typedef struct PatchCore_struct {
 } PatchCore;
 
 PatchCore* PatchCore_new();
+void PatchCore_save_buffers_as_wav(PatchCore* patch, float* l_buf, float* r_buf, int buf_size);
 int PatchCore_install_module(PatchCore* patch, struct Module_struct* module);
 int PatchCore_next_spawn_x(PatchCore* patch);
 int PatchCore_next_spawn_y(PatchCore* patch);

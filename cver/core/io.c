@@ -12,26 +12,6 @@ void IO_update_latches(IO* io) {
                    &io->latched_l_sample,
                    &io->latched_r_sample,
                    &io->latched_g_sample);
-
-    //TESTING: Clamping output values/digital clipping
-    if(io->latched_l_sample > 1.0)
-        io->latched_l_sample = 1.0;
-
-    if(io->latched_r_sample > 1.0)
-        io->latched_r_sample = 1.0;
-
-    if(io->latched_g_sample > 1.0)
-        io->latched_g_sample = 1.0;
-
-    if(io->latched_l_sample < -1.0)
-        io->latched_l_sample = -1.0;
-
-    if(io->latched_r_sample < -1.0)
-        io->latched_r_sample = -1.0;
-
-    if(io->latched_g_sample < -1.0)
-        io->latched_g_sample = -1.0;
-
 }
 
 IO* IO_new(PatchCore* patch_core, Object* param_object, int x, int y, int is_output) {
@@ -122,9 +102,9 @@ int IO_render_sample(IO* io) {
 
 int IO_pull_sample(IO* io, float *l_sample, float *r_sample, float *g_sample) {
 
-    *l_sample = io->latched_l_sample;
-    *r_sample = io->latched_r_sample;
-    *g_sample = io->latched_g_sample;
+    *l_sample = io->latched_l_sample > 1.0 ? 1.0 : io->latched_l_sample < -1.0 ? -1.0 : io->latched_l_sample;
+    *r_sample = io->latched_r_sample > 1.0 ? 1.0 : io->latched_r_sample < -1.0 ? -1.0 : io->latched_r_sample;
+    *g_sample = io->latched_g_sample > 1.0 ? 1.0 : io->latched_g_sample < -1.0 ? -1.0 : io->latched_g_sample;
 
     return 1;
 }
