@@ -32,8 +32,11 @@ int Capture_render_sample_handler(IO* io, float* l_sample, float* r_sample, floa
     capture->sample_buf_r[capture->capture_pointer] = *r_sample;
     capture->capture_pointer++;
 
-    if(capture->capture_pointer == capture->buf_size)
+    if(capture->capture_pointer == capture->buf_size) {
+
+        capture->capture_pointer = -1;
         PatchCore_save_buffers_as_wav(capture->unit.patch_core, capture->sample_buf_l, capture->sample_buf_r, capture->buf_size);
+    }
 
     return 1;
 }

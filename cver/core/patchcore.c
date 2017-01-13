@@ -109,8 +109,8 @@ void PatchCore_save_buffers_as_wav(PatchCore* patch, float* l_buf, float* r_buf,
     
     for(j = 0; j < buf_size; j++) {
 
-        i += insert_i16_little_endian(&wav_buf[i], l_buf[j]);
-        i += insert_i16_little_endian(&wav_buf[i], r_buf[j]);
+        i += insert_i16_little_endian(&wav_buf[i], (int16_t)(l_buf[j] * 32767));
+        i += insert_i16_little_endian(&wav_buf[i], (int16_t)(r_buf[j] * 32767));
     }
 
     //Pass the buffer to the environment for a save
