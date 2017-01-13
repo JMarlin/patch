@@ -49,6 +49,7 @@ struct Context_struct* PlatformWrapper_get_context();
 void PlatformWrapper_install_mouse_callback(Object* param_object, MouseCallback_handler callback);
 void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallback_handler callback);
 float PlatformWrapper_random();
+void PlatformWrapper_save_file(char* file_buffer, int file_size, char* file_name, char* mime);
 
 #ifdef __cplusplus
 }

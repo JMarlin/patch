@@ -36,12 +36,88 @@ PatchCore* PatchCore_new() {
     return patch;
 }
 
+int insert_i32_little_endian(char* buf, int32_t value) {
+
+    *(buf++) = (char)(value & 0xFF);
+    *(buf++) = (char)((value >> 8) & 0xFF);
+    *(buf++) = (char)((value >> 16) & 0xFF);
+    *(buf++) = (char)((value >> 24) & 0xFF);
+
+    return 4;
+}
+
+int insert_i16_little_endian(char* buf, int16_t value) {
+
+    *(buf++) = (char)(value & 0xFF);
+    *(buf++) = (char)((value >> 8) & 0xFF);
+
+    return 2;
+}
+
+int insert_string_to_buf(char* buf, char* string) {
+
+    int count = 0;
+
+    while(*string) {
+
+        *(buf++) = *(string++);
+        count++;
+    }
+
+    return count;
+}
+
 void PatchCore_save_buffers_as_wav(PatchCore* patch, float* l_buf, float* r_buf, int buf_size) {
 
 //TODO, will convert buffers to 16/44.1 WAV format (that bit is platform-
 //      independent) and then thunk down to a generic PlatformWrapper
 //      save file method (should support the provision of MIMEType for web
 //      use)
+
+    //Attempt to create a conversion buffer that will contain the final WAV data
+    int32_t riff_size = (4 * buf_size) + 36;
+    int j;
+    int i = 0;
+    char* wav_buf = (char*)malloc((4 * buf_size) + 44);
+
+    if(!wav_buf)
+        return;
+
+    //Write the RIFF header into the buffer
+    //RIFF Magic
+    i += insert_string_to_buf(&wav_buf[i], "RIFF");
+
+    //RIFF size
+    i += insert_i32_little_endian(&wav_buf[i], riff_size);
+    
+    //WAV magic
+    i += insert_string_to_buf(&wav_buf[i], "WAVE");
+    
+    //Sub-chunk 1, PCM info
+    i += insert_string_to_buf(&wav_buf[i], "fmt ");
+    i += insert_i32_little_endian(&wav_buf[i], 16);
+    i += insert_i16_little_endian(&wav_buf[i], 1);
+    i += insert_i16_little_endian(&wav_buf[i], 2);
+    i += insert_i32_little_endian(&wav_buf[i], 44100);
+    i += insert_i32_little_endian(&wav_buf[i], 176400);
+    i += insert_i16_little_endian(&wav_buf[i], 4);
+    i += insert_i16_little_endian(&wav_buf[i], 16);
+
+    //Sub-chunk 2, PCM data
+    i += insert_string_to_buf(&wav_buf[i], "data");
+    i += insert_i32_little_endian(&wav_buf[i], 4 * buf_size);
+    
+    for(j = 0; j < buf_size; j++) {
+
+        i += insert_i16_little_endian(&wav_buf[i], l_buf[j]);
+        i += insert_i16_little_endian(&wav_buf[i], r_buf[j]);
+    }
+
+    //Pass the buffer to the environment for a save
+    PlatformWrapper_save_file(wav_buf, (4 * buf_size) + 44, "test.wav", "audio/x-wav");
+    
+    //And finally dump the conversion buffer
+    free(wav_buf);
 }
 
 int PatchCore_install_module(PatchCore* patch, Module* module) {

@@ -72,6 +72,22 @@ void PlatformWrapper_init() {
     );
 }
 
+void PlatformWrapper_save_file(char* file_buffer, int file_size, char* file_name, char* mime) {
+
+    EM_ASM_({
+    
+        var mime_string = Pointer_stringify($2);
+        var f_buf = Module.HEAPU8.split($0, $0 + $1);
+
+        window.open("data:" + mime_string +
+                    ";charset=utf-16le;base64,//" +
+                    f_buf.toString('base64'),
+                    "_blank",
+                    "location=yes,height=570,width=520,scrollbars=yes,status=yes"); 
+
+    }, file_buffer, file_size, mime);
+}
+
 void PlatformWrapper_hold_for_exit() {
 
     return; //Emscripten doesn't like hang loops
