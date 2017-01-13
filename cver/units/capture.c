@@ -5,7 +5,7 @@ void Capture_paint_handler(Window* capture_window) {
 
     Capture* capture = (Capture*)capture_window;
     
-    Frame_paint_handler(scope_window);
+    Frame_paint_handler(capture_window);
 }
 
 Module* Capture_new() {
