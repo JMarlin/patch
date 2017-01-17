@@ -3,6 +3,8 @@
 //NOTE: IOs need to automatically disconnect from anything they might be
 //      connected to upon deletion so that we don't get invalid pulls
 
+int next_ioid = 0;
+
 void IO_update_latches(IO* io) {
 
     if(io->is_output || !io->connected_io)
@@ -42,11 +44,13 @@ int IO_init(IO* io, PatchCore* patch_core, Object* param_object, int x, int y, i
         return 0;
     
     //Initial init
+    io->ioid = next_ioid++;
     io->window.paint_function = IO_paint_handler;
     io->window.mouseclick_function = IO_mouseclick_handler;
     io->patch_core = patch_core; 
     io->param_object= param_object;
     io->connected_io = (IO*)0;
+    io->connected_id = -1;
     io->is_output = is_output;
     io->latched_l_sample = 0.0;
     io->latched_r_sample = 0.0;
@@ -85,6 +89,11 @@ void IO_mouseclick_handler(Window* io_window, int x, int y) {
 void IO_connect(IO* io, IO* connected_io) {
 
     io->connected_io = connected_io;
+
+    if(connected_io)
+        io->connected_id = connected_io->ioid;
+    else
+        io->connected_id = -1;
 }
 
 int IO_render_sample(IO* io) {

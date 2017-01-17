@@ -190,6 +190,77 @@ void PatchCore_start(PatchCore* patch) {
     printf("Done\n");
 }
 
+int PatchCore_clear_session(PatchCore* patch) {
+
+    Window* unit_window;
+
+    //Detatch all sources
+    while(patch->sources->count)
+        List_remove_at(patch->sources, 0);
+
+    //Empty i/o lists
+    while(patch->outputs->count)
+        List_remove_at(patch->outputs, 0);
+    
+    while(patch->inputs->count)
+        List_remove_at(patch->inputs, 0);
+
+    //Destroy all instantiated units
+    //Start by making sure the menu is closed
+    Object_delete((Object*)patch->desktop->menu);
+
+    //Then delete all children (units -- should probably make a unit list)
+    while(patch->desktop->children->count) 
+        Object_delete(List_get_at(patch->desktop->children, 0));
+}
+
+int PatchCore_save_session(PatchCore* patch) {
+
+    int i;
+    SerialifyBuf* sbuf;
+    Unit* temp_unit;
+
+    //Make sure the menu is closed
+    Object_delete((Object*)patch->desktop->menu);
+
+    //Create a new serialization object
+    sbuf = SerialifyBuf_new();
+
+    if(!sbuf)
+        return 0;
+
+    //Serialize every instantiated unit
+    for(i = 0; i < patch->desktop->children->count; i++) {
+
+        if(!Unit_serialify((Unit*)List_get_at(patch->desktop->children, i), sbuf)) {
+        
+            Object_delete((Object*)sbuf);
+
+            return 0;
+        }
+    }
+
+    PlatformWrapper_save_file(sbuf->buffer_base, sbuf->used_size, "test.pat", "application/octet-stream");
+    Object_delete((Object*)sbuf);
+
+    return 1;
+}
+
+int PatchCore_load_session(PatchCore* patch) {
+
+    //Later: Make sure user wants to close current
+    //Clear current session
+    //Use a platformwrapper openfile abstraction to get the buffer
+    //Use a serialify function yet to be defined to get a new sbuf from buffer
+    //Loop:
+    //    Get a cstring from the sbuf
+    //    Look to see if it matches a module
+    //    Pass the buf to the deserializer of that module (or fail)
+    //    ^This should probably be done by a twin of instantiate_module
+    //Discard sbuf/buffer
+    //Loop through all registered inputs and outputs and make their 
+    // 'connected_io' pointer matches their 'connected_id'
+}
 
 int PatchCore_add_source(PatchCore* patch, IO* source) {
 

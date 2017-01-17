@@ -1,7 +1,7 @@
 #include "module.h"
 #include <stdlib.h>
 
-Module* Module_new(ModuleConstructor constructor, char* name) {
+Module* Module_new(ModuleConstructor constructor, ModuleDeserializer deserializer, char* name) {
 
     Module* module;
     if(!(module = (Module*)malloc(sizeof(Module))))
@@ -9,6 +9,7 @@ Module* Module_new(ModuleConstructor constructor, char* name) {
 
     Object_init((Object*)module, Module_delete_function);    
     module->constructor = constructor;
+    module->deserializer = deserializer;
     
     if(!(module->name = String_new(name))) {
 

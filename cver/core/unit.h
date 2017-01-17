@@ -9,16 +9,19 @@ struct Unit_struct;
 
 #include "io.h"
 #include "patchcore.h"
+#include "../serialify/serialify.h"
 #include "../uilib/frame.h"
 #include <inttypes.h>
 
 typedef struct Unit_struct {
     Frame frame;
+    Serialify_to_serial_function serialify;
     struct PatchCore_struct* patch_core;
     WindowMoveHandler old_move;
 } Unit;
 
 Unit* Unit_new(struct PatchCore_struct* patch_core);
+int Unit_serialify(Unit* unit, SerialifyBuf* sbuf);
 int Unit_init(Unit* unit, struct PatchCore_struct* patch_core);
 struct IO_struct* Unit_create_output(Unit* unit, int x, int y);
 struct IO_struct* Unit_create_input(Unit* unit, int x, int y);
