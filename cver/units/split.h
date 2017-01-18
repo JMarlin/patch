@@ -25,6 +25,7 @@ typedef struct Split_struct {
 
 Module* Split_new();
 Unit* Split_constructor(PatchCore* patch_core);
+Unit* Split_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
 
 #ifdef __cplusplus
 }

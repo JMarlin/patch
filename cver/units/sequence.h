@@ -24,6 +24,7 @@ typedef struct Sequence_struct {
 
 Module* Sequence_new();
 Unit* Sequence_constructor(PatchCore* patch_core);
+Unit* Sequence_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
 
 #ifdef __cplusplus
 }

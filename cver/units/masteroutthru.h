@@ -23,6 +23,7 @@ typedef struct MasterOutThru_struct {
 
 Module* MasterOutThru_new();
 Unit* MasterOutThru_constructor(PatchCore* patch_core);
+Unit* MasterOutThru_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
 
 #ifdef __cplusplus
 }

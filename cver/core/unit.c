@@ -71,3 +71,11 @@ void Unit_delete(Object* unit_object) {
 
     Window_delete_function(unit_object);
 }
+
+int Unit_serialify(Unit* unit, SerialifyBuf* sbuf) {
+
+    if(unit->serialify)
+        return unit->serialify(unit, sbuf);
+    else
+        return 0; //Need more meaningful error codes
+}

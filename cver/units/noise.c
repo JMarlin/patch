@@ -5,7 +5,7 @@
 
 Module* Noise_new() {
 
-    return Module_new(Noise_constructor, "Noise");
+    return Module_new(Noise_constructor, Noise_deserializer, "Noise");
 }
 
 float float_rand() {
@@ -38,6 +38,11 @@ void Noise_paint_handler(Window* noise_window) {
                        (noise_window->width / 2) - 20,
                        (noise_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* Noise_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* Noise_constructor(PatchCore* patch_core) {

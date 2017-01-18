@@ -10,7 +10,7 @@ void Capture_paint_handler(Window* capture_window) {
 
 Module* Capture_new() {
 
-    return Module_new(Capture_constructor, "Capture");
+    return Module_new(Capture_constructor, Capture_deserializer, "Capture");
 }
 
 void Capture_start_click_handler(Window* button_window, int x, int y) {
@@ -39,6 +39,11 @@ int Capture_render_sample_handler(IO* io, float* l_sample, float* r_sample, floa
     }
 
     return 1;
+}
+
+Unit* Capture_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* Capture_constructor(PatchCore* patch_core) {

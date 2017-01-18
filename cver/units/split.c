@@ -2,7 +2,7 @@
 
 Module* Split_new() {
 
-    return Module_new(Split_constructor, "Split");
+    return Module_new(Split_constructor, Split_deserializer, "Split");
 }
 
 int Split_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
@@ -40,6 +40,11 @@ void Split_paint_handler(Window* sine_window) {
                        (sine_window->width / 2) - 12,
                        (sine_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* Split_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* Split_constructor(PatchCore* patch_core) {

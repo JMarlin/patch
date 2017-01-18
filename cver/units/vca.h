@@ -22,6 +22,7 @@ typedef struct VCA_struct {
 
 Module* VCA_new();
 Unit* VCA_constructor(PatchCore* patch_core);
+Unit* VCA_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
 
 #ifdef __cplusplus
 }

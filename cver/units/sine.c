@@ -4,7 +4,7 @@
 
 Module* Sine_new() {
 
-    return Module_new(Sine_constructor, "Sine");
+    return Module_new(Sine_constructor, Sine_deserializer, "Sine");
 }
 
 int Sine_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
@@ -42,6 +42,11 @@ void Sine_paint_handler(Window* sine_window) {
                        (sine_window->width / 2) - 16,
                        (sine_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* Sine_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* Sine_constructor(PatchCore* patch_core) {

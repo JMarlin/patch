@@ -119,7 +119,7 @@ void Scope_paint_handler(Window* scope_window) {
 
 Module* Scope_new() {
 
-    return Module_new(Scope_constructor, "Scope");
+    return Module_new(Scope_constructor, Scope_deserializer, "Scope");
 }
 
 void Scope_start_click_handler(Window* button_window, int x, int y) {
@@ -146,6 +146,11 @@ int Scope_render_sample_handler(IO* io, float* l_sample, float* r_sample, float*
         Window_invalidate((Window*)scope, 13, 13, 249, 387);
 
     return 1;
+}
+
+Unit* Scope_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 //NOTE: The below needs a lot of proper error handling to be added

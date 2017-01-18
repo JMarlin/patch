@@ -3,7 +3,7 @@
 
 Module* MasterOut_new() {
 
-    return Module_new(MasterOut_constructor, "Master Out");
+    return Module_new(MasterOut_constructor, MasterOut_deserializer, "Master Out");
 }
 
 float db2gain(float value) {
@@ -57,6 +57,11 @@ void MasterOut_paint_handler(Window* master_out_window) {
                        (master_out_window->width / 2) - 40,
                        (master_out_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* MasterOut_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* MasterOut_constructor(PatchCore* patch_core) {

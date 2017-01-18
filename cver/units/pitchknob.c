@@ -3,7 +3,7 @@
 
 Module* PitchKnob_new() {
 
-    return Module_new(PitchKnob_constructor, "Pitch Knob");
+    return Module_new(PitchKnob_constructor, PitchKnob_deserializer, "Pitch Knob");
 }
 
 int PitchKnob_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
@@ -14,6 +14,11 @@ int PitchKnob_pull_sample_handler(IO* io, float* sample_l, float* sample_r, floa
     *sample_g = 1;
 
     return 1;
+}
+
+Unit* PitchKnob_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* PitchKnob_constructor(PatchCore* patch_core) {

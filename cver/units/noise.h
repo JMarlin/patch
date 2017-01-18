@@ -19,6 +19,7 @@ typedef struct Noise_struct {
 
 Module* Noise_new();
 Unit* Noise_constructor(PatchCore* patch_core);
+Unit* Noise_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
 
 #ifdef __cplusplus
 }

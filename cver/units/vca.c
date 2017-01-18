@@ -2,7 +2,7 @@
 
 Module* VCA_new() {
 
-    return Module_new(VCA_constructor, "VCA");
+    return Module_new(VCA_constructor, VCA_deserializer, "VCA");
 }
 
 int VCA_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
@@ -33,6 +33,11 @@ void VCA_paint_handler(Window* sine_window) {
                        (sine_window->width / 2) - 12,
                        (sine_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* VCA_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* VCA_constructor(PatchCore* patch_core) {

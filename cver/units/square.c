@@ -4,7 +4,7 @@
 
 Module* Square_new() {
 
-    return Module_new(Square_constructor, "Square");
+    return Module_new(Square_constructor, Square_deserializer, "Square");
 }
 
 int Square_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
@@ -41,6 +41,11 @@ void Square_paint_handler(Window* square_window) {
                        (square_window->width / 2) - 24,
                        (square_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* Square_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* Square_constructor(PatchCore* patch_core) {

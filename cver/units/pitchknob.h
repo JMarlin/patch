@@ -21,6 +21,7 @@ typedef struct PitchKnob_struct {
 
 Module* PitchKnob_new();
 Unit* PitchKnob_constructor(PatchCore* patch_core);
+Unit* PitchKnob_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
 
 #ifdef __cplusplus
 }

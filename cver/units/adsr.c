@@ -3,7 +3,7 @@
 
 Module* ADSR_new() {
 
-    return Module_new(ADSR_constructor, "ADSR");
+    return Module_new(ADSR_constructor, ADSR_deserializer, "ADSR");
 }
 
 int ADSR_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
@@ -79,6 +79,11 @@ void ADSR_paint_handler(Window* sine_window) {
                        (sine_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
                        */
+}
+
+Unit* ADSR_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* ADSR_constructor(PatchCore* patch_core) {

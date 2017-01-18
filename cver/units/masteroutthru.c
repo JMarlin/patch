@@ -3,7 +3,7 @@
 
 Module* MasterOutThru_new() {
 
-    return Module_new(MasterOutThru_constructor, "Master Out Thru");
+    return Module_new(MasterOutThru_constructor, MasterOutThru_deserializer, "Master Out Thru");
 }
 
 float db2gaint(float value) {
@@ -57,6 +57,11 @@ void MasterOutThru_paint_handler(Window* master_out_window) {
                        (master_out_window->width / 2) - 40,
                        (master_out_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* MasterOutThru_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+    return (Unit*)0;
 }
 
 Unit* MasterOutThru_constructor(PatchCore* patch_core) {

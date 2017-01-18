@@ -2,7 +2,7 @@
 
 Module* Sequence_new() {
 
-    return Module_new(Sequence_constructor, "Sequence");
+    return Module_new(Sequence_constructor, Sequence_deserializer, "Sequence");
 }
 
 int Sequence_pull_sample_handler(IO* io, float* sample_l, float* sample_r, float* sample_g) {
@@ -81,6 +81,11 @@ void Sequence_paint_handler(Window* sequence_window) {
                        (sequence_window->width / 2) - 32,
                        (sequence_window->height / 2) - 6,
                        WIN_BORDERCOLOR);     
+}
+
+Unit* Sequence_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+
+   return (Unit*)0;
 }
 
 Unit* Sequence_constructor(PatchCore* patch_core) {

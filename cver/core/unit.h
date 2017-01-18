@@ -21,6 +21,7 @@ typedef struct Unit_struct {
 } Unit;
 
 Unit* Unit_new(struct PatchCore_struct* patch_core);
+Unit* Unit_deserialify(SerialifyBuf* sbuf, PatchCore* patch_core);
 int Unit_serialify(Unit* unit, SerialifyBuf* sbuf);
 int Unit_init(Unit* unit, struct PatchCore_struct* patch_core);
 struct IO_struct* Unit_create_output(Unit* unit, int x, int y);

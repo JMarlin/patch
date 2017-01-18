@@ -56,6 +56,7 @@ typedef struct Scope_struct {
 
 Module* Scope_new();
 Unit* Scope_constructor(PatchCore* patch_core);
+Unit* Scope_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
 
 #ifdef __cplusplus
 }
