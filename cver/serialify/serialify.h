@@ -12,8 +12,8 @@ typedef struct SerialifyBuf_struct {
     Object object;
     int allocated_size;
     int used_size;
-    void* buffer_base;
-    void* current_buffer;
+    uint8_t* buffer_base;
+    int loc;
 } SerialifyBuf;
 
 typedef int (*Serialify_to_serial_function)(SerialifyBuf*, Object* target);
