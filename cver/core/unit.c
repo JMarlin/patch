@@ -7,7 +7,7 @@ Unit* Unit_new(PatchCore* patch_core) {
     if(!(unit = (Unit*)malloc(sizeof(Unit))))
         return unit;
 
-    if(!Unit_init(unit, patch_core, 0)) {
+    if(!Unit_init(unit, patch_core, 0, 0)) {
 
         Object_delete((Object*)unit);
         return (Unit*)0;
@@ -31,12 +31,13 @@ void Unit_move_function(Window* unit_window, int x, int y) {
     }
 }
 
-int Unit_init(Unit* unit, PatchCore* patch_core, Module* module) {
+int Unit_init(Unit* unit, PatchCore* patch_core, Module* module, UnitToSerialFunction serialify) {
 
     if(!Frame_init((Frame*)unit, 0, 0, 100, 100))
         return 0;
 
     unit->module = module;
+    unit->serialify = serialify;
     unit->patch_core = patch_core;
     unit->old_move = unit->frame.window.move_function;
     unit->frame.window.move_function = Unit_move_function;
@@ -95,7 +96,12 @@ Unit* Unit_deserialify(SerialifyBuf* sbuf, PatchCore* patch) {
         unit->frame.window.y = Serialify_to_int16(sbuf);
 
         //Then get the state for the new unit from its module type
-        return module->deserializer(sbuf, patch);
+        unit =  module->deserializer(sbuf, patch, unit);
+
+        //Install on the desktop
+        Window_insert_child((Window*)patch->desktop, (Window*)unit);
+
+        return unit;
     } else {
 
         //Error: Your copy of Patch does not support module 'module'

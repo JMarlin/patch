@@ -81,9 +81,34 @@ void ADSR_paint_handler(Window* sine_window) {
                        */
 }
 
-Unit* ADSR_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+int ADSR_serializer(Unit* adsr_unit, SerialifyBuf* sbuf) {
 
-    return (Unit*)0;
+    Serialify_from_int32(sbuf, adsr->input->ioid);
+    Serialify_from_int32(sbuf, adsr->input->connected_id);
+    Serialify_from_int32(sbuf, adsr->output->ioid);
+    Serialify_from_int32(sbuf, adsr->output->connected_id);
+    Serialify_from_float(sbuf, Slider_get_value(adsr->a_slider));
+    Serialify_from_float(sbuf, Slider_get_value(adsr->d_slider));
+    Serialify_from_float(sbuf, Slider_get_value(adsr->s_slider));
+    Serialify_from_float(sbuf, Slider_get_value(adsr->r_slider));
+
+    return 1;
+}
+
+Unit* ADSR_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* adsr_unit) {
+
+    ADSR* adsr = (ADSR*)adsr_unit;
+
+    adsr->input->ioid = Serialify_to_int32(sbuf);
+    adsr->input->connected_id = Serialify_to_int32(sbuf);
+    adsr->output->ioid = Serialify_to_int32(sbuf);
+    adsr->output->connected_id = Serialify_to_int32(sbuf);
+    Slider_set_value(adsr->a_slider, Serialify_to_float(sbuf));
+    Slider_set_value(adsr->d_slider, Serialify_to_float(sbuf));
+    Slider_set_value(adsr->s_slider, Serialify_to_float(sbuf));
+    Slider_set_value(adsr->r_slider, Serialify_to_float(sbuf));
+
+    return adsr_unit;
 }
 
 Unit* ADSR_constructor(PatchCore* patch_core, Module* module) {
@@ -93,7 +118,7 @@ Unit* ADSR_constructor(PatchCore* patch_core, Module* module) {
     if(!adsr)
         return (Unit*)adsr;
 
-    if(!Unit_init((Unit*)adsr, patch_core, module)) {
+    if(!Unit_init((Unit*)adsr, patch_core, module, ADSR_serializer)) {
 
         Object_delete((Object*)adsr);
         return (Unit*)0;

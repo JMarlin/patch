@@ -41,9 +41,25 @@ int Capture_render_sample_handler(IO* io, float* l_sample, float* r_sample, floa
     return 1;
 }
 
-Unit* Capture_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+int Capture_serializer(Unit* capture_unit, SerialifyBuf* sbuf) {
 
-    return (Unit*)0;
+    Capture* capture = (Capture*)capture_unit;
+
+    Serialify_from_int32(sbuf, capture->input->ioid);
+    Serialify_from_int32(sbuf, capture->input->connected_id);
+    //capture->buf_size //Not adjustable as of yet
+
+    return 1;
+}
+
+Unit* Capture_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* capture_unit) {
+
+    Capture* capture = (Capture*)capture_unit;
+
+    capture->input->ioid = Serialify_to_int32(sbuf);
+    capture->input->connected_id = Serialify_to_int32(sbuf);
+
+    return capture_unit;
 }
 
 Unit* Capture_constructor(PatchCore* patch_core, Module* module) {
@@ -55,7 +71,7 @@ Unit* Capture_constructor(PatchCore* patch_core, Module* module) {
     if(!capture)
         return (Unit*)0;
 
-    Unit_init((Unit*)capture, patch_core, module);
+    Unit_init((Unit*)capture, patch_core, module, Capture_serializer);
     Window_resize((Window*)capture, 124, 54);
 
     //Allocate the sample buffers

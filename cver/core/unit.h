@@ -14,9 +14,11 @@ struct Unit_struct;
 #include "module.h"
 #include <inttypes.h>
 
+typedef Unit_struct* (*UnitToSerialFunction)(Unit_struct* unit, SerialifyBuf* sbuf);
+
 typedef struct Unit_struct {
     Frame frame;
-    Serialify_to_serial_function serialify;
+    UnitToSerialFunction serialify;
     struct PatchCore_struct* patch_core;
     WindowMoveHandler old_move;
     Module* module;
@@ -25,7 +27,7 @@ typedef struct Unit_struct {
 Unit* Unit_new(struct PatchCore_struct* patch_core);
 Unit* Unit_deserialify(SerialifyBuf* sbuf, PatchCore* patch_core);
 int Unit_serialify(Unit* unit, SerialifyBuf* sbuf);
-int Unit_init(Unit* unit, struct PatchCore_struct* patch_core, Module* module);
+int Unit_init(Unit* unit, struct PatchCore_struct* patch_core, Module* module, UnitToSerialFunction serialify);
 struct IO_struct* Unit_create_output(Unit* unit, int x, int y);
 struct IO_struct* Unit_create_input(Unit* unit, int x, int y);
 void Unit_delete(Object* unit_object);

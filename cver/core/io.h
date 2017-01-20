@@ -14,10 +14,10 @@ typedef int (*IOSamplePullHandler)(struct IO_struct*, float*, float*, float*);
 
 typedef struct IO_struct {
     Window window;
-    int ioid;
+    int32_t ioid;
     struct PatchCore_struct* patch_core; 
     struct IO_struct* connected_io;
-    int connected_id;
+    int32_t connected_id;
     Object* param_object;
     int is_output;
     IOSamplePullHandler pull_sample_function;

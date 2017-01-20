@@ -23,7 +23,7 @@ typedef struct MasterOut_struct {
 
 Module* MasterOut_new();
 Unit* MasterOut_constructor(PatchCore* patch_core, Module* module);
-Unit* MasterOut_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
+Unit* MasterOut_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* master_out_unit);
 
 #ifdef __cplusplus
 }

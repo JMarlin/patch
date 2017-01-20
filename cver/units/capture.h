@@ -27,7 +27,7 @@ typedef struct Capture_struct {
 
 Module* Capture_new();
 Unit* Capture_constructor(PatchCore* patch_core, Module* module);
-Unit* Capture_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
+Unit* Capture_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* capture_unit);
 
 #ifdef __cplusplus
 }

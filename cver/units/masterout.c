@@ -59,9 +59,32 @@ void MasterOut_paint_handler(Window* master_out_window) {
                        WIN_BORDERCOLOR);     
 }
 
-Unit* MasterOut_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+int MasterOut_serializer(Unit* master_out_unit, SerialifyBuf* sbuf) {
 
-    return (Unit*)0;
+    MasterOut* master_out = (MasterOut*)master_out_unit;
+
+    Serialify_from_int32(sbuf, master_out->input->ioid);
+    Serialify_from_int32(sbuf, master_out->input->connected_id);
+    Serialify_from_int32(sbuf, master_out->output->ioid);
+    Serialify_from_int32(sbuf, master_out->output->connected_id);
+    Serialify_from_float(Slider_get_value(master_out->gain_slider));
+    Serialify_from_float(Slider_get_value(master_out->pan_slider));
+
+    return 1;
+}
+
+Unit* MasterOut_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* master_out_unit) {
+
+    MasterOut* master_out = (MasterOut*)master_out_unit;
+
+    master_out->input->ioid = Serialify_to_int32(sbuf);
+    master_out->input->connected_id = Serialify_to_int32(sbuf);
+    master_out->output->ioid = Serialify_to_int32(sbuf);
+    master_out->output->connected_id = Serialify_to_int32(sbuf);
+    Slider_set_value(master_out->gain_slider, Serialify_to_float(sbuf));
+    Slider_set_value(master_out->pan_slider, Serialify_to_float(sbuf));
+
+    return master_out_unit;
 }
 
 Unit* MasterOut_constructor(PatchCore* patch_core, Module* module) {
@@ -71,7 +94,7 @@ Unit* MasterOut_constructor(PatchCore* patch_core, Module* module) {
     if(!master_out)
         return (Unit*)master_out;
 
-    if(!Unit_init((Unit*)master_out, patch_core, module)) {
+    if(!Unit_init((Unit*)master_out, patch_core, module, MasterOut_serializer)) {
 
         Object_delete((Object*)master_out);
         return (Unit*)0;

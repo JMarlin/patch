@@ -27,7 +27,7 @@ typedef struct ADSR_struct {
 
 Module* ADSR_new();
 Unit* ADSR_constructor(PatchCore* patch_core, Module* module);
-Unit* ADSR_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
+Unit* ADSR_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* adsr_unit);
 
 #ifdef __cplusplus
 }
