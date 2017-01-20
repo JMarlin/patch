@@ -48,14 +48,14 @@ Unit* Square_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* Square_constructor(PatchCore* patch_core) {
+Unit* Square_constructor(PatchCore* patch_core, Module* module) {
 
     Square* square = (Square*)malloc(sizeof(Square));
 
     if(!square)
         return (Unit*)square;
 
-    if(!Unit_init((Unit*)square, patch_core)) {
+    if(!Unit_init((Unit*)square, patch_core, module)) {
 
         Object_delete((Object*)square);
         return (Unit*)0;

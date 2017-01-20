@@ -86,14 +86,14 @@ Unit* ADSR_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* ADSR_constructor(PatchCore* patch_core) {
+Unit* ADSR_constructor(PatchCore* patch_core, Module* module) {
 
     ADSR* adsr = (ADSR*)malloc(sizeof(ADSR));
 
     if(!adsr)
         return (Unit*)adsr;
 
-    if(!Unit_init((Unit*)adsr, patch_core)) {
+    if(!Unit_init((Unit*)adsr, patch_core, module)) {
 
         Object_delete((Object*)adsr);
         return (Unit*)0;

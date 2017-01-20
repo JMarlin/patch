@@ -2,6 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* NOTES:
+        -Should add a method for starting/ending a block, which will
+         automatically insert a block header which includes the size
+         of that block. This way, the system has a more sane way of
+         storing chunks in a way that can skip over bits of a block 
+         for which the deserializer didn't consume every bit of the
+         data
+*/
+
 void SerialifyBuf_delete_function(Object* sbuf_object) {
 
     SerialifyBuf* sbuf = (SerialifyBuf*)sbuf_object;

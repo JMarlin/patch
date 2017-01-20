@@ -40,14 +40,14 @@ Unit* VCA_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* VCA_constructor(PatchCore* patch_core) {
+Unit* VCA_constructor(PatchCore* patch_core, Module* module) {
 
     VCA* vca = (VCA*)malloc(sizeof(VCA));
 
     if(!vca)
         return (Unit*)vca;
 
-    if(!Unit_init((Unit*)vca, patch_core)) {
+    if(!Unit_init((Unit*)vca, patch_core, module)) {
 
         Object_delete((Object*)vca);
         return (Unit*)0;

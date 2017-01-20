@@ -309,7 +309,7 @@ void PatchCore_instantiate_module(PatchCore* patch, String* module_name) {
     if(!module)
         return;
 
-    window = (Window*)module->constructor(patch);
+    window = (Window*)module->constructor(patch, module);
     if(!window)
         return;
 

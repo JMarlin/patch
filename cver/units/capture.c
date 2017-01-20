@@ -46,7 +46,7 @@ Unit* Capture_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* Capture_constructor(PatchCore* patch_core) {
+Unit* Capture_constructor(PatchCore* patch_core, Module* module) {
 
     Capture* capture;
 
@@ -55,7 +55,7 @@ Unit* Capture_constructor(PatchCore* patch_core) {
     if(!capture)
         return (Unit*)0;
 
-    Unit_init((Unit*)capture, patch_core);
+    Unit_init((Unit*)capture, patch_core, module);
     Window_resize((Window*)capture, 124, 54);
 
     //Allocate the sample buffers

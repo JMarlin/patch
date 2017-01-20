@@ -47,14 +47,14 @@ Unit* Split_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* Split_constructor(PatchCore* patch_core) {
+Unit* Split_constructor(PatchCore* patch_core, Module* module) {
 
     Split* split = (Split*)malloc(sizeof(Split));
 
     if(!split)
         return (Unit*)split;
 
-    if(!Unit_init((Unit*)split, patch_core)) {
+    if(!Unit_init((Unit*)split, patch_core, module)) {
 
         Object_delete((Object*)split);
         return (Unit*)0;

@@ -12,7 +12,7 @@ struct Module_struct;
 #include "../core/patchcore.h"
 #include "unit.h"
 
-typedef struct Unit_struct* (*ModuleConstructor)(struct PatchCore_struct* patch_core);
+typedef struct Unit_struct* (*ModuleConstructor)(struct PatchCore_struct* patch_core, Module_struct* module);
 typedef struct Unit_struct* (*ModuleDeserializer)(SerialifyBuf* sbuf, struct PatchCore_struct* patch_core);
 
 typedef struct Module_struct {

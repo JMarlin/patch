@@ -21,14 +21,14 @@ Unit* PitchKnob_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* PitchKnob_constructor(PatchCore* patch_core) {
+Unit* PitchKnob_constructor(PatchCore* patch_core, Module* module) {
 
     PitchKnob* pitch_knob = (PitchKnob*)malloc(sizeof(PitchKnob));
 
     if(!pitch_knob)
         return (Unit*)pitch_knob;
 
-    if(!Unit_init((Unit*)pitch_knob, patch_core)) {
+    if(!Unit_init((Unit*)pitch_knob, patch_core, module)) {
 
         Object_delete((Object*)pitch_knob);
         return (Unit*)0;

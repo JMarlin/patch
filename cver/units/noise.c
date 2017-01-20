@@ -45,14 +45,14 @@ Unit* Noise_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* Noise_constructor(PatchCore* patch_core) {
+Unit* Noise_constructor(PatchCore* patch_core, Module* module) {
 
     Noise* noise = (Noise*)malloc(sizeof(Noise));
 
     if(!noise)
         return (Unit*)noise;
 
-    if(!Unit_init((Unit*)noise, patch_core)) {
+    if(!Unit_init((Unit*)noise, patch_core, module)) {
 
         Object_delete((Object*)noise);
         return (Unit*)0;

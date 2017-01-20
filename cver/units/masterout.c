@@ -64,14 +64,14 @@ Unit* MasterOut_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* MasterOut_constructor(PatchCore* patch_core) {
+Unit* MasterOut_constructor(PatchCore* patch_core, Module* module) {
 
     MasterOut* master_out = (MasterOut*)malloc(sizeof(MasterOut));
 
     if(!master_out)
         return (Unit*)master_out;
 
-    if(!Unit_init((Unit*)master_out, patch_core)) {
+    if(!Unit_init((Unit*)master_out, patch_core, module)) {
 
         Object_delete((Object*)master_out);
         return (Unit*)0;

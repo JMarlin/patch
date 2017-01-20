@@ -88,7 +88,7 @@ Unit* Sequence_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
    return (Unit*)0;
 }
 
-Unit* Sequence_constructor(PatchCore* patch_core) {
+Unit* Sequence_constructor(PatchCore* patch_core, Module* module) {
 
     int i;
     IO* temp_input;
@@ -97,7 +97,7 @@ Unit* Sequence_constructor(PatchCore* patch_core) {
     if(!sequence)
         return (Unit*)sequence;
 
-    if(!Unit_init((Unit*)sequence, patch_core)) {
+    if(!Unit_init((Unit*)sequence, patch_core, module)) {
 
         Object_delete((Object*)sequence);
         return (Unit*)0;

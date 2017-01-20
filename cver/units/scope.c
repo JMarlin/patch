@@ -160,7 +160,7 @@ Unit* Scope_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
 //        -Control to adjust sample capture/buffer length
 //        -Zoom and pan controls for view area
 //        -Capture and display of all three signals and/or a way to switch which is being viewed
-Unit* Scope_constructor(PatchCore* patch_core) {
+Unit* Scope_constructor(PatchCore* patch_core, Module* module) {
 
     Scope* scope;
 
@@ -169,7 +169,7 @@ Unit* Scope_constructor(PatchCore* patch_core) {
     if(!scope)
         return (Unit*)0;
 
-    Unit_init((Unit*)scope, patch_core);
+    Unit_init((Unit*)scope, patch_core, module);
     Window_resize((Window*)scope, 400, 300);
 
     //Allocate the sample buffers

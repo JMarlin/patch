@@ -49,14 +49,14 @@ Unit* Sine_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
     return (Unit*)0;
 }
 
-Unit* Sine_constructor(PatchCore* patch_core) {
+Unit* Sine_constructor(PatchCore* patch_core, Module* module) {
 
     Sine* sine = (Sine*)malloc(sizeof(Sine));
 
     if(!sine)
         return (Unit*)sine;
 
-    if(!Unit_init((Unit*)sine, patch_core)) {
+    if(!Unit_init((Unit*)sine, patch_core, module)) {
 
         Object_delete((Object*)sine);
         return (Unit*)0;
