@@ -82,7 +82,7 @@ Unit* Unit_deserialify(SerialifyBuf* sbuf, PatchCore* patch) {
 
     name_str = String_new(Serialify_to_cstring(sbuf));
     module = (Module*)AssociativeArray_get(patch->modules, name_str);
-    Object_delete(name_str);
+    Object_delete((Object*)name_str);
 
     if(module) {
 
@@ -117,8 +117,8 @@ int Unit_serialify(Unit* unit, SerialifyBuf* sbuf) {
         //Every unit serialization begins with the module name of the unit
         //as well as the unit's x,y location
         Serialify_from_cstring(sbuf, unit->module->name->buf);
-        Serialify_from_int16(unit->frame.window.x);
-        Serialify_from_int16(unit->frame.window.y);
+        Serialify_from_int16(sbuf, unit->frame.window.x);
+        Serialify_from_int16(sbuf, unit->frame.window.y);
 
         //We then defer to the unit instance to write its own state
         return unit->serialify(unit, sbuf);

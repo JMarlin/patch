@@ -10,10 +10,11 @@ struct Module_struct;
 #include "../wslib/window.h"
 #include "../wslib/object.h"
 #include "../core/patchcore.h"
+#include "../serialify/serialify.h"
 #include "unit.h"
 
-typedef struct Unit_struct* (*ModuleConstructor)(struct PatchCore_struct* patch_core, Module_struct* module);
-typedef struct Unit_struct* (*ModuleDeserializer)(SerialifyBuf* sbuf, struct PatchCore_struct* patch_core, Unit_struct* unit);
+typedef struct Unit_struct* (*ModuleConstructor)(struct PatchCore_struct* patch_core, struct Module_struct* module);
+typedef struct Unit_struct* (*ModuleDeserializer)(SerialifyBuf* sbuf, struct PatchCore_struct* patch_core, struct Unit_struct* unit);
 
 typedef struct Module_struct {
     Object object;

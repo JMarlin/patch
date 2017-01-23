@@ -28,11 +28,13 @@ SerialifyBuf* SerialifyBuf_new() {
     if(!sbuf)
         return sbuf;
 
-    Object_init((Object*)sbuf, SerialfyBuf_delete_function);
+    Object_init((Object*)sbuf, SerialifyBuf_delete_function);
     sbuf->allocated_size = 0;
     sbuf->used_size = 0;
     sbuf->buffer_base = 0;
     sbuf->loc = 0;
+
+    return sbuf;
 }
 
 int Serialify_insert_bytes(SerialifyBuf* sbuf, int count, uint8_t* inbuf) {
@@ -98,7 +100,7 @@ int Serialify_read_bytes(SerialifyBuf* sbuf, int count, uint8_t* outbuf) {
 
 int Serialify_from_cstring(SerialifyBuf* sbuf, char* string) {
 
-    return Serialify_insert_bytes(sbuf, strlen(string) + 1, string);
+    return Serialify_insert_bytes(sbuf, strlen(string) + 1, (uint8_t*)string);
 }
 
 int Serialify_from_int8(SerialifyBuf* sbuf, int8_t value) {
@@ -133,7 +135,7 @@ int Serialify_from_uint16(SerialifyBuf* sbuf, uint16_t value) {
     return Serialify_insert_bytes(sbuf, 2, vbuf);
 }
 
-int Serialify_from_int32(SerialifyBuf* sbuf, int32_t value);
+int Serialify_from_int32(SerialifyBuf* sbuf, int32_t value) {
 
     uint32_t* uval;
     uint8_t vbuf[4];
@@ -147,7 +149,7 @@ int Serialify_from_int32(SerialifyBuf* sbuf, int32_t value);
     return Serialify_insert_bytes(sbuf, 4, vbuf);
 }
 
-int Serialify_from_uint32(SerialifyBuf* sbuf, uint32_t value);
+int Serialify_from_uint32(SerialifyBuf* sbuf, uint32_t value) {
 
     uint8_t vbuf[4];
 
@@ -209,7 +211,7 @@ char* Serialify_to_cstring(SerialifyBuf* sbuf) {
     if(!outstr)
         return outstr;
 
-    Serialify_read_bytes(sbuf, strlen, (uint8_t)outstr);
+    Serialify_read_bytes(sbuf, strlen, (uint8_t*)outstr);
 
     return outstr;
 }
@@ -238,7 +240,7 @@ int16_t Serialify_to_int16(SerialifyBuf* sbuf) {
     uint16_t* uval;
     uint8_t vbuf[2];
 
-    Serialify_read_bytes(sbuf, 2, &vbuf);
+    Serialify_read_bytes(sbuf, 2, vbuf);
 
     uval = (uint16_t*)&outval;
     *uval = 0;
@@ -253,7 +255,7 @@ uint16_t Serialify_to_uint16(SerialifyBuf* sbuf) {
     uint16_t outval;
     uint8_t vbuf[2];
 
-    Serialify_read_bytes(sbuf, 2, &vbuf);
+    Serialify_read_bytes(sbuf, 2, vbuf);
 
     outval = 0;
     outval |= vbuf[0] << 8;
@@ -262,13 +264,13 @@ uint16_t Serialify_to_uint16(SerialifyBuf* sbuf) {
     return outval;
 }
 
-int32_t Serialify_to_int32(SerialifyBuf* sbuf);
+int32_t Serialify_to_int32(SerialifyBuf* sbuf) {
 
     int32_t outval;
     uint32_t* uval;
     uint8_t vbuf[4];
 
-    Serialify_read_bytes(sbuf, 4, &vbuf);
+    Serialify_read_bytes(sbuf, 4, vbuf);
 
     uval = (uint32_t*)&outval;
     *uval = 0;
@@ -280,12 +282,12 @@ int32_t Serialify_to_int32(SerialifyBuf* sbuf);
     return outval;
 }
 
-uint32_t Serialify_to_uint32(SerialifyBuf* sbuf);
+uint32_t Serialify_to_uint32(SerialifyBuf* sbuf) {
 
     uint32_t outval;
     uint8_t vbuf[4];
 
-    Serialify_read_bytes(sbuf, 4, &vbuf);
+    Serialify_read_bytes(sbuf, 4, vbuf);
 
     outval = 0;
     outval |= vbuf[0] << 24;
@@ -296,42 +298,42 @@ uint32_t Serialify_to_uint32(SerialifyBuf* sbuf);
     return outval;
 }
 
-float Serialify_to_float(SerialifyBuf* sbuf);
+float Serialify_to_float(SerialifyBuf* sbuf) {
 
     float outval;
     uint32_t* uval;
     uint8_t vbuf[4];
 
-    Serialify_read_bytes(sbuf, 4, &vbuf);
+    Serialify_read_bytes(sbuf, 4, vbuf);
 
     uval = (uint32_t*)&outval;
     *uval = 0;
-    *uval |= vbuf[0] << 24;
-    *uval |= vbuf[1] << 16;
-    *uval |= vbuf[2] << 8;
-    *uval |= vbuf[3];
+    *uval |= ((uint32_t)vbuf[0]) << 24;
+    *uval |= ((uint32_t)vbuf[1]) << 16;
+    *uval |= ((uint32_t)vbuf[2]) << 8;
+    *uval |= ((uint32_t)vbuf[3]);
 
     return outval;
 }
 
-double Serialify_to_double(SerialifyBuf* sbuf);
+double Serialify_to_double(SerialifyBuf* sbuf) {
 
     double outval;
     uint64_t* uval;
     uint8_t vbuf[8];
 
-    Serialify_read_bytes(sbuf, 8, &vbuf);
+    Serialify_read_bytes(sbuf, 8, vbuf);
 
     uval = (uint64_t*)&outval;
     *uval = 0;
-    *uval |= vbuf[0] << 56;
-    *uval |= vbuf[1] << 48;
-    *uval |= vbuf[2] << 40;
-    *uval |= vbuf[3] << 32;
-    *uval |= vbuf[4] << 24;
-    *uval |= vbuf[5] << 16;
-    *uval |= vbuf[6] << 8;
-    *uval |= vbuf[7];
+    *uval |= ((uint64_t)vbuf[0]) << 56;
+    *uval |= ((uint64_t)vbuf[1]) << 48;
+    *uval |= ((uint64_t)vbuf[2]) << 40;
+    *uval |= ((uint64_t)vbuf[3]) << 32;
+    *uval |= ((uint64_t)vbuf[4]) << 24;
+    *uval |= ((uint64_t)vbuf[5]) << 16;
+    *uval |= ((uint64_t)vbuf[6]) << 8;
+    *uval |= ((uint64_t)vbuf[7]);
 
     return outval;
 }

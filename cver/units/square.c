@@ -43,9 +43,14 @@ void Square_paint_handler(Window* square_window) {
                        WIN_BORDERCOLOR);     
 }
 
-Unit* Square_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* Square_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* square_unit) {
 
-    return (Unit*)0;
+    return square_unit;
+}
+
+int Square_serializer(Unit* square_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 Unit* Square_constructor(PatchCore* patch_core, Module* module) {
@@ -55,7 +60,7 @@ Unit* Square_constructor(PatchCore* patch_core, Module* module) {
     if(!square)
         return (Unit*)square;
 
-    if(!Unit_init((Unit*)square, patch_core, module)) {
+    if(!Unit_init((Unit*)square, patch_core, module, Square_serializer)) {
 
         Object_delete((Object*)square);
         return (Unit*)0;

@@ -35,9 +35,14 @@ void VCA_paint_handler(Window* sine_window) {
                        WIN_BORDERCOLOR);     
 }
 
-Unit* VCA_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* VCA_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* vca_unit) {
 
-    return (Unit*)0;
+    return vca_unit;
+}
+
+int VCA_serializer(Unit* vca_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 Unit* VCA_constructor(PatchCore* patch_core, Module* module) {
@@ -47,7 +52,7 @@ Unit* VCA_constructor(PatchCore* patch_core, Module* module) {
     if(!vca)
         return (Unit*)vca;
 
-    if(!Unit_init((Unit*)vca, patch_core, module)) {
+    if(!Unit_init((Unit*)vca, patch_core, module, VCA_serializer)) {
 
         Object_delete((Object*)vca);
         return (Unit*)0;

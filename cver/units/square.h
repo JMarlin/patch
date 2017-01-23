@@ -21,7 +21,7 @@ typedef struct Square_struct {
 
 Module* Square_new();
 Unit* Square_constructor(PatchCore* patch_core, Module* module);
-Unit* Square_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
+Unit* Square_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* square_unit);
 
 #ifdef __cplusplus
 }

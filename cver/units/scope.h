@@ -32,7 +32,7 @@ typedef struct Scope_struct {
 
 Module* Scope_new();
 Unit* Scope_constructor(PatchCore* patch_core, Module* module);
-Unit* Scope_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
+Unit* Scope_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* scope_unit);
 
 #ifdef __cplusplus
 }

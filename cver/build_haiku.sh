@@ -50,6 +50,9 @@ echo . & gcc -c -o capture.o ../units/capture.c $C_OPTS
 echo . & gcc -c -o patchdesktop.o ../widgets/patchdesktop.c $C_OPTS
 echo . & gcc -c -o sessionmenu.o ../widgets/sessionmenu.c $C_OPTS
 
+# build serialify
+echo . & gcc -c -o serialify.o ../serialify/serialify.c $C_OPTS
+
 # build main and link all
 echo . & gcc -c -o main.o ../main.c $C_OPTS 
 echo . & g++ -o ../patch_haiku ./*.o $C_OPTS -lm -lbe -lmedia -lgame

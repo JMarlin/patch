@@ -21,7 +21,7 @@ typedef struct Sine_struct {
 
 Module* Sine_new();
 Unit* Sine_constructor(PatchCore* patch_core, Module* module);
-Unit* Sine_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core);
+Unit* Sine_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* sine_unit);
 
 #ifdef __cplusplus
 }

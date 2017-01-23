@@ -16,9 +16,14 @@ int PitchKnob_pull_sample_handler(IO* io, float* sample_l, float* sample_r, floa
     return 1;
 }
 
-Unit* PitchKnob_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* PitchKnob_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* pitchknob_unit) {
 
-    return (Unit*)0;
+    return pitchknob_unit;
+}
+
+int PitchKnob_serializer(Unit* pitchknob_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 Unit* PitchKnob_constructor(PatchCore* patch_core, Module* module) {
@@ -28,7 +33,7 @@ Unit* PitchKnob_constructor(PatchCore* patch_core, Module* module) {
     if(!pitch_knob)
         return (Unit*)pitch_knob;
 
-    if(!Unit_init((Unit*)pitch_knob, patch_core, module)) {
+    if(!Unit_init((Unit*)pitch_knob, patch_core, module, PitchKnob_serializer)) {
 
         Object_delete((Object*)pitch_knob);
         return (Unit*)0;

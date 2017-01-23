@@ -36,31 +36,32 @@ PatchCore* PatchCore_new() {
     return patch;
 }
 
-int insert_i32_little_endian(char* buf, int32_t value) {
+int insert_i32_little_endian(uint8_t* buf, int32_t value) {
 
-    *(buf++) = (char)(value & 0xFF);
-    *(buf++) = (char)((value >> 8) & 0xFF);
-    *(buf++) = (char)((value >> 16) & 0xFF);
-    *(buf++) = (char)((value >> 24) & 0xFF);
+    *(buf++) = (uint8_t)(value & 0xFF);
+    *(buf++) = (uint8_t)((value >> 8) & 0xFF);
+    *(buf++) = (uint8_t)((value >> 16) & 0xFF);
+    *(buf++) = (uint8_t)((value >> 24) & 0xFF);
 
     return 4;
 }
 
-int insert_i16_little_endian(char* buf, int16_t value) {
+int insert_i16_little_endian(uint8_t* buf, int16_t value) {
 
-    *(buf++) = (char)(value & 0xFF);
-    *(buf++) = (char)((value >> 8) & 0xFF);
+    *(buf++) = (uint8_t)(value & 0xFF);
+    *(buf++) = (uint8_t)((value >> 8) & 0xFF);
 
     return 2;
 }
 
-int insert_string_to_buf(char* buf, char* string) {
+int insert_string_to_buf(uint8_t* buf, char* string) {
 
     int count = 0;
+    uint8_t* ustr = (uint8_t*)string;
 
     while(*string) {
 
-        *(buf++) = *(string++);
+        *(buf++) = *(ustr++);
         count++;
     }
 
@@ -78,7 +79,7 @@ void PatchCore_save_buffers_as_wav(PatchCore* patch, float* l_buf, float* r_buf,
     int32_t riff_size = (4 * buf_size) + 36;
     int j;
     int i = 0;
-    char* wav_buf = (char*)malloc((4 * buf_size) + 44);
+    uint8_t* wav_buf = (uint8_t*)malloc((4 * buf_size) + 44);
 
     if(!wav_buf)
         return;
@@ -210,8 +211,10 @@ int PatchCore_clear_session(PatchCore* patch) {
     Object_delete((Object*)patch->desktop->menu);
 
     //Then delete all children (units -- should probably make a unit list)
-    while(patch->desktop->children->count) 
-        Object_delete(List_get_at(patch->desktop->children, 0));
+    while(patch->desktop->desktop.window.children->count) 
+        Object_delete(List_get_at(patch->desktop->desktop.window.children, 0));
+
+    return 1;
 }
 
 int PatchCore_save_session(PatchCore* patch) {
@@ -230,9 +233,9 @@ int PatchCore_save_session(PatchCore* patch) {
         return 0;
 
     //Serialize every instantiated unit
-    for(i = 0; i < patch->desktop->children->count; i++) {
+    for(i = 0; i < patch->desktop->desktop.window.children->count; i++) {
 
-        if(!Unit_serialify((Unit*)List_get_at(patch->desktop->children, i), sbuf)) {
+        if(!Unit_serialify((Unit*)List_get_at(patch->desktop->desktop.window.children, i), sbuf)) {
         
             Object_delete((Object*)sbuf);
 
@@ -260,6 +263,8 @@ int PatchCore_load_session(PatchCore* patch) {
     //Discard sbuf/buffer
     //Loop through all registered inputs and outputs and make their 
     // 'connected_io' pointer matches their 'connected_id'
+
+    return 1;
 }
 
 int PatchCore_add_source(PatchCore* patch, IO* source) {

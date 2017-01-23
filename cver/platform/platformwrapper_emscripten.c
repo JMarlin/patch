@@ -72,7 +72,7 @@ void PlatformWrapper_init() {
     );
 }
 
-void PlatformWrapper_save_file(char* file_buffer, int file_size, char* file_name, char* mime) {
+void PlatformWrapper_save_file(uint8_t* file_buffer, int file_size, char* file_name, char* mime) {
 
     EM_ASM_({
     

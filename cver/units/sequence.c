@@ -83,9 +83,14 @@ void Sequence_paint_handler(Window* sequence_window) {
                        WIN_BORDERCOLOR);     
 }
 
-Unit* Sequence_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* Sequence_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* sequence_unit) {
 
-   return (Unit*)0;
+    return sequence_unit;
+}
+
+int Sequence_serializer(Unit* sequence_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 Unit* Sequence_constructor(PatchCore* patch_core, Module* module) {
@@ -97,7 +102,7 @@ Unit* Sequence_constructor(PatchCore* patch_core, Module* module) {
     if(!sequence)
         return (Unit*)sequence;
 
-    if(!Unit_init((Unit*)sequence, patch_core, module)) {
+    if(!Unit_init((Unit*)sequence, patch_core, module, Sequence_serializer)) {
 
         Object_delete((Object*)sequence);
         return (Unit*)0;

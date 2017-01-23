@@ -42,9 +42,14 @@ void Split_paint_handler(Window* sine_window) {
                        WIN_BORDERCOLOR);     
 }
 
-Unit* Split_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* Split_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* split_unit) {
 
-    return (Unit*)0;
+    return split_unit;
+}
+
+int Split_serializer(Unit* split_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 Unit* Split_constructor(PatchCore* patch_core, Module* module) {
@@ -54,7 +59,7 @@ Unit* Split_constructor(PatchCore* patch_core, Module* module) {
     if(!split)
         return (Unit*)split;
 
-    if(!Unit_init((Unit*)split, patch_core, module)) {
+    if(!Unit_init((Unit*)split, patch_core, module, Split_serializer)) {
 
         Object_delete((Object*)split);
         return (Unit*)0;

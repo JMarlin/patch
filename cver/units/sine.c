@@ -44,9 +44,14 @@ void Sine_paint_handler(Window* sine_window) {
                        WIN_BORDERCOLOR);     
 }
 
-Unit* Sine_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* Sine_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* sine_unit) {
 
-    return (Unit*)0;
+    return sine_unit;
+}
+
+int Sine_serializer(Unit* sine_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 Unit* Sine_constructor(PatchCore* patch_core, Module* module) {
@@ -56,7 +61,7 @@ Unit* Sine_constructor(PatchCore* patch_core, Module* module) {
     if(!sine)
         return (Unit*)sine;
 
-    if(!Unit_init((Unit*)sine, patch_core, module)) {
+    if(!Unit_init((Unit*)sine, patch_core, module, Sine_serializer)) {
 
         Object_delete((Object*)sine);
         return (Unit*)0;

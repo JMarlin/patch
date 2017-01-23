@@ -49,6 +49,9 @@ rem build widgets
 echo . & call  emcc -c -o patchdesktop.bc ../widgets/patchdesktop.c -g4
 echo . & call  emcc -c -o sessionmenu.bc ../widgets/sessionmenu.c -g4
 
+rem build serialify
+echo . & call  emcc -c -o serialify.bc ../serialify/serialify.c -g4
+
 rem build main and link all
 echo . & call  emcc -c -o main.bc ../main.c -g4 
 set expanded_list=

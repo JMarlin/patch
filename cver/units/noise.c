@@ -40,9 +40,14 @@ void Noise_paint_handler(Window* noise_window) {
                        WIN_BORDERCOLOR);     
 }
 
-Unit* Noise_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* Noise_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* noise_unit) {
 
-    return (Unit*)0;
+    return noise_unit;
+}
+
+int Noise_serializer(Unit* Noise_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 Unit* Noise_constructor(PatchCore* patch_core, Module* module) {
@@ -52,7 +57,7 @@ Unit* Noise_constructor(PatchCore* patch_core, Module* module) {
     if(!noise)
         return (Unit*)noise;
 
-    if(!Unit_init((Unit*)noise, patch_core, module)) {
+    if(!Unit_init((Unit*)noise, patch_core, module, Noise_serializer)) {
 
         Object_delete((Object*)noise);
         return (Unit*)0;

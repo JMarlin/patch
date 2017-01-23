@@ -148,9 +148,14 @@ int Scope_render_sample_handler(IO* io, float* l_sample, float* r_sample, float*
     return 1;
 }
 
-Unit* Scope_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core) {
+Unit* Scope_deserializer(SerialifyBuf* sbuf, PatchCore* patch_core, Unit* scope_unit) {
 
-    return (Unit*)0;
+    return scope_unit;
+}
+
+int Scope_serializer(Unit* scope_unit, SerialifyBuf* sbuf) {
+
+    return 1;
 }
 
 //NOTE: The below needs a lot of proper error handling to be added
@@ -169,7 +174,7 @@ Unit* Scope_constructor(PatchCore* patch_core, Module* module) {
     if(!scope)
         return (Unit*)0;
 
-    Unit_init((Unit*)scope, patch_core, module);
+    Unit_init((Unit*)scope, patch_core, module, Scope_serializer);
     Window_resize((Window*)scope, 400, 300);
 
     //Allocate the sample buffers

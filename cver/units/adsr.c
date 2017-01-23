@@ -83,6 +83,8 @@ void ADSR_paint_handler(Window* sine_window) {
 
 int ADSR_serializer(Unit* adsr_unit, SerialifyBuf* sbuf) {
 
+    ADSR* adsr = (ADSR*)adsr_unit;
+
     Serialify_from_int32(sbuf, adsr->input->ioid);
     Serialify_from_int32(sbuf, adsr->input->connected_id);
     Serialify_from_int32(sbuf, adsr->output->ioid);

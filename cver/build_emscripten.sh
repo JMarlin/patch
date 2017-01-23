@@ -48,6 +48,9 @@ echo . & emcc -c -o capture.bc ../units/capture.c -g4
 echo . & emcc -c -o patchdesktop.bc ../widgets/patchdesktop.c -g4
 echo . & emcc -c -o sessionmenu.bc ../widgets/sessionmenu.c -g4
 
+#build serialify
+echo . & emcc -c -o serialify.bc ../serialify/serialify.c -g4
+
 # build main and link all
 echo . & emcc -c -o main.bc ../main.c -g4 
 echo . & emcc -o ../current_build.js ./*.bc -g4 -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1

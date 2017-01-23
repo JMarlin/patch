@@ -67,8 +67,8 @@ int MasterOut_serializer(Unit* master_out_unit, SerialifyBuf* sbuf) {
     Serialify_from_int32(sbuf, master_out->input->connected_id);
     Serialify_from_int32(sbuf, master_out->output->ioid);
     Serialify_from_int32(sbuf, master_out->output->connected_id);
-    Serialify_from_float(Slider_get_value(master_out->gain_slider));
-    Serialify_from_float(Slider_get_value(master_out->pan_slider));
+    Serialify_from_float(sbuf, Slider_get_value(master_out->gain_slider));
+    Serialify_from_float(sbuf, Slider_get_value(master_out->pan_slider));
 
     return 1;
 }
