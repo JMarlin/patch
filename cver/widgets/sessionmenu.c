@@ -1,6 +1,13 @@
 
 #include "sessionmenu.h"
 
+void SaveSession_mouseclick_function(Window* session_menu_entry_window, int x, int y) {
+
+    SessionMenu* session_menu = (SessionMenu*)session_menu_entry_window->parent;
+
+    PatchCore_save_session(session_menu->patch_core);
+}
+
 SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
 
     int i;
@@ -17,6 +24,9 @@ SessionMenu* SessionMenu_new(PatchCore* patch_core, int x, int y) {
 
     session_menu->patch_core = patch_core;
     session_menu->module_names = PatchCore_get_module_list(patch_core);
+
+    Menu_add_entry((Menu*)session_menu,
+                   MenuEntry_new(String_new("Save Session"), SaveSession_mouseclick_function));
 
     //TODO: Need to add a sanity check in the case that the new menu entry
     //couldn't be properly instantiated
