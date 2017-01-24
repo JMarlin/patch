@@ -6,6 +6,7 @@
 
 MouseCallback mouse_handler;
 ResizeCallback resize_handler;
+PlatformWrapperFileOpenCallback open_handler;
 Context* internal_context;
 float left_sum, right_sum;
 List* ah_list;
@@ -40,9 +41,11 @@ void PlatformWrapper_init() {
     mouse_handler.callback = (MouseCallback_handler)0;
     resize_handler.param_object = (Object*)0;
     resize_handler.callback = (ResizeCallback_handler)0;
+    open_handler = (PlatformWrapperFileOpenCallback)0;
 
-    //Set up the audio processing loop
     EM_ASM(
+
+        //Set up the audio processing loop
 
         window.fo_sample = [0, 0];
 
@@ -69,6 +72,14 @@ void PlatformWrapper_init() {
         source.connect(pcm_node);
         pcm_node.connect(audioCtx.destination);
         source.start();
+
+        //Set up the hidden file input for file API
+        window.fo_file = document.createElement('input');
+        window.fo_file.type = 'file';
+        window.fo_file.style.width = '0px';
+        window.fo_file.style.height = '0px';
+        window.fo_file.style.position = 'fixed';
+        window.fo_file.left = '-100px';
     );
 }
 
@@ -80,16 +91,41 @@ void PlatformWrapper_save_file(uint8_t* file_buffer, int file_size, char* file_n
         var f_buf = Module.HEAPU8.subarray($0, $0 + $1);
         var binstr = Array.prototype.map.call(f_buf, function(ch) {
                          return String.fromCharCode(ch);
-                     }).join('');
+                     }).join("");
 
         var str = "data:" + mime_string +
                   ";charset=utf-16le;base64," +
                   btoa(binstr);
         
-        console.log(str); 
+        //console.log(str); 
         window.open(str, "_blank", "location=yes,height=570,width=520,scrollbars=yes,status=yes"); 
 
     }, file_buffer, file_size, mime);
+}
+
+void PlatformWrapper_open_file(PlatformWrapperOpenFileCallback open_complete) {
+
+    open_handler = open_complete;
+
+    EM_ASM_({
+
+        window.fo_file.onchange = function(e) {
+
+            //Need to fire a call to read as array here, then do the
+            //reading in that callback and, once the copying to a
+            //C-accessible buffer is complete, call the open_handler
+            window.fo_file.files[0].
+        };
+
+        window.fo_file.click();
+
+        //TODO: This will fail and cause patch to hang if the file
+        //doesn't change
+
+    }, 0);
+}
+
+void PlatformWrapper_close_file(uint8_t* file_buffer) {
 }
 
 void PlatformWrapper_hold_for_exit() {

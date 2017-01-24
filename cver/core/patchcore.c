@@ -251,6 +251,11 @@ int PatchCore_save_session(PatchCore* patch) {
 
 int PatchCore_load_session(PatchCore* patch) {
 
+    int file_size;
+    uint8_t* file_buffer;
+
+    file_buffer = PlatformWrapper_open_file(&file_size);
+
     //Later: Make sure user wants to close current
     //Clear current session
     //Use a platformwrapper openfile abstraction to get the buffer
@@ -263,6 +268,8 @@ int PatchCore_load_session(PatchCore* patch) {
     //Discard sbuf/buffer
     //Loop through all registered inputs and outputs and make their 
     // 'connected_io' pointer matches their 'connected_id'
+
+    PlatformWrapper_close_file(file_buffer);
 
     return 1;
 }
