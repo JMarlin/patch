@@ -19,6 +19,7 @@ typedef struct SerialifyBuf_struct {
 typedef int (*Serialify_to_serial_function)(SerialifyBuf*, Object* target);
 
 SerialifyBuf* SerialifyBuf_new();
+SerialifyBuf* SerialifyBuf_from_buffer(uint8_t* buffer, int buf_size);
 int Serialify_from_cstring(SerialifyBuf* sbuf, char* string);
 int Serialify_from_int8(SerialifyBuf* sbuf, int8_t value);
 int Serialify_from_uint8(SerialifyBuf* sbuf, uint8_t value);

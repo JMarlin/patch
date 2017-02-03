@@ -249,27 +249,95 @@ int PatchCore_save_session(PatchCore* patch) {
     return 1;
 }
 
+void PatchCore_session_file_opened(uint8_t* buffer, int buf_size, void* param_object) {
+
+	int i, j;
+	char* temp_buf;
+	String* module_name;
+	PatchCore* patch = (PatchCore*)param_object;
+	Module* module_to_build;
+	IO* current_input;
+	IO* current_output;
+
+	//Wrap the buffer in a new SBuf
+	SerialifyBuf* sbuf = SerialifyBuf_from_buffer(buffer, buf_size);
+
+	//Loop:
+	//    Get a cstring from the sbuf
+	//    Look to see if it matches a module
+	//    Pass the buf to the deserializer of that module (or fail)
+	//    ^This should probably be done by a twin of instantiate_module
+	while (!!sbuf & (sbuf->loc < sbuf->used_size)) {
+
+		if (!Unit_deserialify(sbuf, patch)) {
+
+			PatchCore_clear_session(patch);
+			break;
+		}
+	}
+
+	//Now that the buffer has been deserialized, we can trash the 
+	//serialized file
+	PlatformWrapper_close_file(buffer);
+
+	//Discard sbuf/buffer
+	if (sbuf) {
+
+		sbuf->buffer_base = 0;
+		Object_delete((Object*)sbuf);
+	}
+
+	//Loop through all registered inputs and outputs and make their 
+	// 'connected_io' pointer matches their 'connected_id'
+	//TODO: This could be done way, way faster if I made a b-tree indexed 
+	//by the unit id and with each node having a pointer to that object and
+	//looked up units by ID that way while doing the association. Even that
+	//could be given a performance increase by dropping a unit from the tree
+	//when it's the successful target of the search
+	//Regardless, a double-loop is just about the slowest way to do this
+	for (i = 0; i < patch->inputs->count; i++) {
+
+		current_input = (IO*)List_get_at(patch->inputs, i);
+		
+		//Don't bother connecting an input that wasn't connected to anything
+		if (current_input->connected_id < 0)
+			continue;
+
+		for (j = 0; j < patch->outputs->count; j++) {
+
+			current_output = (IO*)List_get_at(patch->outputs, j);
+
+			if (current_output->ioid == current_input->connected_id) {
+
+				IO_connect(current_input, current_output);
+				break;
+			}
+		}
+	}
+
+	//Fire a desktop redraw?
+}
+
 int PatchCore_load_session(PatchCore* patch) {
 
     int file_size;
     uint8_t* file_buffer;
 
-    file_buffer = PlatformWrapper_open_file(&file_size);
+	//Later: Make sure user wants to close current
+	//Clear current session
+	PatchCore_clear_session(patch);
 
-    //Later: Make sure user wants to close current
-    //Clear current session
-    //Use a platformwrapper openfile abstraction to get the buffer
-    //Use a serialify function yet to be defined to get a new sbuf from buffer
-    //Loop:
-    //    Get a cstring from the sbuf
-    //    Look to see if it matches a module
-    //    Pass the buf to the deserializer of that module (or fail)
-    //    ^This should probably be done by a twin of instantiate_module
-    //Discard sbuf/buffer
-    //Loop through all registered inputs and outputs and make their 
-    // 'connected_io' pointer matches their 'connected_id'
+	//Use a platformwrapper openfile abstraction to get the buffer
+	//Will asynchronously call back to session_file_opened when the
+	//buffer is loaded
+	//NOTE: We really need a PatchCore_disable_input function here
+	//so that the user doesn't try to create units or modify the 
+	//fresh session state while we're trying to load the file
+    PlatformWrapper_open_file(PatchCore_session_file_opened, (void*)patch);
 
-    PlatformWrapper_close_file(file_buffer);
+	//Should probably throw up a loading in progress dialog while we wait
+	//This could be baked into the patch object so that the loading process
+	//can access it, update its progress display, and close it when done
 
     return 1;
 }

@@ -37,6 +37,23 @@ SerialifyBuf* SerialifyBuf_new() {
     return sbuf;
 }
 
+SerialifyBuf* SerialifyBuf_from_buffer(uint8_t* buffer, int buf_size) {
+
+	SerialifyBuf* sbuf;
+
+	if (!buffer || buf_size == 0)
+		return (SerialifyBuf*)0;
+
+	if (!(sbuf = SerialifyBuf_new()))
+		return sbuf;
+
+	sbuf->allocated_size = buf_size;
+	sbuf->used_size = buf_size;
+	sbuf->buffer_base = buffer;
+	
+	return sbuf;
+}
+
 int Serialify_insert_bytes(SerialifyBuf* sbuf, int count, uint8_t* inbuf) {
 
     int i;

@@ -5,6 +5,10 @@
 extern "C" {
 #endif
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846 
+#endif
+
 #define SAMPLE_RATE 44100.0
 
 struct MouseCallback_struct;
@@ -30,7 +34,7 @@ struct ResizeCallback_struct;
 
 typedef void (*MouseCallback_handler)(Object* param_object, uint16_t mouse_x, uint16_t mouse_y, uint8_t buttons);
 typedef void (*ResizeCallback_handler)(Object* param_object, int w, int h);
-typedef void (*PlatformWrapperOpenFileCallback)(uint8_t**, int*);
+typedef void (*PlatformWrapperOpenFileCallback)(uint8_t*, int, void* param_object);
 
 typedef struct MouseCallback_struct {
     Object* param_object;
@@ -51,7 +55,7 @@ void PlatformWrapper_install_mouse_callback(Object* param_object, MouseCallback_
 void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallback_handler callback);
 float PlatformWrapper_random();
 void PlatformWrapper_save_file(uint8_t* file_buffer, int file_size, char* file_name, char* mime);
-void PlatformWrapper_open_file(PlatformWrapperOpenFileCallback open_complete);
+void PlatformWrapper_open_file(PlatformWrapperOpenFileCallback open_complete, void* param_object);
 void PlatformWrapper_close_file(uint8_t* file_buffer);
 
 #ifdef __cplusplus

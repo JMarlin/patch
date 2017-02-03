@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="wslib">
+      <UniqueIdentifier>{569e8fd7-2d60-4145-8555-671eba582d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="widgets">
+      <UniqueIdentifier>{68296914-8282-49e2-a620-bdf99eed8d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="units">
+      <UniqueIdentifier>{32b6df50-2f58-44e0-89ae-b350dbd0e10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="uilib">
+      <UniqueIdentifier>{aacec650-5745-4df2-adb7-5c1354c046b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="serialify">
+      <UniqueIdentifier>{7fe04a05-b990-4a90-8d06-1651965599d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{26002175-71e5-4c5f-834f-cc05ab3eac48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{9d3b09c3-0209-4d06-8489-6aebb3c71c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="build">
+      <UniqueIdentifier>{6036cef3-4d90-4f2e-a0ad-e27c5e8ec748}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\associativearray.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\button.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\context.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\desktop.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\font.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\list.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\listnode.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\object.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\rect.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\styleutils.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\textbox.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="wslib\window.h">
+      <Filter>wslib</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\patchdesktop.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\sessionmenu.h">
+      <Filter>widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="units\adsr.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\capture.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\masterout.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\masteroutthru.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\noise.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\pitchknob.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\scope.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\sequence.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\sine.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\split.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\square.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="units\vca.h">
+      <Filter>units</Filter>
+    </ClInclude>
+    <ClInclude Include="uilib\frame.h">
+      <Filter>uilib</Filter>
+    </ClInclude>
+    <ClInclude Include="uilib\menu.h">
+      <Filter>uilib</Filter>
+    </ClInclude>
+    <ClInclude Include="uilib\menuentry.h">
+      <Filter>uilib</Filter>
+    </ClInclude>
+    <ClInclude Include="uilib\slider.h">
+      <Filter>uilib</Filter>
+    </ClInclude>
+    <ClInclude Include="serialify\serialify.h">
+      <Filter>serialify</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\audiohandler.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\platformwrapper.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="core\io.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\module.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\patchcore.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\unit.h">
+      <Filter>core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Patch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\associativearray.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\button.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\context.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\desktop.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\list.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\listnode.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\object.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\rect.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\styleutils.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\textbox.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="wslib\window.c">
+      <Filter>wslib</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\patchdesktop.c">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\sessionmenu.c">
+      <Filter>widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="units\adsr.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\capture.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\masterout.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\masteroutthru.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\noise.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\pitchknob.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\scope.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\sequence.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\sine.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\split.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\square.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="units\vca.c">
+      <Filter>units</Filter>
+    </ClCompile>
+    <ClCompile Include="uilib\frame.c">
+      <Filter>uilib</Filter>
+    </ClCompile>
+    <ClCompile Include="uilib\menu.c">
+      <Filter>uilib</Filter>
+    </ClCompile>
+    <ClCompile Include="uilib\menuentry.c">
+      <Filter>uilib</Filter>
+    </ClCompile>
+    <ClCompile Include="uilib\slider.c">
+      <Filter>uilib</Filter>
+    </ClCompile>
+    <ClCompile Include="serialify\serialify.c">
+      <Filter>serialify</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\audiohandler.c">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\platformwrapper_windows.c">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="core\io.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\module.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\patchcore.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\unit.c">
+      <Filter>core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Patch.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Patch.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
