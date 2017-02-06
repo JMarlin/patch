@@ -9,6 +9,7 @@ PlatformWrapperOpenFileCallback open_handler;
 Context* internal_context;
 float left_sum, right_sum;
 List* ah_list;
+unsigned char* fb_buffer = 0;
 
 void doPullSample() {
 
@@ -63,15 +64,15 @@ Context* PlatformWrapper_get_context() {
 	
 	//Init the display
 	//Declare our return variable
-	uint32_t *return_buffer = (uint32_t*)0;
+	uint32_t *return_buffer = (uint32_t*)fb_buffer;
 	
 	//Clear the dimensions until we've gotten past any potential errors
 	uint16_t width = 640;
 	uint16_t height = 480;
 	
 	//Attempt to create the framebuffer array 
-	if (!(return_buffer = (uint32_t*)malloc(sizeof(uint32_t) * width * height)))
-		return (Context*)0; //Exit early indicating error with an empty pointer 
+	//if (!(return_buffer = (uint32_t*)malloc(sizeof(uint32_t) * width * height)))
+		//return (Context*)0; //Exit early indicating error with an empty pointer 
 
 	/*
 							//Clear the framebuffer to black
@@ -88,9 +89,16 @@ Context* PlatformWrapper_get_context() {
 	return internal_context;
 }
 
+void PlatformWrapper_do_mouse_callback(uint16_t mouse_x, uint16_t mouse_y, uint8_t buttons) {
+
+	if (mouse_handler.callback)
+		mouse_handler.callback(mouse_handler.param_object, mouse_x, mouse_y, buttons);
+}
+
 void PlatformWrapper_install_mouse_callback(Object* param_object, MouseCallback_handler callback) {
 
-    //TODO
+	mouse_handler.param_object = param_object;
+	mouse_handler.callback = callback;
 }
 
 void PlatformWrapper_install_resize_callback(Object* param_object, ResizeCallback_handler callback) {

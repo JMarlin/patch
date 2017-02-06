@@ -20,16 +20,24 @@ struct ResizeCallback_struct;
 #include "../wslib/context.h"
 #include <time.h>
 
-#ifndef PLATFORM_HAIKU
-#define RGB(r, g, b) ((0xFF000000) | (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16))
-#define RVAL(x) (x & 0xFF)
-#define GVAL(x) ((x & 0xFF00) >> 8)
-#define BVAL(x) ((x & 0xFF0000) >> 16)
-#else
+
+#ifdef PLATFORM_HAIKU
 #define RGB(r, g, b) ((0xFF << 24) | ((b & 0xFF) << 16) | ((g & 0xFF) << 8) | (r & 0xFF))
 #define BVAL(x) ((x & 0xFF0000) >> 16)
 #define GVAL(x) ((x & 0xFF00) >> 8)
 #define RVAL(x) (x & 0xFF)
+#else
+#ifdef WIN32
+#define RGB(r, g, b) ((0xFF << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF))
+#define RVAL(x) ((x & 0xFF0000) >> 16)
+#define GVAL(x) ((x & 0xFF00) >> 8)
+#define BVAL(x) (x & 0xFF)
+#else
+#define RGB(r, g, b) ((0xFF000000) | (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16))
+#define RVAL(x) (x & 0xFF)
+#define GVAL(x) ((x & 0xFF00) >> 8)
+#define BVAL(x) ((x & 0xFF0000) >> 16)
+#endif
 #endif
 
 typedef void (*MouseCallback_handler)(Object* param_object, uint16_t mouse_x, uint16_t mouse_y, uint8_t buttons);

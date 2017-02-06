@@ -18,6 +18,17 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+//Global values for PlatformWrapper
+HBITMAP fb_bitmap;
+
+extern "C" {
+
+	extern unsigned char* fb_buffer;
+	extern void PlatformWrapper_do_mouse_callback(uint16_t mouse_x, uint16_t mouse_y, uint8_t buttons);
+}
+
+HDC fb_dc;
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -25,12 +36,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
-
-    // TODO: Place code here.
-	//Before we call this, use CreateDIBSection to create a raw bitmap
-	//pointer that the context can draw to and the paint function can
-	//blit from as a windows bitmap
-	PatchCore_start(PatchCore_new());
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -102,16 +107,58 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
+   RECT rcClient, rcWindow;
+   POINT ptDiff;
+   
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, 640, 480, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
       return FALSE;
    }
 
+   GetClientRect(hWnd, &rcClient);
+   GetWindowRect(hWnd, &rcWindow);
+   ptDiff.x = (rcWindow.right - rcWindow.left) - rcClient.right;
+   ptDiff.y = (rcWindow.bottom - rcWindow.top) - rcClient.bottom;
+
+   MoveWindow(hWnd, rcWindow.left, rcWindow.top, 640 + ptDiff.x, 480 + ptDiff.y, TRUE);
+
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
+
+   //Create an application-writable bitmap
+   BITMAPINFO bitmap_info;
+   HDC hdc = GetDC(hWnd);
+   fb_dc = CreateCompatibleDC(hdc);
+
+   //Set the initial bitmap format
+   bitmap_info.bmiHeader.biSize = sizeof(bitmap_info);
+   bitmap_info.bmiHeader.biWidth = 640; //These need to default to the initial window size
+   bitmap_info.bmiHeader.biHeight = -480;
+   bitmap_info.bmiHeader.biPlanes = 1;
+   bitmap_info.bmiHeader.biBitCount = 32;
+   bitmap_info.bmiHeader.biCompression = BI_RGB;
+   bitmap_info.bmiHeader.biSizeImage = ((640 * (bitmap_info.bmiHeader.biBitCount / 8) + 3) & -4) * 480;
+
+   //Generate the bitmap
+   fb_bitmap = CreateDIBSection(fb_dc, &bitmap_info, DIB_RGB_COLORS, (VOID**)&fb_buffer, 0, 0);
+
+   if (!fb_bitmap)
+	   MessageBox(hWnd, L"ERROR CREATING BITMAP", L"ERROR", MB_OK);
+
+   int i;
+   DWORD32* pixel = (DWORD32*)fb_buffer;
+   for (i = 0; i < (640 * 480); i++)
+	   pixel[i] = 0xFFFF0000;
+
+   // TODO: Place code here.
+   PatchCore_start(PatchCore_new());
+
+   HBITMAP bitmap_old = (HBITMAP)SelectObject(fb_dc, fb_bitmap);
+   BitBlt(hdc, 0, 0, 640, 480, fb_dc, 0, 0, SRCCOPY);
+   SelectObject(hdc, bitmap_old);
 
    return TRUE;
 }
@@ -130,58 +177,60 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // Parse the menu selections:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-           
-			handle_MemoryDC = CreateCompatibleDC(handle_ScreenDC);
 
-            EndPaint(hWnd, &ps);
-        }
-        break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+		case WM_COMMAND:
+			{
+				int wmId = LOWORD(wParam);
+				// Parse the menu selections:
+				switch (wmId)
+				{
+					case IDM_EXIT:
+						DestroyWindow(hWnd);
+						break;
+					default:
+						return DefWindowProc(hWnd, message, wParam, lParam);
+				}
+			}
+			break;
+        
+		case WM_LBUTTONDOWN:
+		case WM_LBUTTONUP:
+		case WM_RBUTTONDOWN:
+		case WM_RBUTTONUP:
+		case WM_MBUTTONDOWN:
+		case WM_MBUTTONUP:
+		case WM_MOUSEMOVE:
+			{
+				PlatformWrapper_do_mouse_callback(LOWORD(lParam), HIWORD(lParam), wParam & (MK_LBUTTON | MK_MBUTTON | MK_RBUTTON));
+				InvalidateRect(hWnd, NULL, FALSE);
+			}
+			break;
+
+		case WM_PAINT:
+			{
+				if (!fb_buffer)
+					break;
+
+				PAINTSTRUCT ps;
+				HDC hdc = BeginPaint(hWnd, &ps);
+
+				HBITMAP bitmap_old = (HBITMAP)SelectObject(fb_dc, fb_bitmap);
+				BitBlt(hdc, 0, 0, 640, 480, fb_dc, 0, 0, SRCCOPY);
+				SelectObject(fb_dc, bitmap_old);
+
+				EndPaint(hWnd, &ps);
+				ReleaseDC(hWnd, hdc);
+			}
+			break;
+
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
+
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
     }
+
     return 0;
 }
 
-// Message handler for about box.
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        return (INT_PTR)TRUE;
-
-    case WM_COMMAND:
-        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-        {
-            EndDialog(hDlg, LOWORD(wParam));
-            return (INT_PTR)TRUE;
-        }
-        break;
-    }
-    return (INT_PTR)FALSE;
-}

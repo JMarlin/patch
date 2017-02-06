@@ -1,151 +1,39 @@
-﻿  stdafx.cpp
-  window.c
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(296): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(352): warning C4101: 'screen_x': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(352): warning C4101: 'screen_y': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(444): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(479): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(487): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(533): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(541): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(622): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(654): warning C4101: 'i': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(727): warning C4101: 'inner_y2': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(727): warning C4101: 'inner_x2': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(727): warning C4101: 'inner_y1': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(727): warning C4101: 'inner_x1': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(839): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(1014): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\window.c(1018): warning C4018: '<': signed/unsigned mismatch
-  textbox.c
-  styleutils.c
-  rect.c
-  object.c
-  listnode.c
-  list.c
-  desktop.c
-c:\users\jmarlin\documents\patch\cver\wslib\desktop.c(90): warning C4101: 'i': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\desktop.c(91): warning C4101: 'child': unreferenced local variable
-  context.c
-c:\users\jmarlin\documents\patch\cver\wslib\context.c(121): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\context.c(177): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\context.c(207): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\wslib\context.c(201): warning C4101: 'j': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\context.c(257): warning C4101: 'cur_rect': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\wslib\context.c(337): warning C4018: '<': signed/unsigned mismatch
-  button.c
-  associativearray.c
-c:\users\jmarlin\documents\patch\cver\wslib\associativearray.c(43): warning C4018: '<': signed/unsigned mismatch
-  sessionmenu.c
-c:\users\jmarlin\documents\patch\cver\widgets\sessionmenu.c(45): warning C4018: '<': signed/unsigned mismatch
-  patchdesktop.c
-c:\users\jmarlin\documents\patch\cver\widgets\patchdesktop.c(105): warning C4018: '<': signed/unsigned mismatch
-  vca.c
-c:\users\jmarlin\documents\patch\cver\units\vca.c(24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  square.c
-c:\users\jmarlin\documents\patch\cver\units\square.c(26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\units\square.c(27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\units\square.c(30): warning C4305: '-=': truncation from 'double' to 'float'
-  split.c
-  sine.c
-c:\users\jmarlin\documents\patch\cver\units\sine.c(28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\units\sine.c(31): warning C4305: '-=': truncation from 'double' to 'float'
-  sequence.c
-c:\users\jmarlin\documents\patch\cver\units\sequence.c(43): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  scope.c
-c:\users\jmarlin\documents\patch\cver\units\scope.c(27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\units\scope.c(21): warning C4101: 'tceil': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\units\scope.c(23): warning C4101: 'interpolated': unreferenced local variable
-  pitchknob.c
-  Generating Code...
-c:\users\jmarlin\documents\patch\cver\wslib\context.c(350): warning C4700: uninitialized local variable 'clip_area' used
-  Compiling...
-  noise.c
-c:\users\jmarlin\documents\patch\cver\units\noise.c(16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\units\noise.c(13): warning C4101: 't': unreferenced local variable
-  masteroutthru.c
-c:\users\jmarlin\documents\patch\cver\units\masteroutthru.c(31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\units\masteroutthru.c(32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  masterout.c
-c:\users\jmarlin\documents\patch\cver\units\masterout.c(31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\units\masterout.c(32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  capture.c
-  adsr.c
-c:\users\jmarlin\documents\patch\cver\units\adsr.c(35): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\jmarlin\documents\patch\cver\units\adsr.c(39): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\jmarlin\documents\patch\cver\units\adsr.c(58): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\jmarlin\documents\patch\cver\units\adsr.c(129): warning C4305: 'function': truncation from 'double' to 'float'
-c:\users\jmarlin\documents\patch\cver\units\adsr.c(130): warning C4305: 'function': truncation from 'double' to 'float'
-c:\users\jmarlin\documents\patch\cver\units\adsr.c(132): warning C4305: 'function': truncation from 'double' to 'float'
-  slider.c
-  menuentry.c
-  menu.c
-  frame.c
-  serialify.c
-c:\users\jmarlin\documents\patch\cver\serialify\serialify.c(215): warning C4101: 'i': unreferenced local variable
-  platformwrapper_windows.c
-c:\users\jmarlin\documents\patch\cver\platform\platformwrapper_windows.c(19): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\platform\platformwrapper_windows.c(103): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-  audiohandler.c
-  unit.c
-  patchcore.c
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(196): warning C4101: 'unit_window': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(236): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(224): warning C4101: 'temp_unit': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(298): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(306): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(256): warning C4101: 'module_name': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(255): warning C4101: 'temp_buf': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(258): warning C4101: 'module_to_build': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(323): warning C4101: 'file_size': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(324): warning C4101: 'file_buffer': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(357): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(411): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(415): warning C4018: '<': signed/unsigned mismatch
-c:\users\jmarlin\documents\patch\cver\core\patchcore.c(419): warning C4018: '<': signed/unsigned mismatch
-  module.c
-  io.c
-c:\users\jmarlin\documents\patch\cver\core\io.c(101): warning C4101: 'retval': unreferenced local variable
-c:\users\jmarlin\documents\patch\cver\core\io.c(114): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\core\io.c(115): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jmarlin\documents\patch\cver\core\io.c(116): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Patch.cpp
-  Note: including file: c:\users\jmarlin\documents\patch\cver\Patch.h
-  Note: including file:  c:\users\jmarlin\documents\patch\cver\resource.h
-  Note: including file: c:\users\jmarlin\documents\patch\cver\core/patchcore.h
-  Note: including file:  c:\users\jmarlin\documents\patch\cver\core\../platform/platformwrapper.h
+﻿  Patch.cpp
+  Note: including file: c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\Patch.h
+  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\resource.h
+  Note: including file: c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core/patchcore.h
+  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../platform/platformwrapper.h
   Note: including file:   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\inttypes.h
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\stdint.h
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\platform\audiohandler.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\platform\../wslib/object.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\platform\../wslib/context.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\wslib\list.h
-  Note: including file:     c:\users\jmarlin\documents\patch\cver\wslib\listnode.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\wslib\rect.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\wslib\../platform/platformwrapper.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\audiohandler.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\../wslib/object.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\../wslib/context.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\list.h
+  Note: including file:     c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\listnode.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\rect.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\../platform/platformwrapper.h
   Note: including file:   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\time.h
-c:\users\jmarlin\documents\patch\cver\platform\platformwrapper.h(24): warning C4005: 'RGB': macro redefinition
+c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\platformwrapper.h(31): warning C4005: 'RGB': macro redefinition
   c:\program files (x86)\windows kits\8.1\include\um\wingdi.h(1846): note: see previous definition of 'RGB'
-  Note: including file:  c:\users\jmarlin\documents\patch\cver\core\../wslib/associativearray.h
-  Note: including file:  c:\users\jmarlin\documents\patch\cver\core\../widgets/patchdesktop.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\widgets\../wslib/desktop.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\wslib\window.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\widgets\../core/io.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\core\patchcore.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\widgets\sessionmenu.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\widgets\../uilib/menu.h
-  Note: including file:     c:\users\jmarlin\documents\patch\cver\uilib\frame.h
-  Note: including file:     c:\users\jmarlin\documents\patch\cver\uilib\menuentry.h
-  Note: including file:      c:\users\jmarlin\documents\patch\cver\uilib\menu.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\widgets\../core/patchcore.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\widgets\../core/patchcore.h
-  Note: including file:  c:\users\jmarlin\documents\patch\cver\core\module.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\core\../core/patchcore.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\core\../serialify/serialify.h
-  Note: including file:   c:\users\jmarlin\documents\patch\cver\core\unit.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\core\patchcore.h
-  Note: including file:    c:\users\jmarlin\documents\patch\cver\core\module.h
-c:\users\jmarlin\documents\patch\cver\patch.cpp(155): error C2065: 'handle_MemoryDC': undeclared identifier
-c:\users\jmarlin\documents\patch\cver\patch.cpp(155): error C2065: 'handle_ScreenDC': undeclared identifier
+  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../wslib/associativearray.h
+  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../widgets/patchdesktop.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../wslib/desktop.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\window.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../core/io.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\patchcore.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\sessionmenu.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../uilib/menu.h
+  Note: including file:     c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\uilib\frame.h
+  Note: including file:     c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\uilib\menuentry.h
+  Note: including file:      c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\uilib\menu.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../core/patchcore.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../core/patchcore.h
+  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\module.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../core/patchcore.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../serialify/serialify.h
+  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\unit.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\patchcore.h
+  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\module.h
+  Patch.vcxproj -> C:\Users\jmarlin\Documents\Visual Studio 2015\Projects\Patch\Debug\Patch.exe
+  Patch.vcxproj -> C:\Users\jmarlin\Documents\Visual Studio 2015\Projects\Patch\Debug\Patch.pdb (Full PDB)
