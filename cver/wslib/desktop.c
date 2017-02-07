@@ -55,6 +55,9 @@ int Desktop_init(Desktop* desktop, Context* context) {
                     WIN_NODECORATION | WIN_NORAISE, context))
         return 0;
 
+	if (!(desktop->pending_deletions = List_new()))
+		return 0;
+
     //Override our paint function
     desktop->window.paint_function = Desktop_paint_handler;
 
@@ -96,6 +99,11 @@ void Desktop_process_mouse(Desktop* desktop, uint16_t mouse_x,
     Window_process_mouse((Window*)desktop, mouse_x, mouse_y, mouse_buttons);
 
     //Window painting now happens inside of the window raise and move operations
+
+	//Make sure any windows are deleted from the heirarchy AFTER we've gone through
+	//the tree to avoid iterating over any freed pointers
+	while (desktop->pending_deletions->count)
+		Window_final_delete(List_remove_at(desktop->pending_deletions, 0));
     
     //Exit early if the mouse is turned off
     if(!desktop->mouse_shown)

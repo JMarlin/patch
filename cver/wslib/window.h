@@ -67,6 +67,7 @@ typedef struct Window_struct {
     WindowMouseclickHandler mouseclick_function;
     WindowMoveHandler move_function;
     char* title;
+	unsigned char deleted;
 } Window;
 
 //Methods
@@ -104,6 +105,7 @@ void Window_append_title(Window* window, char* additional_chars);
 void Window_delete_function(Object* window_object);
 void Window_resize(Window* window, int w, int h);
 void print_window(Window* window);
+void Window_final_delete(Object* window);
 
 #ifdef __cplusplus
 }

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "window.h"
 #include "styleutils.h"
+#include "desktop.h"
 
 
 //================| Window Class Implementation |================//
@@ -103,6 +104,7 @@ int Window_init(Window* window, int16_t x, int16_t y, uint16_t width,
     window->active_child = (Window*)0;
     window->over_child = (Window*)0;
     window->title = (char*)0;
+	window->deleted = 0;
 
     return 1;
 }
@@ -996,7 +998,7 @@ void Window_show(Window* window) {
     Window_paint(window, (List*)0, 1);
 }
 
-void Window_delete_function(Object* window_object) {
+void Window_final_delete(Object* window_object) {
 
     int i;
     Window *window = (Window*)window_object;
@@ -1006,7 +1008,7 @@ void Window_delete_function(Object* window_object) {
 
     Window_hide(window);
 
-    Object_delete((Object*)window->children);
+	Object_delete((Object*)window->children);
 
     if(window->parent) {
 
@@ -1042,6 +1044,31 @@ void Window_delete_function(Object* window_object) {
 
     Object_delete((Object*)window->context);
     free(window);
+}
+
+void Window_delete_function(Object* window_object) {
+
+	Window* window = (Window*)window_object;
+	Window* parent = (Window*)window_object;
+	Desktop* desk;
+
+	if (window->deleted)
+		return;
+
+	if (window->parent->deleted) {
+
+		Window_final_delete(window_object);
+		return;
+	}
+
+
+	while (parent->parent)
+		parent = parent->parent;
+
+	desk = (Desktop*)parent;
+	List_add(desk->pending_deletions, window_object);
+
+	window->deleted = 1;
 }
 
 void Window_resize(Window* window, int w, int h) {

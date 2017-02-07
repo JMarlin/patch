@@ -1,39 +1,20 @@
-﻿  Patch.cpp
-  Note: including file: c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\Patch.h
-  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\resource.h
-  Note: including file: c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core/patchcore.h
-  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../platform/platformwrapper.h
-  Note: including file:   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\inttypes.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\stdint.h
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\audiohandler.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\../wslib/object.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\../wslib/context.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\list.h
-  Note: including file:     c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\listnode.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\rect.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\../platform/platformwrapper.h
-  Note: including file:   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\time.h
-c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\platform\platformwrapper.h(31): warning C4005: 'RGB': macro redefinition
-  c:\program files (x86)\windows kits\8.1\include\um\wingdi.h(1846): note: see previous definition of 'RGB'
-  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../wslib/associativearray.h
-  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../widgets/patchdesktop.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../wslib/desktop.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\wslib\window.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../core/io.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\patchcore.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\sessionmenu.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../uilib/menu.h
-  Note: including file:     c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\uilib\frame.h
-  Note: including file:     c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\uilib\menuentry.h
-  Note: including file:      c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\uilib\menu.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../core/patchcore.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\widgets\../core/patchcore.h
-  Note: including file:  c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\module.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../core/patchcore.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\../serialify/serialify.h
-  Note: including file:   c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\unit.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\patchcore.h
-  Note: including file:    c:\users\jmarlin\documents\visual studio 2015\projects\patch\patch\core\module.h
-  Patch.vcxproj -> C:\Users\jmarlin\Documents\Visual Studio 2015\Projects\Patch\Debug\Patch.exe
-  Patch.vcxproj -> C:\Users\jmarlin\Documents\Visual Studio 2015\Projects\Patch\Debug\Patch.pdb (Full PDB)
+﻿  window.c
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(298): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(354): warning C4101: 'screen_x': unreferenced local variable
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(354): warning C4101: 'screen_y': unreferenced local variable
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(446): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(481): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(489): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(535): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(543): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(624): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(656): warning C4101: 'i': unreferenced local variable
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(729): warning C4101: 'inner_y2': unreferenced local variable
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(729): warning C4101: 'inner_x2': unreferenced local variable
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(729): warning C4101: 'inner_y1': unreferenced local variable
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(729): warning C4101: 'inner_x1': unreferenced local variable
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(841): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(1016): warning C4018: '<': signed/unsigned mismatch
+c:\users\jmarlin\documents\patch\cver\wslib\window.c(1020): warning C4018: '<': signed/unsigned mismatch
+  Patch.vcxproj -> C:\Users\jmarlin\Documents\patch\cver\Debug\Patch.exe
+  Patch.vcxproj -> C:\Users\jmarlin\Documents\patch\cver\Debug\Patch.pdb (Full PDB)

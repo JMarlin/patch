@@ -22,6 +22,7 @@ typedef struct Desktop_struct {
     uint16_t mouse_x;
     uint16_t mouse_y;
     uint8_t mouse_shown;
+	List* pending_deletions;
 } Desktop;
 
 //Methods
